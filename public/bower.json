@@ -1,6 +1,6 @@
 {
   "authors": [
-    "Linto Cheeran <linto.cet@gmail.com>"
+    "Linto Cheeran<linto.cet@gmail.com>"
   ],
   "dependencies": {
     "app-elements": "polymerelements/app-elements#^0.10.0",

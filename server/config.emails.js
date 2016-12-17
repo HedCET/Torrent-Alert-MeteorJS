@@ -14,7 +14,7 @@ Accounts.emailTemplates.enrollAccount = {
   },
 };
 
-Accounts.emailTemplates.from = "vCompile<vcompile@gmail.com>";
+Accounts.emailTemplates.from = "Linto Cheeran<linto.cet@gmail.com>";
 
 Accounts.emailTemplates.resetPassword = {
   subject() {
@@ -32,7 +32,7 @@ Accounts.emailTemplates.resetPassword = {
   },
 };
 
-Accounts.emailTemplates.siteName = "vCompile";
+Accounts.emailTemplates.siteName = "Torrent Alert";
 
 Accounts.emailTemplates.verifyEmail = {
   subject() {
