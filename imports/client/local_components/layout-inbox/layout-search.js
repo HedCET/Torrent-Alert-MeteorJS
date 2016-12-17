@@ -16,8 +16,10 @@ Polymer({
   },
 
   _worker_changed(worker) {
-    if (Meteor.status().connected && worker) {
-      console.log(worker);
+    if (worker) {
+      if (this.online) {
+        console.log(worker);
+      }
     }
   },
 
@@ -26,10 +28,12 @@ Polymer({
       this.set('router.path', '/');
     }
 
-    if (this.query.worker) {
+    if (!this.query.worker) {
       this.set('query.worker', '_recent_');
     }
   },
+
+  behaviors: [Polymer.AppNetworkStatusBehavior],
 
   is: "layout-search",
 
