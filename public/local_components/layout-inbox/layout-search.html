@@ -1,0 +1,52 @@
+<link rel="import" href="../../../bower_components/app-route/app-route.html">
+<link rel="import" href="../../../bower_components/font-roboto/roboto.html">
+<link rel="import" href="../../../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
+<link rel="import" href="../../../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../../../bower_components/paper-spinner/paper-spinner.html">
+<link rel="import" href="../../../bower_components/paper-styles/paper-styles.html">
+<link rel="import" href="../../../bower_components/polymer/polymer.html">
+
+<dom-module id="layout-search">
+  <template>
+    <style>
+    paper-input {
+      padding: 0 8px;
+    }
+    
+    .footer {
+      min-height: 88px;
+    }
+    
+    .li .title {
+      padding: 8px;
+    }
+    
+    .spinner,
+    .spinner > div {
+      padding: 8px;
+    }
+    </style>
+
+    <app-route pattern="/:layout_search" query-params="{{query}}" route="{{router}}"></app-route>
+
+    <div class="center-justified horizontal layout">
+      <div class="li">
+        <paper-input autocomplete autocorrect autofocus class="flex" label="{{}}" on-keyup="_search" placeholder="torrent keyword serach" type="search" value="{{keyword}}"></paper-input>
+      </div>
+    </div>
+
+    <template is="dom-repeat" items="{{}}"></template>
+
+    <div class="center-justified horizontal layout" hidden="{{}}">
+      <div class="li">
+        <div class="center-justified horizontal layout spinner">
+          <div>
+            <paper-spinner active></paper-spinner>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer"></div>
+  </template>
+</dom-module>

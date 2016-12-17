@@ -1,0 +1,25 @@
+{
+  "background_color": "#009688",
+  "description": "torrent Search & Alert",
+  "display": "standalone",
+  "icons": [{
+    "sizes": "180x180",
+    "src": "/icons/Icon-60@3x.png",
+    "type": "image/png"
+  }, {
+    "sizes": "192x192",
+    "src": "/icons/xxxhdpi.png",
+    "type": "image/png"
+  }],
+  "name": "Torrent Alert",
+  "orientation": "portrait",
+  "prefer_related_applications": true,
+  "related_applications": [{
+    "id": "online.linto.torrent",
+    "platform": "play",
+    "url": "https://play.google.com/store/apps/details?id=online.linto.torrent"
+  }],
+  "scope": "/",
+  "start_url": "/",
+  "theme_color": "#009688"
+}
