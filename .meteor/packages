@@ -1,6 +1,9 @@
+accounts-base
+accounts-password
 blaze-html-templates
 es5-shim
 ecmascript
+force-ssl
 meteor-base
 mobile-experience
 mongo
