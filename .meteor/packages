@@ -1,0 +1,12 @@
+blaze-html-templates
+es5-shim
+ecmascript
+meteor-base
+mobile-experience
+mongo
+shell-server
+standard-minifier-css
+standard-minifier-js
+tracker
+
+meteorhacks:picker
