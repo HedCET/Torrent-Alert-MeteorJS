@@ -1,4 +1,4 @@
-var polymer_color_class = [{
+let polymer_color_class = [{
     class: 'red-500',
     hex: '#F44336',
   }, {
@@ -58,9 +58,9 @@ var polymer_color_class = [{
   }],
   polymer_color_db = {};
 
-polymer_color = function(key) {
+polymer_color = (key) => {
   if (key) {
-    key = key.replace(/[^0-9a-z]/gi, '');
+    key = key.replace(/[^0-9a-z]+/gi, '');
 
     if (key.length) {
       if (polymer_color_db[key]) {
