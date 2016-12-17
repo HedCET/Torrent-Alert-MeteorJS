@@ -1,14 +1,9 @@
 <link rel="import" href="../../bower_components/font-roboto/roboto.html">
 <link rel="import" href="../../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
-<link rel="import" href="../../bower_components/iron-icons/iron-icons.html">
-<link rel="import" href="../../bower_components/paper-icon-button/paper-icon-button.html">
 <link rel="import" href="../../bower_components/paper-item/paper-item-body.html">
 <link rel="import" href="../../bower_components/paper-item/paper-icon-item.html">
 <link rel="import" href="../../bower_components/paper-styles/paper-styles.html">
 <link rel="import" href="../../bower_components/polymer/polymer.html">
-<link rel="import" href="../../bower_components/polymerfire/firebase-auth.html">
-
-<link rel="import" href="../selectable-icon.html">
 
 <dom-module id="layout-user">
   <template>
@@ -35,8 +30,6 @@
     }
     </style>
 
-    <firebase-auth app-name="TA" id="firebase_auth" online="{{online}}" signed-in="{{signedIn}}" user="{{user}}"></firebase-auth>
-
     <div class="center-justified horizontal layout">
       <div class="li">
         <div class="horizontal layout title">
@@ -47,17 +40,26 @@
 
     <div class="center-justified horizontal layout">
       <div class="li">
-        <paper-icon-item class="cursor-p white" on-tap="_torrent_item">
-          <selectable-icon icon_img_src="png/google-plus.png" id="selectable_icon" item-icon></selectable-icon>
+        <paper-icon-item class="cursor-p white" on-tap="_google_sign_in">
+          <selectable-icon icon_img_src="/png/google-plus.png" item-icon></selectable-icon>
 
           <paper-item-body two-line>
             <div>Google Account</div>
             <div secondary>SignIn with Google Account</div>
           </paper-item-body>
+        </paper-icon-item>
+      </div>
+    </div>
 
-          <div>
-            <paper-icon-button icon="close"></paper-icon-button>
-          </div>
+    <div class="center-justified horizontal layout">
+      <div class="li">
+        <paper-icon-item class="cursor-p white" on-tap="_google_profile">
+          <selectable-icon icon_img_src="https://lh4.googleusercontent.com/-oP_FKBNB_S8/AAAAAAAAAAI/AAAAAAAAAhU/bg9hKrkvgLY/s96-c/photo.jpg" item-icon></selectable-icon>
+
+          <paper-item-body two-line>
+            <div>Linto Cheeran</div>
+            <div secondary>linto.cet@gmail.com</div>
+          </paper-item-body>
         </paper-icon-item>
       </div>
     </div>
@@ -66,39 +68,4 @@
   </template>
 </dom-module>
 
-<script>
-(function() {
-  Polymer({
-
-    attached: function() {
-      this.async(function() {
-        if (this.online && !this.signedIn) {
-          this.$.firebase_auth.auth.signInAnonymously()
-            .then(function(user) {
-              console.log('signInAnonymously', user);
-            })
-            .catch(function(error) {
-              if (error) {
-                console.log('signInAnonymously', error);
-              }
-            });
-        }
-      }, 1000 * 10);
-    },
-
-    is: "layout-user",
-
-    properties: {
-      online: {
-        notify: true,
-      },
-      user: {
-        notify: true,
-      },
-    },
-
-  });
-})();
-</script>
-
-<!-- // this.$.firebase_auth.auth.signOut(); // if (window.cordova) { // var _this = this; // window.plugins.googleplus.login({ // // 'scopes': 'email profile', // 'webClientId': '731987698101-thavlbcphk9v1kco7l7bl3q70dph819m.apps.googleusercontent.com', // 'offline': true, // }, // function(res) { // _this.$.firebase_auth.auth.signInWithCredential(firebase.auth.GoogleAuthProvider.credential(res.idToken)) // .then(function(user) { // alert('signInWithCredential' + JSON.stringify(user)); // }) // .catch(function(error) { // if (error) { // alert('signInWithCredential' + JSON.stringify(error)); // } // }); // }, // function(error) { // if (error) { // alert('google-plus' + JSON.stringify(error)); // } // }); // } else { // var provider = new firebase.auth.GoogleAuthProvider(); // this.$.firebase_auth.auth.signInWithPopup(provider) // .then(function(user) { // alert('signInWithPopup' + JSON.stringify(user)); // }) // .catch(function(error) { // if (error) { // alert('signInWithPopup' + JSON.stringify(error)); // } // }); // } -->
+<link rel="import" href="../selectable-icon.html">
