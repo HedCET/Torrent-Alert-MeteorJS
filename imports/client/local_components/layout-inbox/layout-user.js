@@ -6,7 +6,7 @@ Polymer({
   _google() {
     if (Meteor.status().connected) {
       if (Meteor.user()) {
-        document.querySelector("#polymer_toast").toast('Are you sure you want to signOut ?', 'OUT');
+        document.querySelector("#polymer_toast").toast('Are you sure you want to signOUT ?', 'OUT');
       } else {
         this.google();
       }
@@ -19,7 +19,7 @@ Polymer({
     let _this = this;
 
     Tracker.autorun(() => {
-      _this.set('user', Meteor.user() ? _.pick(Meteor.user().profile, ['email', 'name', 'picture']) : { email: 'SignIn with Google Account', name: 'Google Account', picture: '/png/google-plus.png' });
+      _this.set('user', Meteor.user() ? _.pick(Meteor.user().profile, ['email', 'name', 'picture']) : { email: 'Synchronize with Google Account', name: 'Google Account', picture: '/png/google-plus.png' });
     });
   },
 
@@ -61,7 +61,7 @@ Polymer({
       type: Object,
       value() {
         return {
-          email: 'SignIn with Google Account',
+          email: 'Synchronize with Google Account',
           name: 'Google Account',
           picture: '/png/google-plus.png',
         };
