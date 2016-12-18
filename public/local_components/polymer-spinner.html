@@ -37,14 +37,14 @@
           this.opened = !this.opened;
 
           if (Meteor.isCordova) {
-            StatusBar.show();
+            StatusBar.backgroundColorByHexString('#009688');
           }
         }, 400);
       } else {
         this.opened = !this.opened;
 
         if (Meteor.isCordova) {
-          StatusBar.hide();
+          StatusBar.backgroundColorByName('black');
         }
       }
     },
