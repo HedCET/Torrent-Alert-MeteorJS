@@ -4,7 +4,7 @@ if (Meteor.isCordova) {
   document.addEventListener("WebComponentsReady", function() {
     window.setTimeout(function() {
       _LaunchScreen.release();
-    }, 1000 * 4);
+    }, 1000 * 2);
   }, false);
 
   var moment = require('moment');
