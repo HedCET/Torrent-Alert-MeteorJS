@@ -6,7 +6,7 @@ Polymer({
   _google() {
     if (Meteor.status().connected) {
       if (Meteor.user()) {
-        document.querySelector("#polymer_toast").toast('Are you sure you want to signOUT ?', 'OUT');
+        document.querySelector("#polymer_toast").toast('Are you sure you want to SignOUT ?', 'OUT');
       } else {
         this.google();
       }
