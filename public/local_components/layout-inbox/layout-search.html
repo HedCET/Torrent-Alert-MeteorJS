@@ -32,13 +32,13 @@
 
     <div class="center-justified horizontal layout">
       <div class="li">
-        <paper-input autocomplete autocorrect autofocus class="flex" label="" on-keyup="_search" placeholder="torrent keyword serach" type="search" value="{{keyword}}"></paper-input>
+        <paper-input autocomplete autocorrect autofocus class="flex" label="{{_label(worker.response, worker.status)}}" on-keyup="_search" placeholder="torrent keyword serach" type="search" value="{{keyword}}"></paper-input>
       </div>
     </div>
 
-    <template is="dom-repeat" items="{{}}"></template>
+    <template is="dom-repeat" items="{{worker.response}}"></template>
 
-    <div class="center-justified horizontal layout" hidden="{{}}">
+    <div class="center-justified horizontal layout" hidden="{{worker.status}}">
       <div class="li">
         <div class="center-justified horizontal layout spinner">
           <div>

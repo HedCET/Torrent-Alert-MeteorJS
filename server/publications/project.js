@@ -13,8 +13,5 @@ Meteor.publish('project', (input) => {
       deny: false,
     },
     limit: 15,
-    sort: {
-      ping: -1,
-    },
   });
 });

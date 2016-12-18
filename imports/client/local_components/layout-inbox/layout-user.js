@@ -11,7 +11,7 @@ Polymer({
         this.google();
       }
     } else {
-      document.querySelector('#polymer_spinner').toast('lost server connection');
+      document.querySelector('#polymer_toast').toast('lost server connection');
     }
   },
 
@@ -32,10 +32,10 @@ Polymer({
         profile: ['email', 'email_verified', 'family_name', 'gender', 'given_name', 'locale', 'name', 'picture'],
         webClientId: '731987698101-thavlbcphk9v1kco7l7bl3q70dph819m.apps.googleusercontent.com',
       }, function(error) {
-        document.querySelector('#polymer_spinner').toggle();
+        document.querySelector('#polymer_toast').toggle();
 
         if (error) {
-          document.querySelector('#polymer_spinner').toast(error);
+          document.querySelector('#polymer_toast').toast(error);
         }
       });
     } else {
@@ -48,7 +48,7 @@ Polymer({
         document.querySelector('#polymer_spinner').toggle();
 
         if (error) {
-          document.querySelector('#polymer_spinner').toast('google errorNo - ' + Accounts.LoginCancelledError.numericError);
+          document.querySelector('#polymer_toast').toast('google errorNo - ' + Accounts.LoginCancelledError.numericError);
         }
       });
     }

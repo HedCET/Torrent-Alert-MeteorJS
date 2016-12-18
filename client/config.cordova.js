@@ -8,7 +8,7 @@ if (Meteor.isCordova) {
   }, false);
 
   var moment = require('moment');
-  var _exit = moment().format();
+  var _exit = moment().todate();
 
   document.addEventListener("deviceready", function(e) {
     document.addEventListener("backbutton", function(e) {
@@ -18,7 +18,7 @@ if (Meteor.isCordova) {
         navigator.app.backHistory();
       }
 
-      _exit = moment().format();
+      _exit = moment().todate();
     }, false);
   }, false);
 }

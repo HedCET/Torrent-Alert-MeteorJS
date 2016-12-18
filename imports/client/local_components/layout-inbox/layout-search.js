@@ -1,26 +1,66 @@
 import { Meteor } from 'meteor/meteor';
+import { Tracker } from 'meteor/tracker';
 
 Polymer({
+
+  _label: function(response, status) {
+    switch (status) {
+      case '':
+        return 'indexing';
+        break;
+
+      case '200':
+        return (response.length ? response.length + ' item' : 'noItemFound');
+        break;
+
+      default:
+        return status;
+        break;
+    }
+  },
 
   _search() {
     clearTimeout(this._search_handler ? this._search_handler : null);
 
-    this.keyword = this.keyword.replace(/ added.*?[0-9]+[a-z] ?/gi, ' ').replace(/ seed.*?[0-9]+ ?/gi, ' ');
-    let worker = this.keyword.replace(/[^0-9a-z]+/gi, '');
+    let _this = this;
 
-    if (worker) {
-      var _this = this;
+    _this._search_handler = setTimeout(() => {
+      _this.keyword = _this.keyword.replace(/ added.*?[0-9]+[a-z] ?/gi, ' ').replace(/ seed.*?[0-9]+ ?/gi, ' ').replace(/\s+/g, ' ').trim();
 
-      _this._search_handler = setTimeout(() => {
-        _this.set('query.worker', worker);
-      }, 1000);
-    }
+      if (_this.keyword) {
+        if (Meteor.status().connected) {
+          Meteor.call('insert_worker', _this.keyword + ' added:60d seeds > 0', (error, res) => {
+            if (error) {
+              document.querySelector('#polymer_toast').toast(error.message);
+            } else {
+              _this.set('query.worker', res);
+            }
+          });
+        } else {
+          document.querySelector('#polymer_toast').toast('lost server connection');
+        }
+      }
+    }, 1000);
   },
 
   _worker_changed(worker) {
-    if (worker) {
-      if (this.online) {
-        console.log(worker);
+    if (this.online) {
+      if (worker) {
+        let _this = this;
+
+        Tracker.autorun(() => {
+          Meteor.subscribe('worker', [worker]);
+        });
+
+        Tracker.autorun(() => {
+          let row = _worker.findOne({
+            _id: worker,
+          });
+
+          if (row) {
+            _this.set('worker', row);
+          }
+        });
       }
     }
   },

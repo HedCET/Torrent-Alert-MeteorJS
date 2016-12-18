@@ -2,6 +2,7 @@ accounts-base
 accounts-google
 accounts-password
 blaze-html-templates
+check
 es5-shim
 ecmascript
 force-ssl
