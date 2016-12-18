@@ -38,22 +38,9 @@
       </div>
     </div>
 
-    <div class="center-justified horizontal layout" hidden="{{user.email}}">
+    <div class="center-justified horizontal layout">
       <div class="li">
         <paper-icon-item class="cursor-p white" on-tap="_google">
-          <selectable-icon icon_img_src="/png/google-plus.png" item-icon></selectable-icon>
-
-          <paper-item-body two-line>
-            <div>Google Account</div>
-            <div secondary>SignIn with Google Account</div>
-          </paper-item-body>
-        </paper-icon-item>
-      </div>
-    </div>
-
-    <div class="center-justified horizontal layout" hidden="{{!user.email}}">
-      <div class="li">
-        <paper-icon-item class="cursor-p white" on-tap="_google_user">
           <selectable-icon icon_img_src="{{user.picture}}" item-icon></selectable-icon>
 
           <paper-item-body two-line>
