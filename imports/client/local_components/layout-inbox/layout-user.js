@@ -1,6 +1,6 @@
 Polymer({
 
-  _google_sign_in() {
+  _google() {
     if (Meteor.status().connected) {
       if (Meteor.isCordova) {
         Meteor.cordova_g_plus({
@@ -18,13 +18,23 @@ Polymer({
           requestPermissions: ['email', 'profile']
         }, function(error) {
           if (error) {
-            console.log('Google SignIn ErrorNo - ' + Accounts.LoginCancelledError.numericError);
+            console.log('googleSignIn ErrorNo', Accounts.LoginCancelledError.numericError);
           }
         });
       }
     } else {
       console.log('lost server connection');
     }
+  },
+
+  attached() {
+    let _this = this;
+
+    Tracker.autorun(() => {
+      if (Meteor.user()) {
+        _this.user = _.pick(Meteor.user().profile, ['email', 'name', 'picture']);
+      }
+    });
   },
 
   is: 'layout-user',

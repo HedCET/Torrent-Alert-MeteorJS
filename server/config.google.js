@@ -10,16 +10,16 @@ Meteor.startup(() => {
   });
 });
 
-Accounts.onCreateUser(function(opts, user) {
+Accounts.onCreateUser((opts, user) => {
   if (user.services.google && user.services.google.accessToken) {
-    var res = Meteor.http.get('https://www.googleapis.com/oauth2/v3/userinfo', {
+    var res = http.get('https://www.googleapis.com/oauth2/v3/userinfo', {
       headers: {
-        'User-Agent': 'Meteor/1.0'
+        'User-Agent': 'Meteor/1.0',
       },
 
       params: {
-        access_token: user.services.google.accessToken
-      }
+        access_token: user.services.google.accessToken,
+      },
     });
 
     if (res.error) {
