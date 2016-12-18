@@ -5,7 +5,7 @@ Polymer({
   _search() {
     clearTimeout(this._search_handler ? this._search_handler : null);
 
-    this.keyword = this.keyword.replace(/\++/g, ' ').replace(/ seed.*?[0-9]+ ?/gi, ' ').replace(/ added.*?[0-9]+[a-z] ?/gi, ' ').replace(/\s+/g, ' ').trim();
+    this.keyword = this.keyword.replace(/ seed.*?[0-9]+ ?/gi, ' ').replace(/ added.*?[0-9]+[a-z] ?/gi, ' ');
     let worker = this.keyword.replace(/[^0-9a-z]+/gi, '');
 
     if (worker) {

@@ -36,6 +36,14 @@
           }
           break;
 
+        case 'IN':
+          document.querySelector("#layout_user").google();
+          break;
+
+        case 'OUT':
+          Meteor.logout();
+          break;
+
       }
 
       this.logic = '';
