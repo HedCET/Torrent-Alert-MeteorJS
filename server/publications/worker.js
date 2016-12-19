@@ -1,8 +1,6 @@
-Meteor.publish('worker', (input) => {
-  if (this.userId == 'ADMIN') {
-    check(input, Object);
-
-    return _worker.find(input);
+Meteor.publish('worker', function(input) {
+  if (this.userId == 'ADMIN' && Object.prototype.toString.call(input) == '[object Object]') {
+    return _worker.find(input.query, input.option);
   } else {
     check(input, [String]);
 

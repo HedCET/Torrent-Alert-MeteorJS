@@ -1,4 +1,4 @@
-Meteor.publish('torrent', (input) => {
+Meteor.publish('torrent', function(input) {
   check(input, Match.OneOf({ page: Number, project: [String] }, { project: [String], torrent: [String] }, { torrent: [String] }));
 
   let A = _torrent.find(_.extend({ deny: { $exists: false } }, (input.project ? { project: { $in: input.project } } : {}), (input.torrent ? { _id: { $in: input.torrent } } : {}), (this.userId ? { user_removed: { $ne: this.userId } } : {})), {
