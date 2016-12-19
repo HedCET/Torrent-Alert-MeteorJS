@@ -30,7 +30,7 @@ import { Tracker } from 'meteor/tracker';
 
         if (_this.keyword) {
           if (Meteor.status().connected) {
-            Meteor.call('insert_worker', '/suggestions.php?q=' + _this.keyword, (error, res) => {
+            Meteor.call('insert_keyword', _this.keyword, (error, res) => {
               if (error) {
                 document.querySelector('#polymer_toast').toast(error.message);
               } else {
