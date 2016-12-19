@@ -29,11 +29,24 @@ Meteor.methods({
     } else {
       return _worker.insert({
         query: input,
-        response: [],
+        // response: [],
         status: '',
         time: moment().toDate(),
         type: 'keyword',
       });
+    }
+  },
+
+  update_worker(input) {
+    this.unblock();
+
+    var user = Meteor.user();
+    if (!user) throw new Meteor.Error(422, "userNotFound");
+
+    if (user._id == 'ADMIN') {
+
+    } else {
+      throw new Meteor.Error(422, "userNotPermitted");
     }
   },
 
