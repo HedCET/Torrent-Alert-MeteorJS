@@ -4,14 +4,14 @@ import { Tracker } from 'meteor/tracker';
 (function() {
   Polymer({
 
-    _label: function(response, status) {
+    _label: function(project, status) {
       switch (status) {
         case '':
           return 'indexing';
           break;
 
         case '200':
-          return (response.length ? response.length + ' item' : 'noItemFound');
+          return (project.length ? project.length + ' item' : 'noItemFound');
           break;
 
         default:

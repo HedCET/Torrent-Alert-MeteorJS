@@ -5,7 +5,7 @@ Meteor.methods({
   insert_keyword(input) {
     this.unblock();
 
-    // var user = Meteor.user();
+    // let user = Meteor.user();
     // if (!user) throw new Meteor.Error(422, "userNotFound");
 
     check(input, String);
@@ -30,8 +30,8 @@ Meteor.methods({
       return row._id;
     } else {
       return _worker.insert({
+        project: [],
         query: input,
-        response: [],
         status: '',
         time: moment().toDate(),
         type: 'keyword',
