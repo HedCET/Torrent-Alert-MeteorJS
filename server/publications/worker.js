@@ -13,7 +13,7 @@ Meteor.publish('worker', function(input) {
       },
     }, {
       fields: {
-        response: true,
+        response: (true),
         status: true,
       },
       limit: 15,

@@ -31,7 +31,7 @@ Meteor.methods({
     } else {
       return _worker.insert({
         query: input,
-        // response: [],
+        response: [],
         status: '',
         time: moment().toDate(),
         type: 'keyword',
