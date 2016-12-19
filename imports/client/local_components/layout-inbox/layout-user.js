@@ -1,72 +1,74 @@
 import { Meteor } from 'meteor/meteor';
 import { Tracker } from 'meteor/tracker';
 
-Polymer({
+(function() {
+  Polymer({
 
-  _google() {
-    if (Meteor.status().connected) {
-      if (Meteor.user()) {
-        document.querySelector("#polymer_toast").toast('Are you sure you want to SignOUT ?', 'OUT');
-      } else {
-        this.google();
-      }
-    } else {
-      document.querySelector('#polymer_toast').toast('lost server connection');
-    }
-  },
-
-  attached() {
-    let _this = this;
-
-    Tracker.autorun(() => {
-      _this.set('user', Meteor.user() ? _.pick(Meteor.user().profile, ['email', 'name', 'picture']) : { email: 'Synchronize with Google Account', name: 'Google Account', picture: '/png/google-plus.png' });
-    });
-  },
-
-  google() {
-    if (Meteor.isCordova) {
-      document.querySelector('#polymer_spinner').toggle();
-
-      Meteor.cordova_g_plus({
-        cordova_g_plus: true,
-        profile: ['email', 'email_verified', 'family_name', 'gender', 'given_name', 'locale', 'name', 'picture'],
-        webClientId: '731987698101-thavlbcphk9v1kco7l7bl3q70dph819m.apps.googleusercontent.com',
-      }, function(error) {
-        document.querySelector('#polymer_toast').toggle();
-
-        if (error) {
-          document.querySelector('#polymer_toast').toast(error);
+    _google() {
+      if (Meteor.status().connected) {
+        if (Meteor.user()) {
+          document.querySelector("#polymer_toast").toast('Are you sure you want to SignOUT ?', 'OUT');
+        } else {
+          this.google();
         }
-      });
-    } else {
-      document.querySelector('#polymer_spinner').toggle();
+      } else {
+        document.querySelector('#polymer_toast').toast('lost server connection');
+      }
+    },
 
-      Meteor.loginWithGoogle({
-        requestOfflineToken: true,
-        requestPermissions: ['email', 'profile']
-      }, function(error) {
+    attached() {
+      let _this = this;
+
+      Tracker.autorun(() => {
+        _this.set('user', Meteor.user() ? _.pick(Meteor.user().profile, ['email', 'name', 'picture']) : { email: 'Synchronize with Google Account', name: 'Google Account', picture: '/png/google-plus.png' });
+      });
+    },
+
+    google() {
+      if (Meteor.isCordova) {
         document.querySelector('#polymer_spinner').toggle();
 
-        if (error) {
-          document.querySelector('#polymer_toast').toast('google errorNo - ' + Accounts.LoginCancelledError.numericError);
-        }
-      });
-    }
-  },
+        Meteor.cordova_g_plus({
+          cordova_g_plus: true,
+          profile: ['email', 'email_verified', 'family_name', 'gender', 'given_name', 'locale', 'name', 'picture'],
+          webClientId: '731987698101-thavlbcphk9v1kco7l7bl3q70dph819m.apps.googleusercontent.com',
+        }, function(error) {
+          document.querySelector('#polymer_spinner').toggle();
 
-  is: 'layout-user',
+          if (error) {
+            document.querySelector('#polymer_toast').toast(error);
+          }
+        });
+      } else {
+        document.querySelector('#polymer_spinner').toggle();
 
-  properties: {
-    user: {
-      type: Object,
-      value() {
-        return {
-          email: 'Synchronize with Google Account',
-          name: 'Google Account',
-          picture: '/png/google-plus.png',
-        };
+        Meteor.loginWithGoogle({
+          requestOfflineToken: true,
+          requestPermissions: ['email', 'profile']
+        }, function(error) {
+          document.querySelector('#polymer_spinner').toggle();
+
+          if (error) {
+            document.querySelector('#polymer_toast').toast('google errorNo - ' + Accounts.LoginCancelledError.numericError);
+          }
+        });
+      }
+    },
+
+    is: 'layout-user',
+
+    properties: {
+      user: {
+        type: Object,
+        value() {
+          return {
+            email: 'Synchronize with Google Account',
+            name: 'Google Account',
+            picture: '/png/google-plus.png',
+          };
+        },
       },
     },
-  },
 
-});
+  });
+})();
