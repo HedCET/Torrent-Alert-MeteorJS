@@ -33,7 +33,7 @@ Meteor.methods({
               });
 
               if (worker) {
-                if (worker.status != '200' || 1 < moment.duration(moment().diff(worker.time)).asDays()) {
+                if (worker.status != '200' || 3 < moment.duration(moment().diff(worker.time)).asDays()) {
                   _worker.update({
                     _id: worker._id,
                   }, {
