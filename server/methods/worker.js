@@ -169,7 +169,7 @@ Meteor.methods({
 
           if (input.torrent_count) {
             _project.update({
-              query: project._id,
+              _id: project._id,
             }, {
               $set: {
                 torrent_count: input.torrent_count,
