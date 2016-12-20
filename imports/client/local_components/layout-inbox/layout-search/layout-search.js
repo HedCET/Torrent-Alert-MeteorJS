@@ -59,7 +59,7 @@ import { Tracker } from 'meteor/tracker';
             _id: worker,
           });
 
-          if (row && row.response.length) {
+          if (row && row.response && row.response.length) {
             _this.set('worker', row);
           }
         });
