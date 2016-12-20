@@ -19,9 +19,15 @@ import { Tracker } from 'meteor/tracker';
     attached() {
       let _this = this;
 
-      Tracker.autorun(() => {
+      _this._stop = Tracker.autorun(() => {
         _this.set('user', Meteor.user() ? _.pick(Meteor.user().profile, ['email', 'name', 'picture']) : { email: 'Synchronize with Google Account', name: 'Google Account', picture: '/png/google-plus.png' });
       });
+    },
+
+    detached() {
+      if (this._stop) {
+        this._stop.stop();
+      }
     },
 
     google() {

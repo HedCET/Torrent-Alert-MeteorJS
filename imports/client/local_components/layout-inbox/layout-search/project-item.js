@@ -3,21 +3,23 @@ import { Tracker } from 'meteor/tracker';
 
 Polymer({
 
-  _item_changed(item) {
-    if (item) {
-      Meteor.subscribe('project', [item]);
-
-      if (this._stop) {
-        this._stop.stop();
-      }
+  attached() {
+    if (this.item) {
+      Meteor.subscribe('project', [this.item]);
 
       let _this = this;
 
       _this._stop = Tracker.autorun(() => {
         _this.project = _project.findOne({
-          _id: item,
+          _id: _this.item,
         });
       });
+    }
+  },
+
+  detached() {
+    if (this._stop) {
+      this._stop.stop();
     }
   },
 
