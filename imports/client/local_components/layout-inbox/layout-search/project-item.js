@@ -25,6 +25,4 @@ Polymer({
 
   is: "project-item",
 
-  observers: ['_item_changed(item)'],
-
 });
