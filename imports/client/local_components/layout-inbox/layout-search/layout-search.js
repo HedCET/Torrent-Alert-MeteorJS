@@ -46,13 +46,15 @@ import { Tracker } from 'meteor/tracker';
 
     _worker_changed(worker) {
       if (worker) {
+        Meteor.subscribe('worker', [worker]);
+
+        if (this._stop) {
+          this._stop.stop();
+        }
+
         let _this = this;
 
-        Tracker.autorun(() => {
-          Meteor.subscribe('worker', [worker]);
-        });
-
-        Tracker.autorun(() => {
+        _this._stop = Tracker.autorun(() => {
           let row = _worker.findOne({
             _id: worker,
           });

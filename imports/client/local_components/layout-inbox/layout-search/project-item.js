@@ -5,15 +5,15 @@ Polymer({
 
   _item_changed(item) {
     if (item) {
+      Meteor.subscribe('project', [item]);
+
+      if (this._stop) {
+        this._stop.stop();
+      }
+
       let _this = this;
 
-      Tracker.autorun(() => {
-        Tracker.autorun(() => {
-          Meteor.subscribe('project', [item]);
-        });
-      });
-
-      Tracker.autorun(() => {
+      _this._stop = Tracker.autorun(() => {
         _this.project = _project.findOne({
           _id: item,
         });
