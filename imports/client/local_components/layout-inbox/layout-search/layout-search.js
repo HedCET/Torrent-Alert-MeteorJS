@@ -45,24 +45,22 @@ import { Tracker } from 'meteor/tracker';
     },
 
     _worker_changed(worker) {
-      if (this.online) {
-        if (worker) {
-          let _this = this;
+      if (worker) {
+        let _this = this;
 
-          Tracker.autorun(() => {
-            Meteor.subscribe('worker', [worker]);
+        Tracker.autorun(() => {
+          Meteor.subscribe('worker', [worker]);
+        });
+
+        Tracker.autorun(() => {
+          let row = _worker.findOne({
+            _id: worker,
           });
 
-          Tracker.autorun(() => {
-            let row = _worker.findOne({
-              _id: worker,
-            });
-
-            if (row) {
-              _this.set('worker', row);
-            }
-          });
-        }
+          if (row) {
+            _this.set('worker', row);
+          }
+        });
       }
     },
 
@@ -75,8 +73,6 @@ import { Tracker } from 'meteor/tracker';
         this.set('query.worker', '_recent_');
       }
     },
-
-    behaviors: [Polymer.AppNetworkStatusBehavior],
 
     is: "layout-search",
 

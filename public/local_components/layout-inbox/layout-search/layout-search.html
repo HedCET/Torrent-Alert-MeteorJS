@@ -36,7 +36,9 @@
       </div>
     </div>
 
-    <template is="dom-repeat" items="{{worker.project}}"></template>
+    <template is="dom-repeat" items="{{worker.project}}">
+      <project-item item="{{item}}"></project-item>
+    </template>
 
     <div class="center-justified horizontal layout" hidden="{{worker.status}}">
       <div class="li">
@@ -51,3 +53,5 @@
     <div class="footer"></div>
   </template>
 </dom-module>
+
+<link rel="import" href="project-item.html">
