@@ -55,17 +55,22 @@ const underscore = require('underscore');
 
     attached() {
       if (!this.router.path) {
-        this.set('router.path', '/_project_/1');
-      }
-
-      if (!this.route.page) {
-        this.set('router.path', this.router.path + '/1');
+        this.set('router.path', '/_project_');
       }
     },
 
     is: "layout-project",
 
     observers: ['_layout_project_changed(route.layout_project)'],
+
+    properties: {
+      torrent: {
+        type: Array,
+        value() {
+          return [];
+        },
+      },
+    },
 
   });
 })();

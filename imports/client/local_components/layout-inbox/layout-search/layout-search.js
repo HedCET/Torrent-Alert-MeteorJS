@@ -46,11 +46,11 @@ const underscore = require('underscore');
     },
 
     _project(e) {
-      Meteor.call('insert_project', e.model.item, (error, res) => {
+      Meteor.call('insert_project', e.model.item._id, (error, res) => {
         if (error) {
           document.querySelector('#polymer_toast').toast(error.message);
         } else {
-          document.querySelector('#app_location').path = '/z/project/' + res + '/1';
+          document.querySelector('#app_location').path = '/z/project/' + res;
         }
       });
     },
