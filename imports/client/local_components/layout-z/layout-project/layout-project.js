@@ -19,7 +19,7 @@ const underscore = require('underscore');
         this.set('torrent', []);
 
         Meteor.subscribe('project', [layout_project]);
-        Meteor.subscribe('torrent', { page: 1, project: [this.route.layout_project] });
+        Meteor.subscribe('torrent', { page: 1, project: [layout_project] });
 
         if (this._tracker) {
           this._tracker.stop();
