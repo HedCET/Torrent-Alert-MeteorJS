@@ -29,37 +29,37 @@ Meteor.methods({
               if (project) {
                 input.project.push(project._id);
 
-                let worker = _worker.findOne({
-                  query: query,
-                });
+                // let worker = _worker.findOne({
+                //   query: query,
+                // });
 
-                if (worker) {
-                  if (worker.status != '200' || 3 < moment.duration(moment().diff(worker.time)).asDays()) {
-                    _worker.update({
-                      _id: worker._id,
-                    }, {
-                      $set: {
-                        status: '',
-                      },
-                    });
-                  }
-                } else {
-                  _worker.insert({
-                    query: query,
-                    status: '',
-                    time: moment().toDate(),
-                    type: 'project',
-                  });
-                }
+                // if (worker) {
+                //   if (worker.status != '200' || 3 < moment.duration(moment().diff(worker.time)).asDays()) {
+                //     _worker.update({
+                //       _id: worker._id,
+                //     }, {
+                //       $set: {
+                //         status: '',
+                //       },
+                //     });
+                //   }
+                // } else {
+                //   _worker.insert({
+                //     query: query,
+                //     status: '',
+                //     time: moment().toDate(),
+                //     type: 'project',
+                //   });
+                // }
               } else {
                 input.project.push(_project.insert({ query: query, title: keyword }));
 
-                _worker.insert({
-                  query: query,
-                  status: '',
-                  time: moment().toDate(),
-                  type: 'project',
-                });
+                // _worker.insert({
+                //   query: query,
+                //   status: '',
+                //   time: moment().toDate(),
+                //   type: 'project',
+                // });
               }
             }
           });

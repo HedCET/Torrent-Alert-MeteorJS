@@ -46,7 +46,11 @@ const underscore = require('underscore');
     },
 
     _project(e) {
+      document.querySelector('#polymer_spinner').toggle();
+
       Meteor.call('insert_project', e.model.item._id, (error, res) => {
+        document.querySelector('#polymer_spinner').toggle();
+
         if (error) {
           document.querySelector('#polymer_toast').toast(error.message);
         } else {
