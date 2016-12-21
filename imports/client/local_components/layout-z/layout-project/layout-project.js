@@ -1,6 +1,8 @@
 import { Meteor } from 'meteor/meteor';
 import { Tracker } from 'meteor/tracker';
 
+const underscore = require('underscore');
+
 (function() {
   Polymer({
 
@@ -14,32 +16,39 @@ import { Tracker } from 'meteor/tracker';
 
     _layout_project_changed(layout_project) {
       if (layout_project) {
-        Meteor.subscribe('project', [layout_project]);
+        this.set('torrent', []);
 
-        if (this._tracker_project) {
-          this._tracker_project.stop();
+        Meteor.subscribe('project', [layout_project]);
+        Meteor.subscribe('torrent', { page: 1, project: [this.route.layout_project] });
+
+        if (this._tracker) {
+          this._tracker.stop();
+        }
+
+        if (this._observe) {
+          this._observe.stop();
         }
 
         let _this = this;
 
-        _this._tracker_project = Tracker.autorun(() => {
+        _this._tracker = Tracker.autorun(() => {
           _this.set('project', _project.findOne({ _id: layout_project }));
         });
-      }
-    },
 
-    _page_changed(page) {
-      if (this.route.layout_project && page) {
-        Meteor.subscribe('torrent', { page: +page, project: [this.route.layout_project] });
+        _this._observe = _torrent.find({
+          project: layout_project,
+        }).observe({
+          addedAt(row) {
+            _this.push('torrent', row);
+          },
 
-        if (this._tracker_page) {
-          this._tracker_page.stop();
-        }
+          changedAt(row) {
+            _this.splice('torrent', underscore.findIndex(_this.torrent, { _id: row._id }), 1, row);
+          },
 
-        let _this = this;
-
-        _this._tracker_page = Tracker.autorun(() => {
-          _this.set('torrent', _torrent.find({ project: _this.route.layout_project }).fetch());
+          removedAt(row) {
+            _this.splice('torrent', underscore.findIndex(_this.torrent, { _id: row._id }), 1);
+          },
         });
       }
     },
@@ -56,7 +65,7 @@ import { Tracker } from 'meteor/tracker';
 
     is: "layout-project",
 
-    observers: ['_layout_project_changed(route.layout_project)', '_page_changed(route.page)'],
+    observers: ['_layout_project_changed(route.layout_project)'],
 
   });
 })();

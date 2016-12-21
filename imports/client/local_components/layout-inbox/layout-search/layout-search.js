@@ -1,10 +1,12 @@
 import { Meteor } from 'meteor/meteor';
 import { Tracker } from 'meteor/tracker';
 
+const underscore = require('underscore');
+
 (function() {
   Polymer({
 
-    _label: function(project, status) {
+    _label(project, status) {
       switch (status) {
         case '':
           return 'indexing';
@@ -20,9 +22,9 @@ import { Tracker } from 'meteor/tracker';
       }
     },
 
-    _layout_search_changed(change) {
-      if (change) {
-        Meteor.subscribe('worker', [change]);
+    _layout_search_changed(layout_search) {
+      if (layout_search) {
+        Meteor.subscribe('worker', [layout_search]);
 
         if (this._tracker) {
           this._tracker.stop();
@@ -32,17 +34,18 @@ import { Tracker } from 'meteor/tracker';
 
         _this._tracker = Tracker.autorun(() => {
           let worker = _worker.findOne({
-            _id: change,
+            _id: layout_search,
           });
 
           if (worker) {
             _this.set('worker', worker);
+            _this._worker_changed(worker);
           }
         });
       }
     },
 
-    _project: function(e) {
+    _project(e) {
       Meteor.call('insert_project', e.model.item, (error, res) => {
         if (error) {
           document.querySelector('#polymer_toast').toast(error.message);
@@ -74,6 +77,38 @@ import { Tracker } from 'meteor/tracker';
           }
         }
       }, 1000);
+    },
+
+    _worker_changed(worker) {
+      if (worker.project.length) {
+        this.set('project', []);
+
+        Meteor.subscribe('project', worker.project);
+
+        if (this._observe) {
+          this._observe.stop();
+        }
+
+        let _this = this;
+
+        _this._observe = _project.find({
+          _id: {
+            $in: worker.project,
+          },
+        }).observe({
+          addedAt(row) {
+            _this.push('project', row);
+          },
+
+          changedAt(row) {
+            _this.splice('project', underscore.findIndex(_this.project, { _id: row._id }), 1, row);
+          },
+
+          removedAt(row) {
+            _this.splice('project', underscore.findIndex(_this.project, { _id: row._id }), 1);
+          },
+        });
+      }
     },
 
     attached() {
