@@ -12,14 +12,14 @@ Meteor.methods({
 
     input = '/suggestions.php?q=' + input;
 
-    let row = _worker.findOne({
+    let worker = _worker.findOne({
       query: input,
     });
 
-    if (row) {
-      if (row.status != '200' || 3 < moment.duration(moment().diff(row.time)).asDays()) {
+    if (worker) {
+      if (worker.status != '200' || 3 < moment.duration(moment().diff(worker.time)).asDays()) {
         _worker.update({
-          _id: row._id,
+          _id: worker._id,
         }, {
           $set: {
             status: '',
@@ -27,7 +27,7 @@ Meteor.methods({
         });
       }
 
-      return row._id;
+      return worker._id;
     } else {
       return _worker.insert({
         project: [],

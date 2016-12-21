@@ -7,15 +7,15 @@
 
 <dom-module id="layout-main">
   <template>
-    <app-location route="{{router}}"></app-location>
+    <app-location id="app_location" route="{{router}}"></app-location>
     <app-route data="{{route}}" pattern="/:layout_main" route="{{router}}" tail="{{tail}}"></app-route>
 
     <neon-animated-pages attr-for-selected="data-page" class="fit" selected="{{route.layout_main}}">
-      <layout-inbox data-page="layout-inbox" id="layout_inbox" router="{{tail}}"></layout-inbox>
-      <!-- <layout-z data-page="layout-z" router="{{tail}}"></layout-z> -->
+      <layout-inbox data-page="inbox" id="layout_inbox" router="{{tail}}"></layout-inbox>
+      <layout-z data-page="z" router="{{tail}}"></layout-z>
     </neon-animated-pages>
   </template>
 </dom-module>
 
+<link rel="import" href="layout-z/layout-z.html">
 <link rel="import" href="layout-inbox/layout-inbox.html">
-<!-- <link rel="import" href="layout-z/layout-z.html"> -->

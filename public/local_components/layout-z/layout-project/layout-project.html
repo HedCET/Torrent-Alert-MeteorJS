@@ -1,15 +1,13 @@
 <link rel="import" href="../../../bower_components/app-route/app-route.html">
 <link rel="import" href="../../../bower_components/font-roboto/roboto.html">
 <link rel="import" href="../../../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
+<link rel="import" href="../../../bower_components/iron-icons/iron-icons.html">
 <link rel="import" href="../../../bower_components/paper-header-panel/paper-header-panel.html">
 <link rel="import" href="../../../bower_components/paper-item/paper-item-body.html">
 <link rel="import" href="../../../bower_components/paper-item/paper-icon-item.html">
 <link rel="import" href="../../../bower_components/paper-spinner/paper-spinner.html">
 <link rel="import" href="../../../bower_components/paper-toolbar/paper-toolbar.html">
 <link rel="import" href="../../../bower_components/polymer/polymer.html">
-<link rel="import" href="../../../bower_components/polymerfire/firebase-document.html">
-
-<link rel="import" href="torrent-item.html">
 
 <dom-module id="layout-project">
   <template>
@@ -41,23 +39,17 @@
     }
     </style>
 
-    <app-route pattern="/:layout_project" query-params="{{route_query}}" route="{{route}}"></app-route>
-
-    <firebase-document app-name="TA" data="{{firebase_document_user_subscribed_project}}" path="/user/{{user.uid}}/subscribed/{{route_query.project}}"></firebase-document>
-    <firebase-document app-name="TA" data="{{firebase_document_project_torrent}}" path="/project/{{route_query.project}}/torrent"></firebase-document>
+    <app-route data="{{route}}" pattern="/:layout_project/:page" route="{{router}}"></app-route>
 
     <paper-header-panel mode="seamed">
       <paper-toolbar>
         <paper-icon-button icon="arrow-back" on-tap="_back"></paper-icon-button>
-
-        <div class="title"></div>
-
-        <paper-icon-button icon="add-alert" hidden="{{_subscribed(firebase_document_user_subscribed_project}}" on-tap="_add"></paper-icon-button>
+        <div class="title">{{project.title}}</div>
+        <paper-icon-button icon="add-alert" on-tap="_add"></paper-icon-button>
         <paper-icon-button icon="filter-list" on-tap="_filter"></paper-icon-button>
-        <paper-icon-button icon="refresh" on-tap="_refresh"></paper-icon-button>
       </paper-toolbar>
 
-      <div class="center-justified horizontal layout" hidden="{{torrent_list.length}}">
+      <div class="center-justified horizontal layout" hidden="{{torrent.length}}">
         <div class="li">
           <div class="horizontal layout title">
             <div class="body1 color cursor-d flex">indexing</div>
@@ -65,19 +57,19 @@
         </div>
       </div>
 
-      <div class="center-justified horizontal layout" hidden="{{!torrent_list.length}}">
+      <div class="center-justified horizontal layout" hidden="{{!torrent.length}}">
         <div class="li">
           <div class="horizontal layout title">
-            <div class="body1 color cursor-d flex"><span>{{torrent_list.length}}</span> item</div>
+            <div class="body1 color cursor-d flex"><span>{{torrent.length}}</span> item</div>
           </div>
         </div>
       </div>
 
-      <template is="dom-repeat" items="{{torrent_list}}">
-        <torrent-item item="{{item}}"></torrent-item>
+      <template is="dom-repeat" items="{{torrent}}">
+        <torrent-item item="{{item}}" on-tap="_torrent"></torrent-item>
       </template>
 
-      <div class="center-justified horizontal layout" hidden="{{torrent_list.length}}">
+      <div class="center-justified horizontal layout" hidden="{{torrent.length}}">
         <div class="li">
           <div class="center-justified horizontal layout spinner">
             <div>
@@ -92,35 +84,4 @@
   </template>
 </dom-module>
 
-<script>
-(function() {
-  Polymer({
-
-    _back: function() {
-      history.back();
-    },
-
-    _subscribed: function(value) {
-      return value === true;
-    },
-
-    _torrent_list: function(list, limit) {
-      this.set('torrent_list', _.first(_.keys(list).sort(function(A, Z) {
-        return list[Z] - list[A];
-      }), limit));
-    },
-
-    is: "layout-project",
-
-    observers: ['_torrent_list(firebase_document_project_torrent, torrent_list_limit)'],
-
-    properties: {
-      torrent_list_limit: {
-        type: Number,
-        value: 50,
-      },
-    },
-
-  });
-})();
-</script>
+<link rel="import" href="torrent-item.html">

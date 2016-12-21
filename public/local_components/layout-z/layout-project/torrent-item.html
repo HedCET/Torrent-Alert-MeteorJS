@@ -4,9 +4,6 @@
 <link rel="import" href="../../../bower_components/paper-item/paper-icon-item.html">
 <link rel="import" href="../../../bower_components/paper-styles/paper-styles.html">
 <link rel="import" href="../../../bower_components/polymer/polymer.html">
-<link rel="import" href="../../../bower_components/polymerfire/firebase-document.html">
-
-<link rel="import" href="../../selectable-icon.html">
 
 <dom-module id="torrent-item">
   <template>
@@ -25,19 +22,17 @@
     }
     </style>
 
-    <firebase-document app-name="TA" data="{{firebase_document}}" path="/torrent/{{item}}"></firebase-document>
-
     <div class="center-justified horizontal layout">
       <div class="li">
-        <paper-icon-item class="cursor-p white" on-tap="_torrent_item">
-          <selectable-icon icon_class="{{_icon_class(firebase_document.category)}}" icon_text="{{_icon_text(firebase_document.url)}}" id="selectable_icon" item-icon></selectable-icon>
+        <paper-icon-item class="cursor-p white">
+          <selectable-icon icon_class="{{_icon_class(item.category)}}" icon_text="{{_icon_text(item.url.length)}}" id="selectable_icon" item-icon></selectable-icon>
 
           <paper-item-body two-line>
-            <div class="horizontal justified layout" secondary>{{firebase_document.category}}</div>
-            <div class="white-space-normal">{{firebase_document.title}}</div>
+            <div class="horizontal justified layout" secondary>{{item.category}}</div>
+            <div class="white-space-normal">{{item.title}}</div>
             <div class="horizontal justified layout" secondary>
-              <div><span>{{firebase_document.size}}</span> | <b>{{firebase_document.leech}}</b> L &amp; <b>{{firebase_document.seed}}</b> S</div>
-              <div>{{_time(firebase_document.time)}}</div>
+              <div><span>{{item.size}}</span> | <b>{{item.leech}}</b> L &amp; <b>{{item.seed}}</b> S</div>
+              <div>{{_time(item.time)}}</div>
             </div>
           </paper-item-body>
         </paper-icon-item>
@@ -46,24 +41,4 @@
   </template>
 </dom-module>
 
-<script>
-(function() {
-  Polymer({
-
-    _icon_class: function(text) {
-      return text ? polymer_color(text) : polymer_color('#');
-    },
-
-    _icon_text: function(_url) {
-      return _url ? _.size(_url) : '#';
-    },
-
-    _time: function(time) {
-      return moment(time, ['X']).isValid() ? moment(time, ['X']).format('MMM Do ddd') : moment().format('MMM Do ddd');
-    },
-
-    is: "torrent-item",
-
-  });
-})();
-</script>
+<link rel="import" href="../../selectable-icon.html">

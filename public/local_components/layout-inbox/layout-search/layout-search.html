@@ -1,5 +1,4 @@
 <link rel="import" href="../../../bower_components/app-route/app-route.html">
-<link rel="import" href="../../../bower_components/app-storage/app-network-status-behavior.html">
 <link rel="import" href="../../../bower_components/font-roboto/roboto.html">
 <link rel="import" href="../../../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
 <link rel="import" href="../../../bower_components/paper-input/paper-input.html">
@@ -28,7 +27,7 @@
     }
     </style>
 
-    <app-route pattern="/:layout_search" query-params="{{query}}" route="{{router}}"></app-route>
+    <app-route data="{{route}}" pattern="/:layout_search" route="{{router}}"></app-route>
 
     <div class="center-justified horizontal layout">
       <div class="li">
@@ -37,7 +36,7 @@
     </div>
 
     <template is="dom-repeat" items="{{worker.project}}">
-      <project-item item="{{item}}"></project-item>
+      <project-item item="{{item}}" on-tap="_project"></project-item>
     </template>
 
     <div class="center-justified horizontal layout" hidden="{{worker.status}}">

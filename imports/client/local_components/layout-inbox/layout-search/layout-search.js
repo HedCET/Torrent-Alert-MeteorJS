@@ -20,6 +20,38 @@ import { Tracker } from 'meteor/tracker';
       }
     },
 
+    _layout_search_changed(change) {
+      if (change) {
+        Meteor.subscribe('worker', [change]);
+
+        if (this._tracker) {
+          this._tracker.stop();
+        }
+
+        let _this = this;
+
+        _this._tracker = Tracker.autorun(() => {
+          let worker = _worker.findOne({
+            _id: change,
+          });
+
+          if (worker) {
+            _this.set('worker', worker);
+          }
+        });
+      }
+    },
+
+    _project: function(e) {
+      Meteor.call('insert_project', e.model.item, (error, res) => {
+        if (error) {
+          document.querySelector('#polymer_toast').toast(error.message);
+        } else {
+          document.querySelector('#app_location').path = '/z/project/' + res + '/1';
+        }
+      });
+    },
+
     _search() {
       clearTimeout(this._search_handler ? this._search_handler : null);
 
@@ -34,7 +66,7 @@ import { Tracker } from 'meteor/tracker';
               if (error) {
                 document.querySelector('#polymer_toast').toast(error.message);
               } else {
-                _this.set('query.worker', res);
+                _this.set('route.layout_search', res);
               }
             });
           } else {
@@ -44,41 +76,15 @@ import { Tracker } from 'meteor/tracker';
       }, 1000);
     },
 
-    _worker_changed(worker) {
-      if (worker) {
-        Meteor.subscribe('worker', [worker]);
-
-        if (this._stop) {
-          this._stop.stop();
-        }
-
-        let _this = this;
-
-        _this._stop = Tracker.autorun(() => {
-          let row = _worker.findOne({
-            _id: worker,
-          });
-
-          if (row) {
-            _this.set('worker', row);
-          }
-        });
-      }
-    },
-
     attached() {
       if (!this.router.path) {
-        this.set('router.path', '/');
-      }
-
-      if (!this.query.worker) {
-        this.set('query.worker', '_recent_');
+        this.set('router.path', '/_recent_');
       }
     },
 
     is: "layout-search",
 
-    observers: ['_worker_changed(query.worker)'],
+    observers: ['_layout_search_changed(route.layout_search)'],
 
   });
 })();

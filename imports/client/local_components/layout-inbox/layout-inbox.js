@@ -13,14 +13,14 @@
       window.open('https://github.com/HedCET/Torrent-Alert/wiki', '_system');
     },
 
+    _hidden(value) {
+      return !!value;
+    },
+
     attached() {
       if (!this.router.path) {
         this.set('router.path', '/search');
       }
-    },
-
-    _hidden(value) {
-      return !!value;
     },
 
     is: "layout-inbox",

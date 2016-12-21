@@ -8,7 +8,7 @@ Meteor.publish('torrent', function(input) {
       user_subscribed: false,
     },
     limit: 15,
-    skip: 15 * input.page,
+    skip: Math.abs(15 * (input.page - 1)),
     sort: {
       time: -1,
     },

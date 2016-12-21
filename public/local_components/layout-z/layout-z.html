@@ -4,34 +4,18 @@
 <link rel="import" href="../../bower_components/neon-animation/neon-animated-pages.html">
 <link rel="import" href="../../bower_components/polymer/polymer.html">
 
-<link rel="import" href="filter-item.html">
-<link rel="import" href="layout-project/layout-project.html">
-<!-- <link rel="import" href="torrent-item.html"> -->
-
 <dom-module id="layout-z">
   <template>
-    <app-route pattern="/:layout_z" query-params="{{route_query}}" route="{{route}}"></app-route>
+    <app-route data="{{route}}" pattern="/:layout_z" route="{{router}}" tail="{{tail}}"></app-route>
 
-    <neon-animated-pages attr-for-selected="data-page" class="fit" selected="{{route_query.layout_z_selected}}">
-      <filter-item data-page="filter-item" route="{{route}}"></filter-item>
-      <layout-project data-page="layout-project" route="{{route}}" user="{{user}}"></layout-project>
-      <!-- <torrent-item data-page="torrent-item" route="{{route}}"></torrent-item> -->
+    <neon-animated-pages attr-for-selected="data-page" class="fit" selected="{{route.layout_z}}">
+      <!-- <filter-item data-page="filter" route="{{tail}}"></filter-item> -->
+      <layout-project data-page="project" router="{{tail}}"></layout-project>
+      <!-- <torrent-item data-page="torrent" route="{{tail}}"></torrent-item> -->
     </neon-animated-pages>
   </template>
 </dom-module>
 
-<script>
-(function() {
-  Polymer({
-
-    attached: function() {
-      if (!this.route_query.layout_main_selected) {
-        this.set('route_query.layout_z_selected', 'torrent-item');
-      }
-    },
-
-    is: "layout-z",
-
-  });
-})();
-</script>
+<!-- <link rel="import" href="torrent-item.html"> -->
+<link rel="import" href="layout-project/layout-project.html">
+<!-- <link rel="import" href="filter-item.html"> -->

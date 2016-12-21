@@ -9,17 +9,15 @@ Polymer({
 
       let _this = this;
 
-      _this._stop = Tracker.autorun(() => {
-        _this.project = _project.findOne({
-          _id: _this.item,
-        });
+      _this._tracker = Tracker.autorun(() => {
+        _this.set('project', _project.findOne({ _id: _this.item }));
       });
     }
   },
 
   detached() {
-    if (this._stop) {
-      this._stop.stop();
+    if (this._tracker) {
+      this._tracker.stop();
     }
   },
 

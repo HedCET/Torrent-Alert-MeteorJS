@@ -8,8 +8,8 @@
     },
 
     attached() {
-      if (!this.route.layout_main) {
-        this.set('route.layout_main', 'layout-inbox');
+      if (!this.router.path || this.router.path == '/') {
+        this.set('router.path', '/inbox');
       }
     },
 
