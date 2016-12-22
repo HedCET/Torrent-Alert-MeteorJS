@@ -73,6 +73,14 @@ const underscore = require('underscore');
       }
     },
 
+    _url(e) {
+      if (this.proxy) {
+        window.open(Meteor.absoluteUrl('proxy?url=' + encodeURIComponent(encodeURIComponent(e.model.item.query))), '_system');
+      } else {
+        window.open(e.model.item.query, '_system');
+      }
+    },
+
     attached() {
       if (!this.router.path) {
         this.set('router.path', '/_torrent_');
