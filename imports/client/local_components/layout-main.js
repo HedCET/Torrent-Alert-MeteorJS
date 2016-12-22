@@ -11,11 +11,33 @@
       if (!this.router.path || this.router.path == '/') {
         this.set('router.path', '/inbox');
       }
+
+      let _this = this;
+
+      Tracker.autorun(() => {
+        if (Meteor.user()) {
+          _this.set('user', _.pick(Meteor.user().profile, ['email', 'name', 'picture', 'subscribed']));
+        }
+      });
     },
 
     is: "layout-main",
 
     observers: ['_layout_main_changed(route.layout_main)'],
+
+    properties: {
+      user: {
+        type: Object,
+        value() {
+          return {
+            email: '',
+            name: '',
+            picture: '',
+            subscribed: [],
+          };
+        },
+      },
+    },
 
   });
 })();

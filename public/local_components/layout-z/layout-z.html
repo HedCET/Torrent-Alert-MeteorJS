@@ -10,7 +10,7 @@
 
     <neon-animated-pages attr-for-selected="data-page" class="fit" selected="{{route.layout_z}}">
       <layout-torrent data-page="torrent" router="{{tail}}"></layout-torrent>
-      <layout-project data-page="project" router="{{tail}}"></layout-project>
+      <layout-project data-page="project" router="{{tail}}" user="{{user}}"></layout-project>
       <!-- <filter-item data-page="filter" route="{{tail}}"></filter-item> -->
     </neon-animated-pages>
   </template>

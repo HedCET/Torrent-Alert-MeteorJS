@@ -44,4 +44,50 @@ Meteor.methods({
     }
   },
 
+  remove_torrent: function(input) {
+    this.unblock();
+
+    let user = Meteor.user();
+    if (!user) throw new Meteor.Error(422, "userNotFound");
+
+    check(input, [String]);
+
+    _torrent.update({
+      _id: {
+        $in: input,
+      },
+    }, {
+      $addToSet: {
+        user_removed: user._id,
+      },
+    }, {
+      multi: true,
+    });
+
+    return 'removed';
+  },
+
+  restore_torrent: function(input) {
+    this.unblock();
+
+    let user = Meteor.user();
+    if (!user) throw new Meteor.Error(422, "userNotFound");
+
+    check(input, [String]);
+
+    _torrent.update({
+      _id: {
+        $in: input,
+      },
+    }, {
+      $pull: {
+        user_removed: user._id,
+      },
+    }, {
+      multi: true,
+    });
+
+    return 'restored';
+  },
+
 });

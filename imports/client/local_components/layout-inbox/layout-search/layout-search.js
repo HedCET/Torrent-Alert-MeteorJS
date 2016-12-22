@@ -23,7 +23,7 @@ const underscore = require('underscore');
     },
 
     _layout_search_changed(layout_search) {
-      if (layout_search) {
+      if (layout_search && document.querySelector('#app_location').path.match(/^\/inbox\/search\//)) {
         Meteor.subscribe('worker', [layout_search]);
 
         if (this._tracker) {

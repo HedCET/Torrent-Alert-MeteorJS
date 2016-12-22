@@ -6,6 +6,16 @@ const underscore = require('underscore');
 (function() {
   Polymer({
 
+    _add() {
+      Meteor.users.update({
+        _id: Meteor.user()._id,
+      }, {
+        $addToSet: {
+          'profile.subscribed': this.route.layout_project,
+        },
+      });
+    },
+
     _back: function() {
       if (Meteor.isCordova) {
         navigator.app.backHistory();
@@ -14,8 +24,12 @@ const underscore = require('underscore');
       }
     },
 
+    _filter() {
+      console.log('_filter');
+    },
+
     _layout_project_changed(layout_project) {
-      if (layout_project) {
+      if (layout_project && document.querySelector('#app_location').path.match(/^\/z\/project\//)) {
         this.set('torrent', []);
 
         Meteor.subscribe('project', [layout_project]);
@@ -51,6 +65,10 @@ const underscore = require('underscore');
           },
         });
       }
+    },
+
+    _subscribed(subscribed, layout_project) {
+      return (-1 < subscribed.indexOf(layout_project));
     },
 
     _torrent(e) {

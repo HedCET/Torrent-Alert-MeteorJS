@@ -4,6 +4,10 @@ import { Tracker } from 'meteor/tracker';
 (function() {
   Polymer({
 
+    _email(email) {
+      return email ? email : 'Synchronize with Google Account';
+    },
+
     _google() {
       if (Meteor.status().connected) {
         if (Meteor.user()) {
@@ -16,18 +20,12 @@ import { Tracker } from 'meteor/tracker';
       }
     },
 
-    attached() {
-      let _this = this;
-
-      _this._stop = Tracker.autorun(() => {
-        _this.set('user', Meteor.user() ? _.pick(Meteor.user().profile, ['email', 'name', 'picture']) : { email: 'Synchronize with Google Account', name: 'Google Account', picture: '/png/google-plus.png' });
-      });
+    _name(name) {
+      return name ? name : 'Google Account';
     },
 
-    detached() {
-      if (this._stop) {
-        this._stop.stop();
-      }
+    _picture(picture) {
+      return picture ? picture : '/png/google-plus.png';
     },
 
     google() {
@@ -62,19 +60,6 @@ import { Tracker } from 'meteor/tracker';
     },
 
     is: 'layout-user',
-
-    properties: {
-      user: {
-        type: Object,
-        value() {
-          return {
-            email: 'Synchronize with Google Account',
-            name: 'Google Account',
-            picture: '/png/google-plus.png',
-          };
-        },
-      },
-    },
 
   });
 })();

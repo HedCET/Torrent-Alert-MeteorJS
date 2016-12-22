@@ -18,7 +18,8 @@
     }
     
     .very_good {
-      border-left: 4px solid #009688;
+      border-right: 4px solid #8BC34A;
+      padding-right: 12px;
     }
     
     .white-space-normal {
@@ -32,11 +33,11 @@
           <selectable-icon icon_class="{{_icon_class(item.category)}}" icon_text="{{_icon_text(item.url.length)}}" id="selectable_icon" item-icon></selectable-icon>
 
           <paper-item-body two-line>
-            <div class="horizontal justified layout" secondary>{{item.category}}</div>
+            <div secondary>{{item.category}}</div>
             <div class="white-space-normal">{{item.title}}</div>
             <div class="horizontal justified layout" secondary>
               <div><span>{{item.size}}</span> | <b>{{item.leech}}</b> L &amp; <b>{{item.seed}}</b> S</div>
-              <div>{{_time(item.time)}}</div>
+              <div>{{_date(item.time)}}</div>
             </div>
           </paper-item-body>
         </paper-icon-item>

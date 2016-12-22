@@ -3,6 +3,10 @@ const moment = require('moment');
 (function() {
   Polymer({
 
+    _date(time) {
+      return moment(time).isValid() ? moment(time).format('MMM Do ddd') : moment().format('MMM Do ddd');
+    },
+
     _icon_class(query) {
       let match = query.match(/:\/\/(www\.)?([^/]*)/);
       return polymer_color(match ? match[2] : '#');
@@ -19,7 +23,7 @@ const moment = require('moment');
     },
 
     _time(time) {
-      return moment(time).isValid() ? moment(time).format('MMM Do ddd hh:mm A') : moment().format('MMM Do ddd hh:mm A');
+      return moment(time).isValid() ? moment(time).format('hh:mm A') : moment().format('hh:mm A');
     },
 
     is: "url-item",

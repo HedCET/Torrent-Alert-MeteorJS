@@ -41,11 +41,11 @@
     <div class="center-justified horizontal layout">
       <div class="li">
         <paper-icon-item class="cursor-p white" on-tap="_google">
-          <selectable-icon icon_img_src="{{user.picture}}" item-icon></selectable-icon>
+          <selectable-icon icon_img_src="{{_picture(user.picture)}}" item-icon></selectable-icon>
 
           <paper-item-body two-line>
-            <div>{{user.name}}</div>
-            <div secondary>{{user.email}}</div>
+            <div>{{_name(user.name)}}</div>
+            <div secondary>{{_email(user.email)}}</div>
           </paper-item-body>
         </paper-icon-item>
       </div>

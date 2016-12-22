@@ -19,6 +19,22 @@ const underscore = require('underscore');
       return polymer_color(text ? text : '#');
     },
 
+    _delete() {
+      document.querySelector('#polymer_spinner').toggle();
+
+      let _this = this;
+
+      Meteor.call('remove_torrent', [_this.route.layout_torrent], (error, res) => {
+        document.querySelector('#polymer_spinner').toggle();
+
+        if (error) {
+          document.querySelector('#polymer_toast').toast(error.message);
+        } else {
+          _this._back();
+        }
+      });
+    },
+
     _download() {
       let torrent = Random.choice(this.url);
 
@@ -32,7 +48,7 @@ const underscore = require('underscore');
     },
 
     _layout_torrent_changed(layout_torrent) {
-      if (layout_torrent) {
+      if (layout_torrent && document.querySelector('#app_location').path.match(/^\/z\/torrent\//)) {
         Meteor.subscribe('torrent', { torrent: [layout_torrent] });
 
         if (this._tracker) {
@@ -51,6 +67,16 @@ const underscore = require('underscore');
             _this._torrent_changed(torrent);
           }
         });
+      }
+    },
+
+    _share() {
+      let share = "\n\n" + this.torrent.category + "\t\t" + this.torrent.size + "\t\t" + this.torrent.title + "\t\t" + Meteor.absoluteUrl('z/torrent/' + this.route.layout_torrent) + "\n\n";
+
+      if (Meteor.isCordova) {
+        window.plugins.socialsharing.share(share);
+      } else {
+        window.open('mailto:?subject=' + encodeURIComponent('Torrent Alert') + '&body=' + encodeURIComponent(share), '_system');
       }
     },
 
