@@ -48,7 +48,7 @@ const underscore = require('underscore');
     },
 
     _layout_torrent_changed(layout_torrent) {
-      if (layout_torrent && document.querySelector('#app_location').path.match(/^\/z\/torrent\//)) {
+      if (layout_torrent && document.querySelector('#app_location').path.match(/^\/z\/torrent/)) {
         Meteor.subscribe('torrent', { torrent: [layout_torrent] });
 
         if (this._tracker) {

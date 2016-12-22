@@ -29,7 +29,7 @@ const underscore = require('underscore');
     },
 
     _layout_project_changed(layout_project) {
-      if (layout_project && document.querySelector('#app_location').path.match(/^\/z\/project\//)) {
+      if (layout_project && document.querySelector('#app_location').path.match(/^\/z\/project/)) {
         this.set('torrent', []);
 
         Meteor.subscribe('project', [layout_project]);
