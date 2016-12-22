@@ -1,4 +1,5 @@
 import { Meteor } from 'meteor/meteor';
+import { Random } from 'meteor/random';
 import { Tracker } from 'meteor/tracker';
 
 const underscore = require('underscore');
@@ -16,6 +17,18 @@ const underscore = require('underscore');
 
     _category_class(text) {
       return polymer_color(text ? text : '#');
+    },
+
+    _download() {
+      let torrent = Random.choice(this.url);
+
+      if (torrent) {
+        if (this.proxy) {
+          window.open(Meteor.absoluteUrl('proxy?url=' + encodeURIComponent(encodeURIComponent(torrent.query))), '_system');
+        } else {
+          window.open(torrent.query, '_system');
+        }
+      }
     },
 
     _layout_torrent_changed(layout_torrent) {
