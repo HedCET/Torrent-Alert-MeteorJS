@@ -53,6 +53,20 @@ const underscore = require('underscore');
       }
     },
 
+    _torrent(e) {
+      document.querySelector('#polymer_spinner').toggle();
+
+      Meteor.call('insert_torrent', e.model.item._id, (error, res) => {
+        document.querySelector('#polymer_spinner').toggle();
+
+        if (error) {
+          document.querySelector('#polymer_toast').toast(error.message);
+        } else {
+          document.querySelector('#app_location').path = '/z/torrent/' + res;
+        }
+      });
+    },
+
     attached() {
       if (!this.router.path) {
         this.set('router.path', '/_project_');

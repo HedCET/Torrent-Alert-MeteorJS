@@ -9,13 +9,13 @@
     <app-route data="{{route}}" pattern="/:layout_z" route="{{router}}" tail="{{tail}}"></app-route>
 
     <neon-animated-pages attr-for-selected="data-page" class="fit" selected="{{route.layout_z}}">
-      <!-- <filter-item data-page="filter" route="{{tail}}"></filter-item> -->
+      <layout-torrent data-page="torrent" router="{{tail}}"></layout-torrent>
       <layout-project data-page="project" router="{{tail}}"></layout-project>
-      <!-- <torrent-item data-page="torrent" route="{{tail}}"></torrent-item> -->
+      <!-- <filter-item data-page="filter" route="{{tail}}"></filter-item> -->
     </neon-animated-pages>
   </template>
 </dom-module>
 
-<!-- <link rel="import" href="torrent-item.html"> -->
+<link rel="import" href="layout-torrent/layout-torrent.html">
 <link rel="import" href="layout-project/layout-project.html">
 <!-- <link rel="import" href="filter-item.html"> -->

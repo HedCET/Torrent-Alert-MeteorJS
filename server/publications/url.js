@@ -2,7 +2,7 @@ Meteor.publish('url', (input) => {
   check(input, [String]);
 
   return _url.find({
-    torrent: {
+    _id: {
       $in: input,
     },
     deny: {
@@ -12,6 +12,6 @@ Meteor.publish('url', (input) => {
     fields: {
       deny: false,
     },
-    limit: 15,
+    // limit: 15,
   });
 });
