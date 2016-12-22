@@ -17,11 +17,17 @@
       return !!value;
     },
 
+    _status_icon(status) {
+      return (status ? 'cloud-queue' : 'cloud-off');
+    },
+
     attached() {
       if (!this.router.path) {
         this.set('router.path', '/search');
       }
     },
+
+    behaviors: [Polymer.AppNetworkStatusBehavior],
 
     is: "layout-inbox",
 

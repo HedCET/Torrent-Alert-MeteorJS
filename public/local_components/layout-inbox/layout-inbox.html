@@ -1,4 +1,5 @@
 <link rel="import" href="../../bower_components/app-route/app-route.html">
+<link rel="import" href="../../bower_components/app-storage/app-network-status-behavior.html">
 <link rel="import" href="../../bower_components/font-roboto/roboto.html">
 <link rel="import" href="../../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
 <link rel="import" href="../../bower_components/iron-icons/iron-icons.html">
@@ -63,7 +64,7 @@
         <iron-selector attr-for-selected="data-tab" class="bottom center-justified flex horizontal layout self-start" hidden="{{_hidden(selected_subscribed.length)}}" selected="{{route.layout_inbox}}" selected-attribute="selected">
           <div class="center-center cursor-p layout relative self-end vertical" data-tab="search">
             <div class="center-justified flex horizontal layout tab-icon">
-              <iron-icon icon="cloud-queue" id="search_badge"></iron-icon>
+              <iron-icon icon="{{_status_icon(online)}}" id="search_badge"></iron-icon>
               <!-- <paper-badge for="search_badge" label="9+"></paper-badge> -->
             </div>
             <div class="teal-A700 tab-bottom-line"></div>

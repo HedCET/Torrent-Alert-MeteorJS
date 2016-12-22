@@ -17,6 +17,10 @@
       padding: 8px 0;
     }
     
+    .very_good {
+      border-left: 4px solid #009688;
+    }
+    
     .white-space-normal {
       white-space: normal;
     }
@@ -24,7 +28,7 @@
 
     <div class="center-justified horizontal layout">
       <div class="li">
-        <paper-icon-item class="cursor-p white">
+        <paper-icon-item class$="cursor-p white {{_very_good(item.very_good)}}">
           <selectable-icon icon_class="{{_icon_class(item.category)}}" icon_text="{{_icon_text(item.url.length)}}" id="selectable_icon" item-icon></selectable-icon>
 
           <paper-item-body two-line>

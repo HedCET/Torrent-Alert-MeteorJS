@@ -13,7 +13,7 @@ const underscore = require('underscore');
           break;
 
         case '200':
-          return (project.length ? project.length + ' item' : 'noItemFound');
+          return (project.length ? project.length + ' item' + (this.route.layout_search == '_recent_' ? ' recent' : '') : 'noItemFound');
           break;
 
         default:
@@ -60,11 +60,11 @@ const underscore = require('underscore');
     },
 
     _search() {
-      clearTimeout(this._search_handler ? this._search_handler : null);
+      clearTimeout(this._search_trigger ? this._search_trigger : null);
 
       let _this = this;
 
-      _this._search_handler = setTimeout(() => {
+      _this._search_trigger = setTimeout(() => {
         _this.keyword = _this.keyword.replace(/ added.*?[0-9]+[a-z] ?/gi, ' ').replace(/ seed.*?[0-9]+ ?/gi, ' ').replace(/\s+/g, ' ').trim();
 
         if (_this.keyword) {

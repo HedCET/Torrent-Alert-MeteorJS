@@ -12,7 +12,11 @@ const moment = require('moment');
     },
 
     _time(time) {
-      return moment(time).isValid() ? moment(time).format('MMM Do ddd') : moment().format('MMM Do ddd');
+      return (moment(time).isValid() ? moment(time).format('MMM Do ddd') : moment().format('MMM Do ddd'));
+    },
+
+    _very_good(very_good) {
+      return (very_good ? 'very_good' : '');
     },
 
     is: "torrent-item",
