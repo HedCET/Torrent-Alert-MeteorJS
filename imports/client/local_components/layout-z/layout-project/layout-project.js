@@ -19,7 +19,7 @@ const underscore = require('underscore');
 
     _back: function() {
       if (this.selected.length) {
-        _this.set('selected', []);
+        this.set('selected', []);
       } else {
         if (Meteor.isCordova) {
           navigator.app.backHistory();
@@ -111,6 +111,8 @@ const underscore = require('underscore');
         } else {
           window.open('mailto:?subject=' + encodeURIComponent('Torrent Alert') + '&body=' + encodeURIComponent(share), "_system");
         }
+
+        this.set('selected', []);
       }
     },
 
