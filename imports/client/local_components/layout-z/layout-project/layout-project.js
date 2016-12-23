@@ -100,7 +100,7 @@ const underscore = require('underscore');
       if (e.detail.target.scrollHeight - (e.detail.target.clientHeight * 1.5) < e.detail.target.scrollTop) {
         this.debounce('_scroll', function() {
           Meteor.subscribe('torrent', { page: ++this.page, project: [this.route.layout_project] });
-        }, 1000 * 1.5);
+        }, 1000 * 3);
       }
     },
 

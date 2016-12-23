@@ -40,7 +40,7 @@
           document.querySelector("#layout_user").google();
           break;
 
-        case 'OUT':
+        case 'SIGNOUT':
           Meteor.logout(function(error) {
             if (Meteor.isCordova) {
               window.plugins.googleplus.disconnect();

@@ -11,7 +11,7 @@ import { Tracker } from 'meteor/tracker';
     _google() {
       if (Meteor.status().connected) {
         if (Meteor.user()) {
-          document.querySelector("#polymer_toast").toast('Are you sure you want to SignOUT ?', 'OUT');
+          document.querySelector("#polymer_toast").toast('', 'SIGNOUT');
         } else {
           this.google();
         }
