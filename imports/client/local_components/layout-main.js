@@ -9,7 +9,7 @@
 
     attached() {
       if (!this.router.path || this.router.path == '/') {
-        this.set('router.path', '/inbox');
+        this.set('router.path', '/inbox/search/_recent_');
       }
 
       let _this = this;

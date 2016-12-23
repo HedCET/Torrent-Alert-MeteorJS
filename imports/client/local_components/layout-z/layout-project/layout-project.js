@@ -57,10 +57,12 @@ const underscore = require('underscore');
 
     _layout_project_changed(layout_project) {
       if (layout_project && document.querySelector('#app_location').path.match(/^\/z\/project/)) {
+        this.page = 1;
+
         this.set('torrent', []);
 
         Meteor.subscribe('project', [layout_project]);
-        Meteor.subscribe('torrent', { page: 1, project: [layout_project] });
+        Meteor.subscribe('torrent', { page: this.page, project: [layout_project] });
 
         if (this._tracker) {
           this._tracker.stop();
@@ -91,6 +93,14 @@ const underscore = require('underscore');
             _this.splice('torrent', underscore.findIndex(_this.torrent, { _id: row._id }), 1);
           },
         });
+      }
+    },
+
+    _scroll(e) {
+      if (e.detail.target.scrollHeight - (e.detail.target.clientHeight * 1.5) < e.detail.target.scrollTop) {
+        this.debounce('_scroll', function() {
+          Meteor.subscribe('torrent', { page: ++this.page, project: [this.route.layout_project] });
+        }, 1000 * 1.5);
       }
     },
 
