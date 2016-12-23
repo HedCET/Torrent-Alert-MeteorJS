@@ -41,8 +41,11 @@
           break;
 
         case 'OUT':
-          Meteor.logout();
-          window.plugins.googleplus.disconnect();
+          Meteor.logout(function(error) {
+            if (Meteor.isCordova) {
+              window.plugins.googleplus.disconnect();
+            }
+          });
           break;
 
         case 'UNDO':

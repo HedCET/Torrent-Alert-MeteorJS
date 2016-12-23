@@ -15,9 +15,7 @@
       let _this = this;
 
       Tracker.autorun(() => {
-        if (Meteor.user()) {
-          _this.set('user', _.pick(Meteor.user().profile, ['email', 'name', 'picture', 'subscribed']));
-        }
+        _this.set('user', Meteor.user() ? _.pick(Meteor.user().profile, ['email', 'name', 'picture', 'subscribed']) : { email: '', name: '', picture: '', subscribed: [] });
       });
     },
 

@@ -35,17 +35,9 @@
       if (this.opened) {
         this.async(function() {
           this.opened = !this.opened;
-
-          if (Meteor.isCordova) {
-            StatusBar.backgroundColorByHexString('#009688');
-          }
         }, 400);
       } else {
         this.opened = !this.opened;
-
-        if (Meteor.isCordova) {
-          StatusBar.backgroundColorByName('black');
-        }
       }
     },
 
