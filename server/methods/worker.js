@@ -107,7 +107,7 @@ Meteor.methods({
             });
 
             if (worker) {
-              if (1 < moment.duration(moment().diff(worker.time)).asMinutes()) {
+              if (3 < moment.duration(moment().diff(worker.time)).asMinutes()) {
                 _worker.update({
                   _id: worker._id,
                 }, {
