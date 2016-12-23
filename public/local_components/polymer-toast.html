@@ -42,6 +42,19 @@
 
         case 'OUT':
           Meteor.logout();
+          window.plugins.googleplus.disconnect();
+          break;
+
+        case 'UNDO':
+          if (this.store.torrent) {
+            var _this = this;
+
+            Meteor.call('restore_torrent', _this.store.torrent, function(error, res) {
+              if (error) {
+                console.log(error);
+              }
+            });
+          }
           break;
 
       }

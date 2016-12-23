@@ -1,6 +1,7 @@
 import { Meteor } from 'meteor/meteor';
 import { Tracker } from 'meteor/tracker';
 
+const moment = require('moment');
 const underscore = require('underscore');
 
 (function() {
@@ -17,11 +18,37 @@ const underscore = require('underscore');
     },
 
     _back: function() {
-      if (Meteor.isCordova) {
-        navigator.app.backHistory();
+      if (this.selected.length) {
+        _this.set('selected', []);
       } else {
-        history.back();
+        if (Meteor.isCordova) {
+          navigator.app.backHistory();
+        } else {
+          history.back();
+        }
       }
+    },
+
+    _delete() {
+      document.querySelector('#polymer_spinner').toggle();
+
+      let selected = _.map(this.selected, (item) => {
+        return item._id;
+      });
+
+      let _this = this;
+
+      Meteor.call('remove_torrent', selected, (error, res) => {
+        document.querySelector('#polymer_spinner').toggle();
+
+        if (error) {
+          document.querySelector('#polymer_toast').toast(error.message);
+        } else {
+          document.querySelector('#polymer_toast').toast(res, 'UNDO', { torrent: selected });
+
+          _this.set('selected', []);
+        }
+      });
     },
 
     _filter() {
@@ -67,22 +94,32 @@ const underscore = require('underscore');
       }
     },
 
-    _subscribed(subscribed, layout_project) {
-      return (-1 < subscribed.indexOf(layout_project));
+    _selected(length) {
+      return (length ? 'hidden' : '');
     },
 
-    _torrent(e) {
-      document.querySelector('#polymer_spinner').toggle();
+    _share() {
+      let share = '';
 
-      Meteor.call('insert_torrent', e.model.item._id, (error, res) => {
-        document.querySelector('#polymer_spinner').toggle();
-
-        if (error) {
-          document.querySelector('#polymer_toast').toast(error.message);
-        } else {
-          document.querySelector('#app_location').path = '/z/torrent/' + res;
-        }
+      this.selected.forEach(function(torrent) {
+        share += "\n\n" + torrent.category + "\t\t" + torrent.size + "\t\t" + torrent.title + "\t\t" + Meteor.absoluteUrl('z/torrent/' + torrent._id) + "\n\n";
       });
+
+      if (share != '') {
+        if (Meteor.isCordova) {
+          window.plugins.socialsharing.share(share);
+        } else {
+          window.open('mailto:?subject=' + encodeURIComponent('Torrent Alert') + '&body=' + encodeURIComponent(share), "_system");
+        }
+      }
+    },
+
+    _sort(A, Z) {
+      return (moment(Z.time).unix() - moment(A.time).unix());
+    },
+
+    _subscribed(subscribed, layout_project) {
+      return (-1 < subscribed.indexOf(layout_project));
     },
 
     attached() {
@@ -96,6 +133,12 @@ const underscore = require('underscore');
     observers: ['_layout_project_changed(route.layout_project)'],
 
     properties: {
+      selected: {
+        type: Array,
+        value() {
+          return [];
+        },
+      },
       torrent: {
         type: Array,
         value() {

@@ -23,7 +23,7 @@ const moment = require('moment');
     },
 
     _time(time) {
-      return moment(time).isValid() ? moment(time).format('hh:mm A') : moment().format('hh:mm A');
+      return moment(time).isValid() ? moment(time).format('h:m A') : moment().format('h:m A');
     },
 
     is: "url-item",

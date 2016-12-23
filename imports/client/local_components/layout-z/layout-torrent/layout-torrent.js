@@ -30,6 +30,8 @@ const underscore = require('underscore');
         if (error) {
           document.querySelector('#polymer_toast').toast(error.message);
         } else {
+          document.querySelector('#polymer_toast').toast(res, 'UNDO', { torrent: [_this.route.layout_torrent] });
+
           _this._back();
         }
       });

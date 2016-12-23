@@ -15,6 +15,24 @@ const moment = require('moment');
       return (length ? length : '#');
     },
 
+    _torrent(e) {
+      if (Polymer.dom(e).localTarget.id != 'selectable_icon') {
+        e.stopPropagation();
+
+        document.querySelector('#polymer_spinner').toggle();
+
+        Meteor.call('insert_torrent', this.item._id, (error, res) => {
+          document.querySelector('#polymer_spinner').toggle();
+
+          if (error) {
+            document.querySelector('#polymer_toast').toast(error.message);
+          } else {
+            document.querySelector('#app_location').path = '/z/torrent/' + res;
+          }
+        });
+      }
+    },
+
     _very_good(very_good) {
       return (very_good ? 'very_good' : '');
     },
