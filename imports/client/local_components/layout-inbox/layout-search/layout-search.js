@@ -89,13 +89,13 @@ const underscore = require('underscore');
 
         Meteor.subscribe('project', worker.project);
 
-        if (this._observe) {
-          this._observe.stop();
+        if (this._observer) {
+          this._observer.stop();
         }
 
         let _this = this;
 
-        _this._observe = _project.find({
+        _this._observer = _project.find({
           _id: {
             $in: worker.project,
           },

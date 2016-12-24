@@ -88,13 +88,13 @@ const underscore = require('underscore');
 
         Meteor.subscribe('url', torrent.url);
 
-        if (this._observe) {
-          this._observe.stop();
+        if (this._observer) {
+          this._observer.stop();
         }
 
         let _this = this;
 
-        _this._observe = _url.find({
+        _this._observer = _url.find({
           _id: {
             $in: torrent.url,
           },

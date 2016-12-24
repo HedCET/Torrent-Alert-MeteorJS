@@ -98,7 +98,7 @@
 
       <neon-animated-pages attr-for-selected="data-page" selected="{{route.layout_inbox}}">
         <layout-search data-page="search" router="{{tail}}"></layout-search>
-        <!-- <layout-subscribed data-page="subscribed" selected="{{selected_subscribed}}"></layout-subscribed> -->
+        <layout-subscribed data-page="subscribed" selected="{{selected_subscribed}}" user="{{user}}"></layout-subscribed>
         <layout-user data-page="user" id="layout_user" user="{{user}}"></layout-user>
       </neon-animated-pages>
     </paper-scroll-header-panel>
@@ -106,5 +106,5 @@
 </dom-module>
 
 <link rel="import" href="layout-user.html">
-<!-- <link rel="import" href="layout-subscribed.html"> -->
+<link rel="import" href="layout-subscribed/layout-subscribed.html">
 <link rel="import" href="layout-search/layout-search.html">

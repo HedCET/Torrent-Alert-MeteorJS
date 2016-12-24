@@ -49,6 +49,28 @@
           break;
 
         case 'UNDO':
+          if (this.store.subscribed) {
+            // Meteor.users.update({
+            //   _id: Meteor.user()._id,
+            // }, {
+            //   $pull: {
+            //     'profile.subscribed': {
+            //       $in: this.store.subscribed,
+            //     },
+            //   },
+            // });
+
+            this.store.subscribed.forEach(function(_id) {
+              Meteor.users.update({
+                _id: Meteor.user()._id,
+              }, {
+                $pull: {
+                  'profile.subscribed': _id,
+                },
+              });
+            });
+          }
+
           if (this.store.torrent) {
             var _this = this;
 
@@ -56,6 +78,18 @@
               if (error) {
                 console.log(error);
               }
+            });
+          }
+
+          if (this.store.un_subscribed) {
+            Meteor.users.update({
+              _id: Meteor.user()._id,
+            }, {
+              $addToSet: {
+                'profile.subscribed': {
+                  $each: this.store.un_subscribed,
+                },
+              },
             });
           }
           break;

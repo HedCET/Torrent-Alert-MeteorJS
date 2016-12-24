@@ -15,6 +15,8 @@ const underscore = require('underscore');
           'profile.subscribed': this.route.layout_project,
         },
       });
+
+      document.querySelector('#polymer_toast').toast('subscribed', 'UNDO', { subscribed: [this.route.layout_project] });
     },
 
     _back: function() {
@@ -68,8 +70,8 @@ const underscore = require('underscore');
           this._tracker.stop();
         }
 
-        if (this._observe) {
-          this._observe.stop();
+        if (this._observer) {
+          this._observer.stop();
         }
 
         let _this = this;
@@ -78,7 +80,7 @@ const underscore = require('underscore');
           _this.set('project', _project.findOne({ _id: layout_project }));
         });
 
-        _this._observe = _torrent.find({
+        _this._observer = _torrent.find({
           project: layout_project,
         }).observe({
           addedAt(row) {

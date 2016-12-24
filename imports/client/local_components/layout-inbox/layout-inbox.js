@@ -2,11 +2,37 @@
   Polymer({
 
     _delete() {
-      // switch (this.selected) {
-      //   case 'subscribed':
-      //     this.selected_subscribed = [];
-      //     break;
-      // }
+      switch (this.route.layout_inbox) {
+        case 'subscribed':
+          let selected_subscribed = _.map(this.selected_subscribed, (item) => {
+            return item._id;
+          });
+
+          // Meteor.users.update({
+          //   _id: Meteor.user()._id,
+          // }, {
+          //   $pull: {
+          //     'profile.subscribed': {
+          //       $in: selected_subscribed,
+          //     },
+          //   },
+          // });
+
+          selected_subscribed.forEach((_id) => {
+            Meteor.users.update({
+              _id: Meteor.user()._id,
+            }, {
+              $pull: {
+                'profile.subscribed': _id,
+              },
+            });
+          });
+
+          document.querySelector('#polymer_toast').toast('removed', 'UNDO', { un_subscribed: selected_subscribed });
+
+          this.set('selected_subscribed', []);
+          break;
+      }
     },
 
     _info() {
