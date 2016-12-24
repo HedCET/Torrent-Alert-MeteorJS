@@ -130,6 +130,22 @@ const underscore = require('underscore');
       return (moment(Z.time).unix() - moment(A.time).unix());
     },
 
+    _status(projectError, torrentLength) {
+      if (torrentLength) {
+        return torrentLength + ' item';
+      } else {
+        switch (projectError) {
+          case '':
+            return 'indexing';
+            break;
+
+          default:
+            return projectError;
+            break;
+        }
+      }
+    },
+
     _subscribed(subscribed, layout_project) {
       return (-1 < subscribed.indexOf(layout_project));
     },

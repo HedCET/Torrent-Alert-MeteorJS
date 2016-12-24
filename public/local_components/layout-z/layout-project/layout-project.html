@@ -58,18 +58,10 @@
         <paper-icon-button hidden="{{!selected.length}}" icon="social:share" on-tap="_share"></paper-icon-button>
       </paper-toolbar>
 
-      <div class="center-justified horizontal layout" hidden="{{torrent.length}}">
+      <div class="center-justified horizontal layout">
         <div class="li">
           <div class="horizontal layout title">
-            <div class="body1 color cursor-d flex">indexing</div>
-          </div>
-        </div>
-      </div>
-
-      <div class="center-justified horizontal layout" hidden="{{!torrent.length}}">
-        <div class="li">
-          <div class="horizontal layout title">
-            <div class="body1 color cursor-d flex"><span>{{torrent.length}}</span> item</div>
+            <div class="body1 color cursor-d flex">{{_status(project.error, torrent.length)}}</div>
           </div>
         </div>
       </div>

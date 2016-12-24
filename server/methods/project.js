@@ -15,6 +15,14 @@ Meteor.methods({
     });
 
     if (project) {
+      _project.update({
+        _id: project._id,
+      }, {
+        $set: {
+          error: '',
+        },
+      });
+
       let worker = _worker.findOne({
         query: project.query,
       });
