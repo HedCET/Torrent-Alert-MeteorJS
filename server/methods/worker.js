@@ -171,19 +171,26 @@ Meteor.methods({
             });
           }
 
-          let update = {
-            error: (input.error ? input.error : ''),
-          };
-
           if (input.torrent_count) {
-            update.torrent_count = input.torrent_count;
+            _project.update({
+              _id: project._id,
+            }, {
+              $set: {
+                torrent_count: input.torrent_count,
+              },
+              $unset: {
+                error: true,
+              },
+            });
+          } else {
+            _project.update({
+              _id: project._id,
+            }, {
+              $set: {
+                error: (input.error ? input.error : 'noItemFound'),
+              },
+            });
           }
-
-          _project.update({
-            _id: project._id,
-          }, {
-            $set: update,
-          });
         } else {
           throw new Meteor.Error(422, 'projectNotFound - { query: "' + input.query + '" }');
         }

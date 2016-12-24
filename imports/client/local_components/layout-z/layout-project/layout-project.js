@@ -130,7 +130,7 @@ const underscore = require('underscore');
       return (moment(Z.time).unix() - moment(A.time).unix());
     },
 
-    _status(projectError, torrentLength) {
+    _status(torrentLength, projectError) {
       if (torrentLength) {
         return torrentLength + ' item';
       } else {
