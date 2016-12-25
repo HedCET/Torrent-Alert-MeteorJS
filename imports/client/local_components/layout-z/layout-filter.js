@@ -13,7 +13,7 @@
       if (this.project) {
         document.querySelector('#polymer_spinner').toggle();
 
-        Meteor.call('worker_project', { query: '/' + this.quality + '?f=' + (this.project.title ? this.project.title : '') + ' added:' + this.period + 'd seed > ' + this.seed + (this.ACF ? '&safe=1' : ''), title: (this.project.title ? this.project.title : 'title') }, (error, res) => {
+        Meteor.call('insert_project', { query: '/' + this.quality + '?f=' + this.project.title + ' added:' + this.period + 'd seed > ' + this.seed + (this.ACF ? '&safe=1' : ''), title: this.project.title }, (error, res) => {
           document.querySelector('#polymer_spinner').toggle();
 
           if (error) {
@@ -40,9 +40,9 @@
             _id: layout_filter,
           });
 
-          // if (project) {
-          _this._project_changed(project);
-          // }
+          if (project) {
+            _this._project_changed(project);
+          }
         });
       }
     },
@@ -50,18 +50,18 @@
     _project_changed(project) {
       this.set('project', project);
 
-      if (project && project.query) {
+      if (project.query) {
         let ACF = project.query.match(/&safe=(0|1)/i);
         this.ACF = (ACF && +ACF[1] ? ACF[1] : null);
 
         let period = project.query.match(/ added.*?([0-9]+)[a-z] ?/i);
-        this.period = (period && +period[1] ? period[1] : 60);
+        this.period = (period && +period[1] ? +period[1] : 30);
 
         let quality = project.query.match(/\/([^\/]*)\?/);
         this.quality = (quality && -1 < quality[1].indexOf('verified') ? 'verified' : 'search');
 
         let seed = project.query.match(/ seed.*?([0-9]+) ?/i);
-        this.seed = (seed && +seed[1] ? seed[1] : 30);
+        this.seed = (seed && +seed[1] ? +seed[1] : 500);
       }
     },
 
