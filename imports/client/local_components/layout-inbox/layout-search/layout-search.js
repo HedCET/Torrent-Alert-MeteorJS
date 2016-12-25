@@ -47,7 +47,7 @@ const underscore = require('underscore');
     _project(e) {
       document.querySelector('#polymer_spinner').toggle();
 
-      Meteor.call('worker_project', e.model.item._id, (error, res) => {
+      Meteor.call('trigger_project_worker', e.model.item._id, (error, res) => {
         document.querySelector('#polymer_spinner').toggle();
 
         if (error) {

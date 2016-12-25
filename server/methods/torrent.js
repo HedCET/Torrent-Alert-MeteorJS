@@ -48,7 +48,7 @@ Meteor.methods({
     return 'restored';
   },
 
-  worker_torrent(input) {
+  trigger_torrent_worker(input) {
     this.unblock();
 
     // let user = Meteor.user();

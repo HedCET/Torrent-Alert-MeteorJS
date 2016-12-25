@@ -61,7 +61,7 @@ Meteor.methods({
     }
   },
 
-  worker_project(input) {
+  trigger_project_worker(input) {
     this.unblock();
 
     // let user = Meteor.user();
