@@ -176,10 +176,8 @@ Meteor.methods({
               _id: project._id,
             }, {
               $set: {
+                error: '',
                 torrent_count: input.torrent_count,
-              },
-              $unset: {
-                error: true,
               },
             });
           } else {

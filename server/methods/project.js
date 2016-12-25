@@ -18,8 +18,8 @@ Meteor.methods({
       _project.update({
         _id: project._id,
       }, {
-        $unset: {
-          error: true,
+        $set: {
+          error: '',
         },
       });
 
@@ -77,8 +77,8 @@ Meteor.methods({
       _project.update({
         _id: project._id,
       }, {
-        $unset: {
-          error: true,
+        $set: {
+          error: '',
         },
       });
 
