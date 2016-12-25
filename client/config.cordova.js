@@ -3,6 +3,12 @@ if (Meteor.isCordova) {
 
   document.addEventListener("WebComponentsReady", function() {
     window.setTimeout(function() {
+      universalLinks.subscribe('ww8', function(e) {
+        if (e.url.match(/^https:\/\/ww8\.herokuapp\.com/i)) {
+          document.querySelector('#app_location').path = e.url.replace(/^https:\/\/ww8\.herokuapp\.com/i, '');
+        }
+      });
+
       _LaunchScreen.release();
     }, 1000 * 2);
   }, false);

@@ -1,9 +1,9 @@
 // ==UserScript==
 // @author       linto.cet@gmail.com
-// @description  ww8
+// @description  ww8.heroku
 // @match        *://localhost:3000/*
 // @match        *://ww8.herokuapp.com/*
-// @name         ww8
+// @name         ww8.heroku
 // @namespace    *://localhost:3000/*
 // @require      http://momentjs.com/downloads/moment.min.js
 // @require      http://underscorejs.org/underscore-min.js
@@ -12,47 +12,58 @@
 
 'use strict';
 
-var tamper_monkey = { origin: null, window: null },
+var TM = { observer: null, origin: null, status: { error: 1, received: 1, send: 1 }, window: null },
   keyword_normalizer = function(keyword) {
     return keyword.replace(/ seed.*?[0-9]+ ?/gi, ' ').replace(/ added.*?[0-9]+[a-z] ?/gi, ' ').replace(/\s+/g, ' ').trim();
   };
 
-tamper_monkey_check = function(origin) {
-  console.log('tamper_monkey_check', origin);
+TM_start = function(origin) {
+  console.log('TM_start', origin);
 
-  tamper_monkey.origin = origin;
-  tamper_monkey.window = window.open(tamper_monkey.origin, 'worker');
+  TM.origin = origin;
+  TM.window = window.open(TM.origin, 'worker');
 
   window.addEventListener('message', function(e) {
-    if (e.origin != tamper_monkey.origin) {
+    if (e.origin != TM.origin) {
       return;
     } else {
-      tamper_monkey_update(e.data);
+      TM.status.received++;
+      TM_worker(e.data);
     }
   }, false);
 };
 
-tamper_monkey_run = function(input) {
-  console.log('tamper_monkey_run', input);
+TM_run = function(input) {
+  console.log('TM_run', input);
 
-  if (tamper_monkey.origin && Meteor.user()._id == 'ADMIN') {
+  if (Meteor.user()._id == 'ADMIN') {
     Meteor.subscribe('worker', input);
 
-    _worker.find(input.query, input.option).observe({
+    TM.observer = _worker.find(input.query, input.opt).observe({
       addedAt: function(row) {
-        console.log('tamper_monkey_run', row);
-        tamper_monkey.window.postMessage(row, tamper_monkey.origin);
+        TM.status.send++;
+        TM.window.postMessage(row, TM.origin);
       },
     });
   }
 };
 
-tamper_monkey_update = function(input) {
-  console.log('tamper_monkey_update', input);
+TM_status = function() {
+  console.log(TM.status);
+};
+
+TM_stop = function() {
+  TM.observer.stop();
+};
+
+TM_worker = function(input) {
+  if (input.error) {
+    TM.status.error++;
+  }
 
   Meteor.call('update_worker', input, function(error, res) {
     if (error) {
-      console.log('tamper_monkey_update', 'error', error);
+      console.log('TM_worker', 'error', error);
     }
   });
 };

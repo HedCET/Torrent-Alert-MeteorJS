@@ -1,5 +1,11 @@
 App.accessRule("*://*.googleusercontent.com/*");
 
+App.appendToConfig(`
+  <universal-links>
+    <host event="ww8" name="ww8.herokuapp.com" scheme="https" />
+  </universal-links>
+`);
+
 App.info({
   author: "Linto Cheeran",
   description: "Torrent Search & Alert",
@@ -12,5 +18,6 @@ App.info({
 
 App.setPreference("android-installLocation", "preferExternal");
 App.setPreference("android-minSdkVersion", "19");
+App.setPreference("AndroidLaunchMode", "singleInstance")
 App.setPreference("SplashShowOnlyFirstTime", false);
 App.setPreference('StatusBarBackgroundColor', '#009688');
