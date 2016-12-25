@@ -50,7 +50,7 @@
     _project_changed(project) {
       this.set('project', project);
 
-      if (project.query) {
+      if (project && project.query) {
         let ACF = project.query.match(/&safe=(0|1)/i);
         this.ACF = (ACF && +ACF[1] ? ACF[1] : null);
 
