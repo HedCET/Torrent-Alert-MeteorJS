@@ -18,6 +18,6 @@ App.info({
 
 App.setPreference("android-installLocation", "preferExternal");
 App.setPreference("android-minSdkVersion", "19");
-App.setPreference("AndroidLaunchMode", "singleInstance")
+App.setPreference("AndroidLaunchMode", "singleInstance");
 App.setPreference("SplashShowOnlyFirstTime", false);
 App.setPreference('StatusBarBackgroundColor', '#009688');
