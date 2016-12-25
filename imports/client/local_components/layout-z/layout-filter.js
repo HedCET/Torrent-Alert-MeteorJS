@@ -51,17 +51,16 @@
       this.set('project', project);
 
       if (project.query) {
-        let ACF = project.query.match(/&safe=(0|1)/i);
-        this.ACF = (ACF && +ACF[1] ? ACF[1] : null);
+        this.ACF = !!project.query.match(/&safe=(0|1)/i);
 
         let period = project.query.match(/ added.*?([0-9]+)[a-z] ?/i);
-        this.period = (period && +period[1] ? +period[1] : 30);
+        this.period = (period ? +period[1] : 999);
 
         let quality = project.query.match(/\/([^\/]*)\?/);
         this.quality = (quality && -1 < quality[1].indexOf('verified') ? 'verified' : 'search');
 
         let seed = project.query.match(/ seed.*?([0-9]+) ?/i);
-        this.seed = (seed && +seed[1] ? +seed[1] : 500);
+        this.seed = (seed ? +seed[1] : 0);
       }
     },
 

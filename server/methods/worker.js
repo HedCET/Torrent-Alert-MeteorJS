@@ -20,7 +20,7 @@ Meteor.methods({
             keyword = keyword.replace(/ seed.*?[0-9]+ ?/gi, ' ').replace(/ added.*?[0-9]+[a-z] ?/gi, ' ').replace(/\s+/g, ' ').trim();
 
             if (keyword) {
-              let query = '/search?f=' + keyword + ' seed > 0 added:60d';
+              let query = '/search?f=' + keyword + ' seed > 0 added:999d';
 
               let project = _project.findOne({
                 query: query,
@@ -88,7 +88,7 @@ Meteor.methods({
               keyword = keyword.replace(/ seed.*?[0-9]+ ?/gi, ' ').replace(/ added.*?[0-9]+[a-z] ?/gi, ' ').replace(/\s+/g, ' ').trim();
 
               if (keyword) {
-                let query = '/search?f=' + keyword + ' seed > 0 added:60d';
+                let query = '/search?f=' + keyword + ' seed > 0 added:999d';
 
                 let project = _project.findOne({
                   query: query,
