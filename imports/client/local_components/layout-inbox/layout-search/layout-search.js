@@ -38,7 +38,6 @@ const underscore = require('underscore');
           });
 
           if (worker) {
-            _this.set('worker', worker);
             _this._worker_changed(worker);
           }
         });
@@ -48,7 +47,7 @@ const underscore = require('underscore');
     _project(e) {
       document.querySelector('#polymer_spinner').toggle();
 
-      Meteor.call('insert_project', e.model.item._id, (error, res) => {
+      Meteor.call('worker_project', e.model.item._id, (error, res) => {
         document.querySelector('#polymer_spinner').toggle();
 
         if (error) {
@@ -84,6 +83,8 @@ const underscore = require('underscore');
     },
 
     _worker_changed(worker) {
+      this.set('worker', worker);
+
       if (worker.project.length) {
         this.set('project', []);
 

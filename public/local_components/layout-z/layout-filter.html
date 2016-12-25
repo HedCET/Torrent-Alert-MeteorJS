@@ -1,4 +1,5 @@
-<!-- <link rel="import" href="../../bower_components/font-roboto/roboto.html">
+<link rel="import" href="../../bower_components/app-route/app-route.html">
+<link rel="import" href="../../bower_components/font-roboto/roboto.html">
 <link rel="import" href="../../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
 <link rel="import" href="../../bower_components/iron-icons/iron-icons.html">
 <link rel="import" href="../../bower_components/paper-header-panel/paper-header-panel.html">
@@ -10,7 +11,7 @@
 <link rel="import" href="../../bower_components/paper-toolbar/paper-toolbar.html">
 <link rel="import" href="../../bower_components/polymer/polymer.html">
 
-<dom-module id="filter-item">
+<dom-module id="layout-filter">
   <template>
     <style>
     paper-toggle-button {
@@ -33,21 +34,45 @@
       min-height: 88px;
     }
     
-    .li {
+    .li .control {
+      height: 48px;
+      padding: 4px 16px;
+    }
+    
+    .li .title {
       padding: 8px;
     }
     </style>
 
+    <app-route data="{{route}}" pattern="/:layout_filter" route="{{router}}"></app-route>
+
     <paper-header-panel mode="seamed">
       <paper-toolbar>
         <paper-icon-button icon="arrow-back" on-tap="_back"></paper-icon-button>
-        <div class="title">Filter</div>
+        <div class="title">{{project.title}}</div>
         <paper-icon-button icon="done" on-tap="_done"></paper-icon-button>
       </paper-toolbar>
 
       <div class="center-justified horizontal layout">
         <div class="li">
-          <div class="center horizontal justified layout">
+          <div class="horizontal layout title">
+            <div class="body1 color cursor-d flex">Filter</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="center-justified horizontal layout">
+        <div class="li">
+          <div class="center control horizontal justified layout white">
+            <div class="body1 cursor-d">Adult Content Filter</div>
+            <paper-toggle-button checked="{{ACF}}"></paper-toggle-button>
+          </div>
+        </div>
+      </div>
+
+      <div class="center-justified horizontal layout">
+        <div class="li">
+          <div class="center control horizontal justified layout white">
             <div class="body1 cursor-d">Period (day limit)</div>
             <paper-slider editable max="60" min="1" pin value="{{period}}"></paper-slider>
           </div>
@@ -56,7 +81,7 @@
 
       <div class="center-justified horizontal layout">
         <div class="li">
-          <div class="center horizontal justified layout">
+          <div class="center control horizontal justified layout white">
             <div class="body1 cursor-d">Quality</div>
 
             <paper-radio-group selected="{{quality}}">
@@ -69,16 +94,10 @@
 
       <div class="center-justified horizontal layout">
         <div class="li">
-          <div class="center horizontal justified layout">
-            <div class="body1 cursor-d">Seed (min)</div>
+          <div class="center control horizontal justified layout white">
+            <div class="body1 cursor-d">Seed Count (min)</div>
             <paper-slider editable max="1000" min="1" pin value="{{seed}}"></paper-slider>
           </div>
-        </div>
-      </div>
-
-      <div class="center-justified horizontal layout">
-        <div class="li">
-          <paper-toggle-button checked="{{safe}}" class="flex">Adult Content Filter</paper-toggle-button>
         </div>
       </div>
 
@@ -86,14 +105,3 @@
     </paper-header-panel>
   </template>
 </dom-module>
-
-<script>
-(function() {
-  Polymer({
-
-    is: "filter-item",
-
-  });
-})();
-</script>
- -->

@@ -11,11 +11,11 @@
     <neon-animated-pages attr-for-selected="data-page" class="fit" selected="{{route.layout_z}}">
       <layout-torrent data-page="torrent" router="{{tail}}"></layout-torrent>
       <layout-project data-page="project" router="{{tail}}" user="{{user}}"></layout-project>
-      <!-- <filter-item data-page="filter" route="{{tail}}"></filter-item> -->
+      <layout-filter data-page="filter" router="{{tail}}"></layout-filter>
     </neon-animated-pages>
   </template>
 </dom-module>
 
 <link rel="import" href="layout-torrent/layout-torrent.html">
 <link rel="import" href="layout-project/layout-project.html">
-<!-- <link rel="import" href="filter-item.html"> -->
+<link rel="import" href="layout-filter.html">

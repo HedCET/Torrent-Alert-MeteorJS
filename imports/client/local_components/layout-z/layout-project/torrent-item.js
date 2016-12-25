@@ -21,7 +21,7 @@ const moment = require('moment');
 
         document.querySelector('#polymer_spinner').toggle();
 
-        Meteor.call('insert_torrent', this.item._id, (error, res) => {
+        Meteor.call('worker_torrent', this.item._id, (error, res) => {
           document.querySelector('#polymer_spinner').toggle();
 
           if (error) {

@@ -7,7 +7,7 @@ const underscore = require('underscore');
 (function() {
   Polymer({
 
-    _back: function() {
+    _back() {
       if (Meteor.isCordova) {
         navigator.app.backHistory();
       } else {

@@ -8,18 +8,22 @@ const underscore = require('underscore');
   Polymer({
 
     _add() {
-      Meteor.users.update({
-        _id: Meteor.user()._id,
-      }, {
-        $addToSet: {
-          'profile.subscribed': this.route.layout_project,
-        },
-      });
+      if (Meteor.user()) {
+        Meteor.users.update({
+          _id: Meteor.user()._id,
+        }, {
+          $addToSet: {
+            'profile.subscribed': this.route.layout_project,
+          },
+        });
 
-      document.querySelector('#polymer_toast').toast('subscribed', 'UNDO', { subscribed: [this.route.layout_project] });
+        document.querySelector('#polymer_toast').toast('subscribed', 'UNDO', { subscribed: [this.route.layout_project] });
+      } else {
+        document.querySelector("#polymer_toast").toast('', 'SIGNIN');
+      }
     },
 
-    _back: function() {
+    _back() {
       if (this.selected.length) {
         this.set('selected', []);
       } else {
@@ -54,7 +58,7 @@ const underscore = require('underscore');
     },
 
     _filter() {
-      console.log('_filter');
+      document.querySelector('#app_location').path = '/z/filter/' + this.route.layout_project;
     },
 
     _layout_project_changed(layout_project) {
@@ -136,14 +140,10 @@ const underscore = require('underscore');
       if (torrentLength) {
         return torrentLength + ' item';
       } else {
-        switch (projectError) {
-          case '':
-            return 'indexing';
-            break;
-
-          default:
-            return projectError;
-            break;
+        if (projectError) {
+          return projectError;
+        } else {
+          return 'indexing';
         }
       }
     },

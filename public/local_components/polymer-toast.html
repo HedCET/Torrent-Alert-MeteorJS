@@ -41,11 +41,13 @@
           break;
 
         case 'SIGNOUT':
-          Meteor.logout(function(error) {
-            if (Meteor.isCordova) {
-              window.plugins.googleplus.disconnect();
-            }
-          });
+          if (Meteor.user()) {
+            Meteor.logout(function(error) {
+              if (Meteor.isCordova) {
+                window.plugins.googleplus.disconnect();
+              }
+            });
+          }
           break;
 
         case 'UNDO':
