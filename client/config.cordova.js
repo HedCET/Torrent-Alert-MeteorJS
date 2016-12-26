@@ -1,36 +1,4 @@
 if (Meteor.isCordova) {
-  document.addEventListener("deviceready", function() {
-    var PN = PushNotification.init({
-      android: {
-        clearBadge: true,
-        forceShow: true,
-        senderID: '731987698101',
-      },
-    });
-
-    PN.hasPermission(function(res) {
-      alert(JSON.stringify(res));
-    });
-
-    PN.on('registration', function(res) {
-      alert(JSON.stringify(res));
-    });
-
-    push.on('notification', function(res) {
-      alert(JSON.stringify(res));
-    });
-
-    PN.on('error', function(res) {
-      alert(JSON.stringify(res));
-    });
-
-    PN.setApplicationIconBadgeNumber(function() {
-      alert('success');
-    }, function() {
-      alert('error');
-    }, 9);
-  });
-
   var _LaunchScreen = LaunchScreen.hold();
 
   document.addEventListener("WebComponentsReady", function() {

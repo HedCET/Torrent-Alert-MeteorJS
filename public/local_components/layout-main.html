@@ -3,6 +3,7 @@
 <link rel="import" href="../bower_components/font-roboto/roboto.html">
 <link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
 <link rel="import" href="../bower_components/neon-animation/neon-animated-pages.html">
+<link rel="import" href="../bower_components/platinum-push-messaging/platinum-push-messaging.html">
 <link rel="import" href="../bower_components/polymer/polymer.html">
 
 <dom-module id="layout-main">
@@ -14,6 +15,8 @@
       <layout-inbox data-page="inbox" id="layout_inbox" router="{{tail}}" user="{{user}}"></layout-inbox>
       <layout-z data-page="z" router="{{tail}}" user="{{user}}"></layout-z>
     </neon-animated-pages>
+
+    <platinum-push-messaging title="Torrent Alert"></platinum-push-messaging>
   </template>
 </dom-module>
 
