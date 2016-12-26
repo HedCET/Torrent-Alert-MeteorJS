@@ -10,6 +10,7 @@
     "cheerio": "^0.22.0",
     "meteor-node-stubs": "^0.2.4",
     "moment": "^2.17.1",
+    "node-gcm": "^0.14.4",
     "underscore": "^1.8.3"
   },
   "description": "Torrent Search & Alert",

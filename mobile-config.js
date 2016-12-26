@@ -6,6 +6,10 @@ App.appendToConfig(`
   </universal-links>
 `);
 
+App.configurePlugin('phonegap-plugin-push', {
+  SENDER_ID: '731987698101',
+});
+
 App.info({
   author: "Linto Cheeran",
   description: "Torrent Search & Alert",
