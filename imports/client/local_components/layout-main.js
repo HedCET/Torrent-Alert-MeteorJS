@@ -12,6 +12,8 @@
         this.set('router.path', '/inbox/search/_recent_');
       }
 
+      this.$.PPM.enable();
+
       let _this = this;
 
       Tracker.autorun(() => {
