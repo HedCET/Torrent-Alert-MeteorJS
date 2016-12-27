@@ -24,8 +24,10 @@ if (Meteor.isCordova) {
 
   document.addEventListener("WebComponentsReady", function() {
     universalLinks.subscribe('ww8', function(e) {
-      if (e.url.match(/^https:\/\/ww8.herokuapp.com/)) {
-        document.querySelector('#app_location').path = e.url.replace(/^https:\/\/ww8.herokuapp.com/, '');
+      let url = new URL(e.url);
+
+      if (url.hostname == 'ww8.herokuapp.com') {
+        document.querySelector('#app_location').path = url.pathname;
       }
     });
   }, false);
