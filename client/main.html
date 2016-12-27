@@ -39,7 +39,13 @@
 
 <script>
   window.setTimeout(function() {
-    document.querySelector('#PPM').enable();
+    // document.querySelector('#PPM').enable();
+
+    Notification.requestPermission(function (permission) {
+      if (permission === "granted") {
+        var notification = new Notification("Torrent Alert");
+      }
+    });
   }, 1000 * 4);
 </script>
 
