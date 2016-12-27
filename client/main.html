@@ -37,6 +37,12 @@
 
 <platinum-push-messaging id="PPM" title="Torrent Alert"></platinum-push-messaging>
 
+<script>
+  window.setTimeout(function() {
+    document.querySelector('#PPM').enable();
+  }, 1000 * 4);
+</script>
+
   <polymer-spinner id="polymer_spinner"></polymer-spinner>
   <polymer-toast id="polymer_toast"></polymer-toast>
 
