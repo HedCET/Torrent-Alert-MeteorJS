@@ -71,8 +71,6 @@ if (Meteor.isCordova) {
 
   universalLinks.subscribe('ww8', function(e) {
     document.addEventListener("WebComponentsReady", function() {
-      document.querySelector('#app_location').set('path', '/search/_recent_');
-
       var url = new URL(e.url);
 
       if (url.hostname == 'ww8.herokuapp.com') {
