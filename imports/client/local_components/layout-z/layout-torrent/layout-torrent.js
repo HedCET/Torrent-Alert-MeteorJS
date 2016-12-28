@@ -1,5 +1,4 @@
 import { Meteor } from 'meteor/meteor';
-import { Random } from 'meteor/random';
 import { Tracker } from 'meteor/tracker';
 
 const underscore = require('underscore');
@@ -24,13 +23,13 @@ const underscore = require('underscore');
 
       let _this = this;
 
-      Meteor.call('remove_torrent', [_this.route.layout_torrent], (error, res) => {
+      Meteor.call('remove_torrent', [_this.torrent._id], (error, res) => {
         document.querySelector('#polymer_spinner').toggle();
 
         if (error) {
           document.querySelector('#polymer_toast').toast(error.message);
         } else {
-          document.querySelector('#polymer_toast').toast(res, 'UNDO', { torrent: [_this.route.layout_torrent] });
+          document.querySelector('#polymer_toast').toast(res, 'UNDO', { torrent: [_this.torrent._id] });
 
           _this._back();
         }
@@ -38,7 +37,7 @@ const underscore = require('underscore');
     },
 
     _download() {
-      let torrent = Random.choice(this.url);
+      let torrent = underscore.sample(this.url);
 
       if (torrent) {
         if (this.proxy) {
@@ -46,12 +45,14 @@ const underscore = require('underscore');
         } else {
           window.open(torrent.query, '_system');
         }
+      } else {
+        document.querySelector('#polymer_toast').toast('noItemFound');
       }
     },
 
     _layout_torrent_changed(layout_torrent) {
-      if (layout_torrent && document.querySelector('#app_location').path.match(/^\/z\/torrent/)) {
-        Meteor.subscribe('torrent', { torrent: [layout_torrent] });
+      if (layout_torrent && document.querySelector('#app_location').path.match(/^\/torrent\//)) {
+        Meteor.subscribe('torrent', { torrent: layout_torrent.split('|') });
 
         if (this._tracker) {
           this._tracker.stop();
@@ -65,7 +66,6 @@ const underscore = require('underscore');
           });
 
           if (torrent) {
-            _this.set('torrent', torrent);
             _this._torrent_changed(torrent);
           }
         });
@@ -73,7 +73,7 @@ const underscore = require('underscore');
     },
 
     _share() {
-      let share = "\n\n" + this.torrent.category + "\t\t" + this.torrent.size + "\t\t" + this.torrent.title + "\t\t" + Meteor.absoluteUrl('z/torrent/' + this.route.layout_torrent) + "\n\n";
+      let share = "\n\n" + this.torrent.category + "\t\t" + this.torrent.size + "\t\t" + this.torrent.title + "\t\t" + Meteor.absoluteUrl('/torrent/' + this.torrent._id) + "\n\n";
 
       if (Meteor.isCordova) {
         window.plugins.socialsharing.share(share);
@@ -83,18 +83,20 @@ const underscore = require('underscore');
     },
 
     _torrent_changed(torrent) {
-      if (torrent.url.length) {
-        this.set('url', []);
+      this.set('torrent', torrent);
 
+      if (torrent.url.length) {
         Meteor.subscribe('url', torrent.url);
 
-        if (this._observer) {
-          this._observer.stop();
+        if (this._observe) {
+          this._observe.stop();
         }
+
+        this.set('url', []);
 
         let _this = this;
 
-        _this._observer = _url.find({
+        _this._observe = _url.find({
           _id: {
             $in: torrent.url,
           },
@@ -119,12 +121,6 @@ const underscore = require('underscore');
         window.open(Meteor.absoluteUrl('proxy?url=' + encodeURIComponent(encodeURIComponent(e.model.item.query))), '_system');
       } else {
         window.open(e.model.item.query, '_system');
-      }
-    },
-
-    attached() {
-      if (!this.router.path) {
-        this.set('router.path', '/_torrent_');
       }
     },
 

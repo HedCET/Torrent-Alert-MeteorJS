@@ -52,7 +52,7 @@
 
         <div class="title"><span hidden="{{selected.length}}">{{project.title}}</span><span hidden="{{!selected.length}}">[[selected.length]]</span></div>
 
-        <paper-icon-button class$="{{_selected(selected.length)}}" hidden="{{_subscribed(user.subscribed, route.layout_project)}}" icon="add-alert" on-tap="_add"></paper-icon-button>
+        <paper-icon-button class$="{{_selected(selected.length)}}" hidden="{{_subscribed(user.subscribed, layout_project.layout_project)}}" icon="add-alert" on-tap="_add"></paper-icon-button>
         <paper-icon-button hidden="{{!selected.length}}" icon="delete" on-tap="_delete"></paper-icon-button>
         <paper-icon-button hidden="{{selected.length}}" icon="filter-list" on-tap="_filter"></paper-icon-button>
         <paper-icon-button hidden="{{!selected.length}}" icon="social:share" on-tap="_share"></paper-icon-button>
@@ -72,7 +72,7 @@
         </template>
       </iron-selector>
 
-      <div class="center-justified horizontal layout" hidden="{{torrent.length}}">
+      <div class="center-justified horizontal layout">
         <div class="li">
           <div class="center-justified horizontal layout spinner">
             <div>

@@ -20,13 +20,13 @@
 
         document.querySelector('#polymer_spinner').toggle();
 
-        Meteor.call('trigger_project_worker', this.item._id, (error, res) => {
+        Meteor.call('trigger_project', this.item._id, (error, res) => {
           document.querySelector('#polymer_spinner').toggle();
 
           if (error) {
             document.querySelector('#polymer_toast').toast(error.message);
           } else {
-            document.querySelector('#app_location').path = '/z/project/' + res;
+            document.querySelector('#app_location').set('path', '/project/' + res);
           }
         });
       }

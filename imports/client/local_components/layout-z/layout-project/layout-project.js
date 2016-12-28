@@ -13,11 +13,11 @@ const underscore = require('underscore');
           _id: Meteor.user()._id,
         }, {
           $addToSet: {
-            'profile.subscribed': this.route.layout_project,
+            'profile.subscribed': this.project._id,
           },
         });
 
-        document.querySelector('#polymer_toast').toast('subscribed', 'UNDO', { subscribed: [this.route.layout_project] });
+        document.querySelector('#polymer_toast').toast('subscribed', 'UNDO', { subscribed: [this.project._id] });
       } else {
         document.querySelector("#polymer_toast").toast('', 'SIGNIN');
       }
@@ -50,43 +50,51 @@ const underscore = require('underscore');
         if (error) {
           document.querySelector('#polymer_toast').toast(error.message);
         } else {
-          document.querySelector('#polymer_toast').toast(res, 'UNDO', { torrent: selected });
-
           _this.set('selected', []);
+
+          document.querySelector('#polymer_toast').toast(res, 'UNDO', { torrent: selected });
         }
       });
     },
 
     _filter() {
-      document.querySelector('#app_location').path = '/z/filter/' + this.route.layout_project;
+      document.querySelector('#app_location').set('path', '/filter/' + this.project._id);
     },
 
     _layout_project_changed(layout_project) {
-      if (layout_project && document.querySelector('#app_location').path.match(/^\/z\/project/)) {
-        this.page = 1;
+      if (layout_project && document.querySelector('#app_location').path.match(/^\/project\//)) {
+        layout_project = layout_project.split('|');
 
-        this.set('torrent', []);
+        let first = underscore.first(layout_project, 1);
+        let rest = underscore.rest(layout_project);
 
-        Meteor.subscribe('project', [layout_project]);
-        Meteor.subscribe('torrent', { page: this.page, project: [layout_project] });
+        Meteor.subscribe('project', first);
+
+        if (rest.length) {
+          Meteor.subscribe('torrent', { project: first, torrent: rest });
+        } else {
+          this.page = 1;
+
+          Meteor.subscribe('torrent', { page: this.page, project: first });
+        }
 
         if (this._tracker) {
           this._tracker.stop();
         }
 
-        if (this._observer) {
-          this._observer.stop();
+        if (this._observe) {
+          this._observe.stop();
         }
 
         let _this = this;
 
         _this._tracker = Tracker.autorun(() => {
-          _this.set('project', _project.findOne({ _id: layout_project }));
+          _this.set('project', _project.findOne({ _id: { $in: first } }));
         });
 
-        _this._observer = _torrent.find({
-          project: layout_project,
-        }).observe({
+        _this.set('torrent', []);
+
+        _this._observe = _torrent.find(_.extend({ project: { $in: first } }, (rest.length ? { _id: { $in: rest } } : {})), { sort: { time: -1 } }).observe({
           addedAt(row) {
             _this.push('torrent', row);
           },
@@ -105,7 +113,11 @@ const underscore = require('underscore');
     _scroll(e) {
       if (e.detail.target.scrollHeight - (e.detail.target.clientHeight * 1.5) < e.detail.target.scrollTop) {
         this.debounce('_scroll', function() {
-          Meteor.subscribe('torrent', { page: ++this.page, project: [this.route.layout_project] });
+          let layout_project = this.route.layout_project.split('|');
+
+          if (layout_project.length == 1) {
+            Meteor.subscribe('torrent', { page: ++this.page, project: layout_project });
+          }
         }, 1000 * 3);
       }
     },
@@ -117,8 +129,8 @@ const underscore = require('underscore');
     _share() {
       let share = '';
 
-      this.selected.forEach(function(torrent) {
-        share += "\n\n" + torrent.category + "\t\t" + torrent.size + "\t\t" + torrent.title + "\t\t" + Meteor.absoluteUrl('z/torrent/' + torrent._id) + "\n\n";
+      this.selected.forEach((torrent) => {
+        share += "\n\n" + torrent.category + "\t\t" + torrent.size + "\t\t" + torrent.title + "\t\t" + Meteor.absoluteUrl('torrent/' + torrent._id) + "\n\n";
       });
 
       if (share != '') {
@@ -148,14 +160,8 @@ const underscore = require('underscore');
       }
     },
 
-    _subscribed(subscribed, layout_project) {
-      return (-1 < subscribed.indexOf(layout_project));
-    },
-
-    attached() {
-      if (!this.router.path) {
-        this.set('router.path', '/_project_');
-      }
+    _subscribed(subscribed, project) {
+      return (-1 < subscribed.indexOf(underscore.first(project.split('|'))));
     },
 
     is: "layout-project",

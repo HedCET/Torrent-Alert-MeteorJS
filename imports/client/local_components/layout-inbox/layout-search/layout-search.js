@@ -23,8 +23,8 @@ const underscore = require('underscore');
     },
 
     _layout_search_changed(layout_search) {
-      if (layout_search && document.querySelector('#app_location').path.match(/^\/inbox\/search/)) {
-        Meteor.subscribe('worker', [layout_search]);
+      if (layout_search && document.querySelector('#app_location').path.match(/^\/search\//)) {
+        Meteor.subscribe('worker', layout_search.split('|'));
 
         if (this._tracker) {
           this._tracker.stop();
@@ -47,23 +47,25 @@ const underscore = require('underscore');
     _project(e) {
       document.querySelector('#polymer_spinner').toggle();
 
-      Meteor.call('trigger_project_worker', e.model.item._id, (error, res) => {
+      Meteor.call('trigger_project', e.model.item._id, (error, res) => {
         document.querySelector('#polymer_spinner').toggle();
 
         if (error) {
           document.querySelector('#polymer_toast').toast(error.message);
         } else {
-          document.querySelector('#app_location').path = '/z/project/' + res;
+          document.querySelector('#app_location').set('path', '/project/' + res);
         }
       });
     },
 
     _search() {
-      clearTimeout(this._search_trigger ? this._search_trigger : null);
+      if (this._trigger) {
+        Meteor.clearTimeout(this._trigger);
+      }
 
       let _this = this;
 
-      _this._search_trigger = setTimeout(() => {
+      _this._trigger = Meteor.setTimeout(() => {
         _this.keyword = _this.keyword.replace(/ added.*?[0-9]+[a-z] ?/gi, ' ').replace(/ seed.*?[0-9]+ ?/gi, ' ').replace(/\s+/g, ' ').trim();
 
         if (_this.keyword) {
@@ -86,17 +88,17 @@ const underscore = require('underscore');
       this.set('worker', worker);
 
       if (worker.project.length) {
-        this.set('project', []);
-
         Meteor.subscribe('project', worker.project);
 
-        if (this._observer) {
-          this._observer.stop();
+        if (this._observe) {
+          this._observe.stop();
         }
+
+        this.set('project', []);
 
         let _this = this;
 
-        _this._observer = _project.find({
+        _this._observe = _project.find({
           _id: {
             $in: worker.project,
           },
@@ -113,12 +115,6 @@ const underscore = require('underscore');
             _this.splice('project', underscore.findIndex(_this.project, { _id: row._id }), 1);
           },
         });
-      }
-    },
-
-    attached() {
-      if (!this.router.path) {
-        this.set('router.path', '/_recent_');
       }
     },
 

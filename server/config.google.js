@@ -12,7 +12,7 @@ Meteor.startup(() => {
 
 Accounts.onCreateUser((opts, user) => {
   if (user.services.google && user.services.google.accessToken) {
-    var res = http.get('https://www.googleapis.com/oauth2/v3/userinfo', {
+    var res = Meteor.http.get('https://www.googleapis.com/oauth2/v3/userinfo', {
       headers: {
         'User-Agent': 'Meteor/1.0',
       },

@@ -29,25 +29,9 @@
 
   <link href="/local_components/layout-main.html" rel="import">
 
-<link rel="import" href="/bower_components/platinum-push-messaging/platinum-push-messaging.html">
-
 </head>
 
 <body class="fullbleed">
-
-<platinum-push-messaging id="PPM" title="Torrent Alert"></platinum-push-messaging>
-
-<script>
-  window.setTimeout(function() {
-    // document.querySelector('#PPM').enable();
-
-    Notification.requestPermission(function (permission) {
-      if (permission === "granted") {
-        var notification = new Notification("Torrent Alert");
-      }
-    });
-  }, 1000 * 4);
-</script>
 
   <polymer-spinner id="polymer_spinner"></polymer-spinner>
   <polymer-toast id="polymer_toast"></polymer-toast>
@@ -100,6 +84,6 @@
   }
   </style>
 
-  <layout-main class="fit"></layout-main>
+  <layout-main class="fit" id="layout_main"></layout-main>
 
 </body>

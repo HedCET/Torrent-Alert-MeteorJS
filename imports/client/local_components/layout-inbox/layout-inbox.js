@@ -43,12 +43,6 @@
       return !!value;
     },
 
-    attached() {
-      if (!this.router.path) {
-        this.set('router.path', '/search');
-      }
-    },
-
     is: "layout-inbox",
 
     properties: {

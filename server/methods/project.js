@@ -48,7 +48,7 @@ Meteor.methods({
 
       return project._id;
     } else {
-      let project_id = _project.insert(input);
+      let project_id = _project.insert(_.extend(input, { error: '' }));
 
       _worker.insert({
         query: input.query,
@@ -61,7 +61,7 @@ Meteor.methods({
     }
   },
 
-  trigger_project_worker(input) {
+  trigger_project(input) {
     this.unblock();
 
     // let user = Meteor.user();

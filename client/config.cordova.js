@@ -1,4 +1,51 @@
 if (Meteor.isCordova) {
+  document.addEventListener("deviceready", function() {
+    var PN = PushNotification.init({
+      android: {
+        clearBadge: true,
+        forceShow: true,
+        icon: 'www/application/app/icons/ldpi.png',
+        // iconColor: '#009688',
+        senderID: '731987698101',
+      },
+      browser: {},
+      ios: {},
+      windows: {},
+    });
+
+    PushNotification.hasPermission(function(res) {
+      document.addEventListener("WebComponentsReady", function() {
+        if (!res.isEnabled) {
+          Meteor.setTimeout(function() {
+            document.querySelector('#polymer_toast').toast('pushAlert permission denied');
+          }, 1000 * 16);
+        }
+      }, false);
+    });
+
+    PN.on('error', function(e) {
+      document.addEventListener("WebComponentsReady", function() {
+        document.querySelector('#polymer_toast').toast(e.message);
+      }, false);
+    });
+
+    PN.on('notification', function(res) {
+      document.addEventListener("WebComponentsReady", function() {
+        document.querySelector('#layout_main').set('PN_N', (res.additionalData.torrent ? res.additionalData.torrent : []));
+      }, false);
+    });
+
+    PN.on('registration', function(res) {
+      document.addEventListener("WebComponentsReady", function() {
+        document.querySelector('#layout_main').set('PN_R', res.registrationId);
+      }, false);
+    });
+
+    document.addEventListener("WebComponentsReady", function() {
+      document.querySelector('#layout_main').set('PN', PN);
+    }, false);
+  }, false);
+
   var _LaunchScreen = LaunchScreen.hold();
 
   document.addEventListener("WebComponentsReady", function() {
@@ -22,13 +69,15 @@ if (Meteor.isCordova) {
     }, false);
   }, false);
 
-  document.addEventListener("WebComponentsReady", function() {
-    universalLinks.subscribe('ww8', function(e) {
-      let url = new URL(e.url);
+  universalLinks.subscribe('ww8', function(e) {
+    document.addEventListener("WebComponentsReady", function() {
+      document.querySelector('#app_location').set('path', '/search/_recent_');
+
+      var url = new URL(e.url);
 
       if (url.hostname == 'ww8.herokuapp.com') {
-        document.querySelector('#app_location').path = url.pathname;
+        document.querySelector('#app_location').set('path', url.pathname);
       }
-    });
-  }, false);
+    }, false);
+  });
 }
