@@ -12,9 +12,7 @@
     },
 
     _PN_R(registrationId) {
-      alert(registrationId);
-
-      // Meteor.call('insert_PN', registrationId, (error, res) => {});
+      Meteor.call('insert_PN', registrationId, (error, res) => {});
     },
 
     attached() {
