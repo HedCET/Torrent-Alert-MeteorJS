@@ -7,14 +7,6 @@
       }
     },
 
-    _PN_N(torrent) {
-      alert(JSON.stringify(torrent));
-    },
-
-    _PN_R(registrationId) {
-      Meteor.call('insert_PN', registrationId, (error, res) => {});
-    },
-
     attached() {
       if (!this.router.path || this.router.path == '/') {
         this.set('router.path', '/search/_recent_');
@@ -23,13 +15,25 @@
       let _this = this;
 
       Tracker.autorun(() => {
-        _this.set('user', Meteor.user() ? _.pick(Meteor.user().profile, ['email', 'name', 'picture', 'subscribed']) : { email: '', name: '', picture: '', subscribed: [] });
+        if (Meteor.user()) {
+          _this.set('user', _.pick(Meteor.user().profile, ['email', 'name', 'picture', 'subscribed']));
+
+          if (_this.PN) {
+            Meteor.call('insert_PN', _this.PN, (error, res) => {
+              if (error) {
+                document.querySelector('#polymer_toast').toast(error.message);
+              }
+            });
+          }
+        } else {
+          _this.set('user', { email: '', name: '', picture: '', subscribed: [] });
+        }
       });
     },
 
     is: "layout-main",
 
-    observers: ['_layout_main_changed(route.layout_main)', '_PN_N(PN_N)', '_PN_R(PN_R)'],
+    observers: ['_layout_main_changed(route.layout_main)'],
 
     properties: {
       user: {

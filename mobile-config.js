@@ -10,6 +10,14 @@ App.configurePlugin('phonegap-plugin-push', {
   SENDER_ID: '731987698101',
 });
 
+App.icons({
+  android_hdpi: 'public/icons/hdpi.png',
+  android_mdpi: 'public/icons/mdpi.png',
+  android_xhdpi: 'public/icons/xhdpi.png',
+  android_xxhdpi: 'public/icons/xxhdpi.png',
+  android_xxxhdpi: 'public/icons/xxhdpi.png',
+});
+
 App.info({
   author: "Linto Cheeran",
   description: "Torrent Search & Alert",
