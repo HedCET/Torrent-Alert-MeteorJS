@@ -52,11 +52,11 @@ TM_observer = function(input) {
 TM_scheduler = function(interval) {
   if (Meteor.user()._id == 'ADMIN') {
     TM.scheduler = setInterval(function() {
-      Meteor.call('PN', function(error, res) {
+      Meteor.call('trigger_PN', function(error, res) {
         if (error) {
           console.log('TM_scheduler', error);
         }
-      })
+      });
     }, interval);
   }
 };
