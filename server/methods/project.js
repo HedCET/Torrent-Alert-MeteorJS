@@ -34,6 +34,7 @@ Meteor.methods({
           }, {
             $set: {
               status: '',
+              time: moment().toDate(),
             },
           });
         }
@@ -93,6 +94,7 @@ Meteor.methods({
           }, {
             $set: {
               status: '',
+              time: moment().toDate(),
             },
           });
         }

@@ -40,6 +40,7 @@ Meteor.methods({
                 //     }, {
                 //       $set: {
                 //         status: '',
+                //         time: moment().toDate(),
                 //       },
                 //     });
                 //   }
@@ -71,6 +72,7 @@ Meteor.methods({
           $set: {
             project: input.project,
             status: (input.error ? input.error : '200'),
+            time: moment().toDate(),
           },
         });
         break;
@@ -147,6 +149,7 @@ Meteor.methods({
                     }, {
                       $set: {
                         status: '',
+                        time: moment().toDate(),
                       },
                     });
                   }
@@ -198,6 +201,7 @@ Meteor.methods({
         }, {
           $set: {
             status: (input.error ? input.error : '200'),
+            time: moment().toDate(),
           },
         });
         break;
@@ -240,6 +244,7 @@ Meteor.methods({
         }, {
           $set: {
             status: (input.error ? input.error : '200'),
+            time: moment().toDate(),
           },
         });
         break;
