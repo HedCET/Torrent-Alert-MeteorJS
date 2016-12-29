@@ -12,7 +12,7 @@
 
 'use strict';
 
-var TM = { observer: null, origin: null, status: { error: 1, received: 1, send: 1 }, window: null },
+var TM = { error: null, observer: null, origin: null, received: null, scheduler: null, send: null, window: null },
   keyword_normalizer = function(keyword) {
     return keyword.replace(/ seed.*?[0-9]+ ?/gi, ' ').replace(/ added.*?[0-9]+[a-z] ?/gi, ' ').replace(/\s+/g, ' ').trim();
   };
@@ -21,39 +21,53 @@ TM_start = function(origin) {
   console.log('TM_start', origin);
 
   TM.origin = origin;
-  TM.window = window.open(TM.origin, 'worker');
+  TM.window = window.open(origin, 'worker');
 
   window.addEventListener('message', function(e) {
     if (e.origin != TM.origin) {
       return;
     } else {
-      TM.status.received++;
+      TM.received = +TM.received + 1;
+
       TM_worker(e.data);
     }
   }, false);
 };
 
-TM_run = function(input) {
-  console.log('TM_run', input);
+TM_observer = function(input) {
+  console.log('TM_observer', input);
 
   if (Meteor.user()._id == 'ADMIN') {
     Meteor.subscribe('worker', input);
 
     TM.observer = _worker.find(input.query, input.opt).observe({
       addedAt: function(row) {
-        TM.status.send++;
+        TM.send = +TM.send + 1;
         TM.window.postMessage(row, TM.origin);
       },
     });
   }
 };
 
+TM_scheduler = function(interval) {
+  if (Meteor.user()._id == 'ADMIN') {
+    TM.scheduler = setInterval(function() {
+      Meteor.call('PN', function(error, res) {
+        if (error) {
+          console.log('TM_scheduler', error);
+        }
+      })
+    }, interval);
+  }
+};
+
 TM_status = function() {
-  console.log(TM.status);
+  console.log(TM.error, TM.origin, TM.received, TM.send);
 };
 
 TM_stop = function() {
   TM.observer.stop();
+  clearInterval(TM.scheduler);
 };
 
 TM_worker = function(input) {

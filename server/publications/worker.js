@@ -1,6 +1,6 @@
 Meteor.publish('worker', function(input) {
   if (this.userId == 'ADMIN' && Object.prototype.toString.call(input) == '[object Object]') {
-    return _worker.find(input.query, input.option);
+    return _worker.find(input.query, input.opt);
   } else {
     check(input, [String]);
 

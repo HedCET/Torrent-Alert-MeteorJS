@@ -124,4 +124,8 @@
         break;
     }
   }, false);
+
+  setInterval(function() {
+    location.reload();
+  }, 1000 * 60 * 60);
 })();
