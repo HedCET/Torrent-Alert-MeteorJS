@@ -24,6 +24,10 @@ Meteor.methods({
 
               let project = _project.findOne({
                 query: query,
+              }, {
+                fields: {
+                  _id: true,
+                },
               });
 
               if (project) {
@@ -31,6 +35,11 @@ Meteor.methods({
 
                 // let worker = _worker.findOne({
                 //   query: query,
+                // }, {
+                //   fields: {
+                //     status: true,
+                //     time: true,
+                //   },
                 // });
 
                 // if (worker) {
@@ -53,7 +62,7 @@ Meteor.methods({
                 //   });
                 // }
               } else {
-                input.project.push(_project.insert({ query: query, title: keyword }));
+                input.project.push(_project.insert({ query: query, title: keyword, error: '' }));
 
                 // _worker.insert({
                 //   query: query,
@@ -80,6 +89,10 @@ Meteor.methods({
       case 'project':
         let project = _project.findOne({
           query: input.query,
+        }, {
+          fields: {
+            _id: true,
+          },
         });
 
         if (project) {
@@ -94,18 +107,26 @@ Meteor.methods({
 
                 let project = _project.findOne({
                   query: query,
+                }, {
+                  fields: {
+                    _id: true,
+                  },
                 });
 
                 if (project) {
                   input.project.push(project._id);
                 } else {
-                  input.project.push(_project.insert({ query: query, title: keyword }));
+                  input.project.push(_project.insert({ query: query, title: keyword, error: '' }));
                 }
               }
             });
 
             let worker = _worker.findOne({
               _id: '_recent_',
+            }, {
+              fields: {
+                time: true,
+              },
             });
 
             if (worker) {
@@ -133,6 +154,10 @@ Meteor.methods({
             input.torrent.forEach((torrent) => {
               let exists = _torrent.findOne({
                 query: torrent.query,
+              }, {
+                fields: {
+                  _id: true,
+                },
               });
 
               if (exists) {
@@ -140,6 +165,11 @@ Meteor.methods({
 
                 let worker = _worker.findOne({
                   query: torrent.query,
+                }, {
+                  fields: {
+                    status: true,
+                    time: true,
+                  },
                 });
 
                 if (worker) {
@@ -209,6 +239,10 @@ Meteor.methods({
       case 'torrent':
         let torrent = _torrent.findOne({
           query: input.query,
+        }, {
+          fields: {
+            _id: true,
+          },
         });
 
         if (torrent) {
@@ -218,7 +252,11 @@ Meteor.methods({
             input.url.forEach((url) => {
               let exists = _url.findOne({
                 query: url.query,
-              })
+              }, {
+                fields: {
+                  _id: true,
+                },
+              });
 
               if (exists) {
                 _torrent_url.push(exists._id);

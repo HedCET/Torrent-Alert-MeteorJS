@@ -25,6 +25,11 @@ Meteor.methods({
 
       let worker = _worker.findOne({
         query: project.query,
+      }, {
+        fields: {
+          status: true,
+          time: true,
+        },
       });
 
       if (worker) {
@@ -85,6 +90,11 @@ Meteor.methods({
 
       let worker = _worker.findOne({
         query: project.query,
+      }, {
+        fields: {
+          status: true,
+          time: true,
+        },
       });
 
       if (worker) {

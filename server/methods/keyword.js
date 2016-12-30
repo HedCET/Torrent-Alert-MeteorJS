@@ -14,6 +14,11 @@ Meteor.methods({
 
     let worker = _worker.findOne({
       query: input,
+    }, {
+      fields: {
+        status: true,
+        time: true,
+      },
     });
 
     if (worker) {

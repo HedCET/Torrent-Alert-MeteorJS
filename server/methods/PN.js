@@ -40,12 +40,26 @@ Meteor.methods({
         row.profile.subscribed.forEach((subscribed_project) => {
           let project = _project.findOne({
             _id: subscribed_project,
+          }, {
+            fields: {
+              query: true,
+              title: true,
+            },
           });
 
           if (project) {
-            let un_subscribed_torrent = _torrent.find({ project: project._id, user_subscribed: { $ne: row._id } });
+            let torrent = _torrent.find({
+              project: project._id,
+              user_subscribed: {
+                $ne: row._id,
+              },
+            }, {
+              fields: {
+                _id: true,
+              },
+            }).fetch();
 
-            if (1 <= un_subscribed_torrent.count()) {
+            if (torrent.length) {
               if (row.PN && row.PN.length) {
                 let pushAlert = new gcm.Message({
                   collapseKey: 'Torrent Alert',
@@ -53,18 +67,18 @@ Meteor.methods({
                   // delayWhileIdle: true,
                   // dryRun: true,
                   data: {
-                    body: un_subscribed_torrent.count() + ' newItemFound',
+                    body: torrent.length + ' newItemFound',
                     // msgcnt: 1,
                     notId: project._id,
                     project: project._id,
-                    soundname: '',
+                    // soundname: '',
                     // style: 'inbox',
                     // summaryText: 'summaryText',
                     title: project.title,
-                    torrent: _.map(un_subscribed_torrent.fetch(), (torrent) => {
-                      return torrent._id;
+                    torrent: _.map(torrent, (item) => {
+                      return item._id;
                     }),
-                    vibrationPattern: [],
+                    // vibrationPattern: [],
                   },
                   priority: 'high',
                   restrictedPackageName: 'online.linto.torrent',
@@ -103,7 +117,7 @@ Meteor.methods({
                 });
               }
 
-              if (un_subscribed_torrent.count() < 35) {
+              if (torrent.length < 35) {
                 _project.update({
                   _id: project._id,
                 }, {
@@ -114,6 +128,11 @@ Meteor.methods({
 
                 let worker = _worker.findOne({
                   query: project.query,
+                }, {
+                  fields: {
+                    status: true,
+                    time: true,
+                  },
                 });
 
                 if (worker) {

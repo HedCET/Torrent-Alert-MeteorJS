@@ -16,7 +16,6 @@ Accounts.onCreateUser((opts, user) => {
       headers: {
         'User-Agent': 'Meteor/1.0',
       },
-
       params: {
         access_token: user.services.google.accessToken,
       },

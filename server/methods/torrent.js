@@ -58,11 +58,20 @@ Meteor.methods({
 
     let torrent = _torrent.findOne({
       _id: input,
+    }, {
+      fields: {
+        query: true,
+      },
     });
 
     if (torrent) {
       let worker = _worker.findOne({
         query: torrent.query,
+      }, {
+        fields: {
+          status: true,
+          time: true,
+        },
       });
 
       if (worker) {

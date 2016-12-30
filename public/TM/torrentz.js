@@ -18,6 +18,7 @@
   };
   var textStatusNormalizer = function(textStatus) {
     switch (textStatus) {
+
       case 'parsererror':
         textStatus = 'responseParseError';
         break;
@@ -25,6 +26,7 @@
       case 'timeout':
         textStatus = 'timeLimitExceed';
         break;
+
     }
 
     return textStatus;
@@ -36,6 +38,7 @@
     }
 
     switch (e.data.type) {
+
       case 'keyword':
         $.getJSON(e.data.query, function(json) {
             e.data.keyword = _.uniq(_.flatten(json));
@@ -122,10 +125,11 @@
         e.data.error = 'noType';
         e.source.postMessage(e.data, e.origin);
         break;
+
     }
   }, false);
 
   setInterval(function() {
     location.reload();
-  }, 1000 * 60 * 60);
+  }, 1000 * 60 * 30);
 })();

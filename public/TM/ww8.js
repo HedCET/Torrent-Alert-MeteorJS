@@ -17,23 +17,6 @@ var TM = { error: null, observer: null, origin: null, received: null, scheduler:
     return keyword.replace(/ seed.*?[0-9]+ ?/gi, ' ').replace(/ added.*?[0-9]+[a-z] ?/gi, ' ').replace(/\s+/g, ' ').trim();
   };
 
-TM_start = function(origin) {
-  console.log('TM_start', origin);
-
-  TM.origin = origin;
-  TM.window = window.open(origin, 'worker');
-
-  window.addEventListener('message', function(e) {
-    if (e.origin != TM.origin) {
-      return;
-    } else {
-      TM.received = +TM.received + 1;
-
-      TM_worker(e.data);
-    }
-  }, false);
-};
-
 TM_observer = function(input) {
   console.log('TM_observer', input);
 
@@ -61,18 +44,40 @@ TM_scheduler = function(interval) {
   }
 };
 
+TM_start = function(origin) {
+  console.log('TM_start', origin);
+
+  TM.origin = origin;
+  TM.window = window.open(origin, 'worker');
+
+  window.addEventListener('message', function(e) {
+    if (e.origin != TM.origin) {
+      return;
+    } else {
+      TM.received = +TM.received + 1;
+
+      TM_worker(e.data);
+    }
+  }, false);
+};
+
 TM_status = function() {
   console.log(TM.error, TM.origin, TM.received, TM.send);
 };
 
 TM_stop = function() {
-  TM.observer.stop();
-  clearInterval(TM.scheduler);
+  if (TM.observer) {
+    TM.observer.stop();
+  }
+
+  if (TM.scheduler) {
+    clearInterval(TM.scheduler);
+  }
 };
 
 TM_worker = function(input) {
   if (input.error) {
-    TM.status.error++;
+    TM.error = +TM.error + 1;
   }
 
   Meteor.call('update_worker', input, function(error, res) {
