@@ -41,10 +41,7 @@ Meteor.methods({
           let project = _project.findOne({
             _id: subscribed_project,
           }, {
-            fields: {
-              query: true,
-              title: true,
-            },
+            fields: { error: true, query: true, title: true },
           });
 
           if (project) {
@@ -118,13 +115,15 @@ Meteor.methods({
               }
 
               if (torrent.length < 35) {
-                _project.update({
-                  _id: project._id,
-                }, {
-                  $set: {
-                    error: '',
-                  },
-                });
+                if (['', 'noItemFound'].indexOf(project.error) == -1) {
+                  _project.update({
+                    _id: project._id,
+                  }, {
+                    $set: {
+                      error: '',
+                    },
+                  });
+                }
 
                 let worker = _worker.findOne({
                   query: project.query,

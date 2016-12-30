@@ -25,11 +25,11 @@ App.info({
   id: "online.linto.torrent",
   name: "Torrent Alert",
   website: "https://github.com/HedCET/Torrent-Alert",
-  version: "0.0.1",
+  version: "0.0.3",
 });
 
 App.setPreference("android-installLocation", "preferExternal");
-App.setPreference("android-minSdkVersion", "19");
+App.setPreference("android-minSdkVersion", "21");
 App.setPreference("AndroidLaunchMode", "singleInstance");
 App.setPreference("SplashShowOnlyFirstTime", false);
 App.setPreference('StatusBarBackgroundColor', '#009688');

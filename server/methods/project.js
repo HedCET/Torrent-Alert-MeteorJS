@@ -12,16 +12,20 @@ Meteor.methods({
 
     let project = _project.findOne({
       query: input.query,
+    }, {
+      fields: { error: true, query: true },
     });
 
     if (project) {
-      _project.update({
-        _id: project._id,
-      }, {
-        $set: {
-          error: '',
-        },
-      });
+      if (['', 'noItemFound'].indexOf(project.error) == -1) {
+        _project.update({
+          _id: project._id,
+        }, {
+          $set: {
+            error: '',
+          },
+        });
+      }
 
       let worker = _worker.findOne({
         query: project.query,
@@ -77,16 +81,20 @@ Meteor.methods({
 
     let project = _project.findOne({
       _id: input,
+    }, {
+      fields: { error: true, query: true },
     });
 
     if (project) {
-      _project.update({
-        _id: project._id,
-      }, {
-        $set: {
-          error: '',
-        },
-      });
+      if (['', 'noItemFound'].indexOf(project.error) == -1) {
+        _project.update({
+          _id: project._id,
+        }, {
+          $set: {
+            error: '',
+          },
+        });
+      }
 
       let worker = _worker.findOne({
         query: project.query,

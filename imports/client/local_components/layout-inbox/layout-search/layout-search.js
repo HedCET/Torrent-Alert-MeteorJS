@@ -74,7 +74,7 @@ const underscore = require('underscore');
               if (error) {
                 document.querySelector('#polymer_toast').toast(error.message);
               } else {
-                _this.set('route.layout_search', res);
+                document.querySelector('#app_location').set('path', '/search/' + res);
               }
             });
           } else {
