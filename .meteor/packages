@@ -3,7 +3,7 @@ accounts-google
 accounts-password
 blaze-html-templates
 check
-crosswalk
+# crosswalk
 es5-shim
 ecmascript
 force-ssl
