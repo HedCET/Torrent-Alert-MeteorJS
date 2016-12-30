@@ -19,13 +19,13 @@ App.icons({
 });
 
 App.info({
-  author: "Linto Cheeran",
+  author: "VCompile",
   description: "Torrent Search & Alert",
   email: "linto.cet@gmail.com",
-  id: "online.linto.torrent",
+  id: "online.linto.torrentz",
   name: "Torrent Alert",
   website: "https://github.com/HedCET/Torrent-Alert",
-  version: "0.0.3",
+  version: "1.0.0",
 });
 
 App.setPreference("android-installLocation", "preferExternal");

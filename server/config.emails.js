@@ -2,7 +2,6 @@ Accounts.emailTemplates.enrollAccount = {
   subject() {
     return "enrollAccount URL";
   },
-
   text(user, url) {
     return `Hi,
 
@@ -13,14 +12,11 @@ Accounts.emailTemplates.enrollAccount = {
     ThankYou`;
   },
 };
-
-Accounts.emailTemplates.from = "Linto Cheeran<linto.cet@gmail.com>";
-
+Accounts.emailTemplates.from = "request<request@vcompile.com>";
 Accounts.emailTemplates.resetPassword = {
   subject() {
     return "reset password URL";
   },
-
   text(user, url) {
     return `Hi,
 
@@ -31,14 +27,11 @@ Accounts.emailTemplates.resetPassword = {
     ThankYou`;
   },
 };
-
 Accounts.emailTemplates.siteName = "Torrent Alert";
-
 Accounts.emailTemplates.verifyEmail = {
   subject() {
     return "VERIFY registered mailId";
   },
-
   text(user, url) {
     return `Hi,
 
@@ -48,4 +41,4 @@ Accounts.emailTemplates.verifyEmail = {
 
     ThankYou`;
   },
-}
+};

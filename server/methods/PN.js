@@ -78,7 +78,7 @@ Meteor.methods({
                     // vibrationPattern: [],
                   },
                   priority: 'high',
-                  restrictedPackageName: 'online.linto.torrent',
+                  restrictedPackageName: 'online.linto.torrentz',
                   // timeToLive: 60 * 60 * 24,
                 });
 
