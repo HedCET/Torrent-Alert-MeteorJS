@@ -83,11 +83,11 @@ Meteor.methods({
                   // timeToLive: 60 * 60 * 24,
                 });
 
-                new fibers(() => {
-                  PN.send(pushAlert, { registrationTokens: row.PN }, 5, (error, res) => {
-                    if (error) {
-                      console.log('trigger_PN', error);
-                    } else {
+                PN.send(pushAlert, { registrationTokens: row.PN }, 5, (error, res) => {
+                  if (error) {
+                    console.log('trigger_PN', error);
+                  } else {
+                    new fibers(() => {
                       res.results.forEach((item, index) => {
                         if (item.registration_id) {
                           Meteor.users.update({
@@ -112,9 +112,9 @@ Meteor.methods({
                           }
                         }
                       });
-                    }
-                  });
-                }).run();
+                    }).run();
+                  }
+                });
               }
 
               if (torrent.length < 35) {
