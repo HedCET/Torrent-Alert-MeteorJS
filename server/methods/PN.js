@@ -82,36 +82,38 @@ Meteor.methods({
                   // timeToLive: 60 * 60 * 24,
                 });
 
-                PN.send(pushAlert, { registrationTokens: row.PN }, 5, (error, res) => {
-                  if (error) {
-                    console.log('trigger_PN', error);
-                  } else {
-                    res.results.forEach((item, index) => {
-                      if (item.registration_id) {
-                        Meteor.users.update({
-                          _id: row._id,
-                        }, {
-                          $addToSet: {
-                            PN: item.registration_id,
-                          },
-                          $pull: {
-                            PN: row.PN[index],
-                          },
-                        });
-                      } else {
-                        if (item.error) {
+                new fibers(() => {
+                  PN.send(pushAlert, { registrationTokens: row.PN }, 5, (error, res) => {
+                    if (error) {
+                      console.log('trigger_PN', error);
+                    } else {
+                      res.results.forEach((item, index) => {
+                        if (item.registration_id) {
                           Meteor.users.update({
                             _id: row._id,
                           }, {
+                            $addToSet: {
+                              PN: item.registration_id,
+                            },
                             $pull: {
                               PN: row.PN[index],
                             },
                           });
+                        } else {
+                          if (item.error) {
+                            Meteor.users.update({
+                              _id: row._id,
+                            }, {
+                              $pull: {
+                                PN: row.PN[index],
+                              },
+                            });
+                          }
                         }
-                      }
-                    });
-                  }
-                });
+                      });
+                    }
+                  });
+                }).run();
               }
 
               if (torrent.length < 35) {
