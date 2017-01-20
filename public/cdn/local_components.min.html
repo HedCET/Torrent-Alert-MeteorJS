@@ -24445,7 +24445,7 @@ is separate from validation, and `allowed-pattern` does not affect how the input
     }
     
     iron-swipeable-pages {
-      position: initial;
+      position: static;
     }
     /*paper-badge {
       --paper-badge-background: var(--paper-red-300);
@@ -24523,7 +24523,7 @@ is separate from validation, and `allowed-pattern` does not affect how the input
         </div>
       </paper-toolbar>
 
-      <iron-swipeable-pages attr-for-selected="data-page" no-cycle="true" selected="{{route.layout_inbox}}">
+      <iron-swipeable-pages attr-for-selected="data-page" selected="{{route.layout_inbox}}">
         <layout-search data-page="search" router="{{tail}}"></layout-search>
         <layout-subscribed data-page="subscribed" selected="{{selected_subscribed}}" user="{{user}}"></layout-subscribed>
         <layout-user data-page="user" id="layout_user" user="{{user}}"></layout-user>
