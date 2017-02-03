@@ -19047,10 +19047,14 @@ It will also ensure that focus remains in the dialog.
         opacity: 0.5;
         pointer-events: none;
         color: var(--paper-toggle-button-unchecked-ink-color, --primary-text-color);
+
+        @apply(--paper-toggle-button-unchecked-ink);
       }
 
       :host([checked]) .toggle-ink {
         color: var(--paper-toggle-button-checked-ink-color, --primary-color);
+
+        @apply(--paper-toggle-button-checked-ink);
       }
 
       .toggle-container {
@@ -21695,7 +21699,7 @@ is separate from validation, and `allowed-pattern` does not affect how the input
         }
       }
     }
-  }
+  };
 
   /** @polymerBehavior */
   Polymer.PaperInputBehavior = [
@@ -23315,6 +23319,7 @@ is separate from validation, and `allowed-pattern` does not affect how the input
             this.increment();
           }
           this.fire('change');
+          event.preventDefault();
         }
       },
 
@@ -23326,6 +23331,7 @@ is separate from validation, and `allowed-pattern` does not affect how the input
             this.decrement();
           }
           this.fire('change');
+          event.preventDefault();
         }
       },
 
