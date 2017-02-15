@@ -1,3 +1,4 @@
+App.accessRule("*://*.googleapis.com/*");
 App.accessRule("*://*.googleusercontent.com/*");
 
 App.appendToConfig(`
