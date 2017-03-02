@@ -1,10 +1,10 @@
 import { Meteor } from 'meteor/meteor';
 
-(function() {
+(function () {
   Polymer({
 
     _email(email) {
-      return email ? email : 'unlock subscription & pushAlert';
+      return email ? email : 'unlock subscription & push message';
     },
 
     _google() {
@@ -35,7 +35,7 @@ import { Meteor } from 'meteor/meteor';
           cordova_g_plus: true,
           profile: ['email', 'email_verified', 'family_name', 'gender', 'given_name', 'locale', 'name', 'picture'],
           webClientId: '731987698101-thavlbcphk9v1kco7l7bl3q70dph819m.apps.googleusercontent.com',
-        }, function(error) {
+        }, function (error) {
           document.querySelector('#polymer_spinner').toggle();
 
           if (error) {
@@ -48,7 +48,7 @@ import { Meteor } from 'meteor/meteor';
         Meteor.loginWithGoogle({
           requestOfflineToken: true,
           requestPermissions: ['email', 'profile']
-        }, function(error) {
+        }, function (error) {
           document.querySelector('#polymer_spinner').toggle();
 
           if (error) {
