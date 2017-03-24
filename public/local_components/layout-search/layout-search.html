@@ -1,0 +1,59 @@
+<link rel="import" href="../../bower_components/font-roboto/roboto.html">
+<link rel="import" href="../../bower_components/iron-flex-layout/iron-flex-layout.html">
+<link rel="import" href="../../bower_components/iron-icons/iron-icons.html">
+<link rel="import" href="../../bower_components/iron-icons/social-icons.html">
+<link rel="import" href="../../bower_components/paper-header-panel/paper-header-panel.html">
+<link rel="import" href="../../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../../bower_components/paper-spinner/paper-spinner.html">
+<link rel="import" href="../../bower_components/paper-styles/paper-styles.html">
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+
+<dom-module id="layout-search">
+  <template>
+    <paper-header-panel mode="cover" style="height: 100vh;">
+      <div class="paper-header tail" style="background: #4DB6AC; height: 256px;"></div>
+
+      <div class="body layout vertical" style="background: #FFF; min-height: 256px;">
+        <div class="end horizontal justified layout" style="background: #009688; color: #E0F2F1; padding: 8px;">
+          <div class="flex" style="padding: 4px;">
+            <style>
+              paper-input {
+                --paper-input-container-color: #E0F2F1;
+                --paper-input-container-focus-color: #E0F2F1;
+                --paper-input-container-input-color: #E0F2F1;
+              }
+            </style>
+            <paper-input autofocus label="Torrent Keyword Search" on-keyup="_search" type="search" value=""></paper-input>
+          </div>
+          <div style="padding: 4px;">
+            <paper-icon-button icon="social:notifications-none"></paper-icon-button>
+          </div>
+        </div>
+
+        <div class="horizontal layout" style="color: #757575; padding: 8px 12px;">
+          <style>
+            .body1 {
+              @apply(--paper-font-body1);
+            }
+            
+            .nowrap {
+              @apply(--paper-font-common-nowrap);
+            }
+          </style>
+          <div class="body1 nowrap">{{_status(worker)}}</div>
+        </div>
+
+        <template is="dom-repeat" items="{{worker.project}}">
+          <search-item item="{{item}}"></search-item>
+        </template>
+
+        <div class="center-center flex horizontal layout" hidden="{{worker.status}}">
+          <paper-spinner active></paper-spinner>
+        </div>
+      </div>
+    </paper-header-panel>
+  </template>
+</dom-module>
+
+<link rel="import" href="./search-item.html">

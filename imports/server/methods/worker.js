@@ -24,7 +24,7 @@ Meteor.methods({
     switch (input.type) {
 
       case 'keyword':
-        let project = [];
+        input.project = [];
 
         if (input.keyword) {
           input.keyword.forEach((keyword) => {
@@ -36,15 +36,15 @@ Meteor.methods({
               let exists = _project.findOne({ query: { $options: 'i', $regex: '^' + query + '$' } }, { fields: { _id: true } });
 
               if (exists) {
-                project.push(exists._id);
+                input.project.push(exists._id);
               } else {
-                project.push(_project.insert({ query, title: keyword, worker: '' }));
+                input.project.push(_project.insert({ query, title: keyword, worker: '' }));
               }
             }
           });
         }
 
-        _worker.update(input._id, { $set: { project, status: (input.error ? input.error : '200'), time: moment().toDate() } });
+        _worker.update(input._id, { $set: { project: input.project, status: (input.error ? input.error : '200'), time: moment().toDate() } });
         break;
 
       case 'project':

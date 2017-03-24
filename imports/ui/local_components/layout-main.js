@@ -6,10 +6,12 @@ Polymer({
     }
 
     this.async(() => {
-      this.$.spinner.toggle();
+      // this.$.spinner.toggle();
     }, 1000 * 3);
   },
 
   is: 'layout-main',
 
 });
+
+import './layout-search/layout-search.js';
