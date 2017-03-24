@@ -22,11 +22,11 @@ App.icons({
 App.info({
   author: "VCompile",
   description: "Torrent Search & Alert",
-  email: "linto.cet@gmail.com",
-  id: "online.linto.torrentz",
+  email: "request@vcompile.com",
+  id: "com.vcompile.torrentz",
   name: "Torrent Alert",
   website: "https://github.com/HedCET/Torrent-Alert",
-  version: "1.1.1",
+  version: "1.0.0",
 });
 
 App.setPreference("android-installLocation", "preferExternal");
