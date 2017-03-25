@@ -6,7 +6,7 @@ import { _torrent } from '../../db/torrents.js';
 
 Meteor.methods({
 
-  remove_torrent(input) {
+  'remove.torrent'(input) {
     this.unblock();
 
     let user = Meteor.user();
@@ -17,7 +17,7 @@ Meteor.methods({
     return _torrent.update({ _id: { $in: input } }, { $addToSet: { user_removed: user._id } }, { multi: true });
   },
 
-  restore_torrent(input) {
+  'restore.torrent'(input) {
     this.unblock();
 
     let user = Meteor.user();
@@ -28,7 +28,7 @@ Meteor.methods({
     return _torrent.update({ _id: { $in: input } }, { $pull: { user_removed: user._id } }, { multi: true });
   },
 
-  trigger_torrent(input) {
+  'trigger.torrent'(input) {
     this.unblock();
 
     let user = Meteor.user();
@@ -39,6 +39,8 @@ Meteor.methods({
     let torrent = _torrent.findOne(input, { fields: { query: true } });
 
     if (torrent) {
+      _torrent.update(torrent._id, { $set: { worker: '' } });
+
       let worker = _worker.findOne({ query: torrent.query }, { fields: { status: true, time: true } });
 
       if (worker) {
@@ -50,8 +52,6 @@ Meteor.methods({
       }
 
       return torrent._id;
-    } else {
-      throw new Meteor.Error(400, 'Torrent Not Found');
     }
   },
 

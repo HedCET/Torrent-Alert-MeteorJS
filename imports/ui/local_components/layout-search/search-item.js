@@ -7,7 +7,11 @@ Polymer({
 
   _project() {
     if (this.project) {
-      Meteor.call('trigger_project', this.project._id, (error, res) => {
+      document.querySelector('#spinner').toggle();
+
+      Meteor.call('trigger.project', this.project._id, (error, res) => {
+        document.querySelector('#spinner').toggle();
+
         if (error) {
           document.querySelector('#toast').toast(error.message);
         } else {

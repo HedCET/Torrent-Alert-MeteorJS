@@ -1,3 +1,4 @@
+import { Accounts } from 'meteor/accounts-base';
 import { Meteor } from 'meteor/meteor';
 import { Tracker } from 'meteor/tracker';
 import moment from 'moment';
@@ -17,7 +18,7 @@ Polymer({
       let _this = this;
 
       _this.set('_search_tracker', Tracker.autorun(() => {
-        _this.set('worker', _worker.findOne(route._id, { fields: { project: 1, status: 1, updatedAt: 1 } }));
+        _this.set('worker', _worker.findOne(route._id, { fields: { project: 1, status: 1, time: 1 } }));
       }));
     }
   },
@@ -32,7 +33,7 @@ Polymer({
     if (value) {
       this.set('_search_timer', Meteor.setTimeout(() => {
         if (Meteor.status().connected) {
-          Meteor.call('insert_keyword', value, (error, res) => {
+          Meteor.call('insert.keyword', value, (error, res) => {
             if (error) {
               document.querySelector('#toast').toast(error.message);
             } else {
@@ -59,6 +60,14 @@ Polymer({
         return worker.status;
         break;
 
+    }
+  },
+
+  _user() {
+    if (Meteor.user()) {
+      document.querySelector('#location').set('route.path', '/user');
+    } else {
+      document.querySelector('#toast').toast('', 'SIGNIN');
     }
   },
 

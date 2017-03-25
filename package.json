@@ -10,6 +10,7 @@
     "cheerio": "^0.22.0",
     "meteor-node-stubs": "^0.2.6",
     "moment": "^2.18.1",
+    "nightmare": "^2.10.0",
     "node-gcm": "^0.14.4",
     "underscore": "^1.8.3"
   },

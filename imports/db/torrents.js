@@ -1,6 +1,5 @@
 import { check, Match } from 'meteor/check';
 import { Meteor } from 'meteor/meteor';
-import { Mongo } from 'meteor/mongo';
 
 export const _torrent = new Meteor.Collection("torrents");
 

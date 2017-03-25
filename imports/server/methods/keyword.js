@@ -6,7 +6,7 @@ import { _worker } from '../../db/workers.js';
 
 Meteor.methods({
 
-  insert_keyword(input) {
+  'insert.keyword'(input) {
     this.unblock();
 
     // let user = Meteor.user();
