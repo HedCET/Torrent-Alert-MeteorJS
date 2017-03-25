@@ -63,9 +63,9 @@ Polymer({
     }
   },
 
-  _user() {
+  _SIGNIN() {
     if (Meteor.user()) {
-      document.querySelector('#location').set('route.path', '/user');
+      document.querySelector('#location').set('route.path', '/user/' + Meteor.user()._id);
     } else {
       document.querySelector('#toast').toast('', 'SIGNIN');
     }

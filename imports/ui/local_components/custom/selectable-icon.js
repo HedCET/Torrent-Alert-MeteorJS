@@ -1,5 +1,5 @@
 Polymer({
 
-  is: "selectable-icon",
+  is: 'selectable-icon',
 
 });

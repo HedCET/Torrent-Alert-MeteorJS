@@ -1,6 +1,6 @@
 Polymer({
 
-  is: "polymer-spinner",
+  is: 'polymer-spinner',
 
   properties: {
     opened: {
