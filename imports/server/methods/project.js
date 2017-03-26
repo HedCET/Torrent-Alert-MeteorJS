@@ -2,7 +2,9 @@ import { check } from 'meteor/check';
 import { Meteor } from 'meteor/meteor';
 import moment from 'moment';
 
+import { _nightmare } from '../config/nightmare.js';
 import { _project } from '../../db/projects.js';
+import { _worker } from '../../db/workers.js';
 
 Meteor.methods({
 
@@ -23,18 +25,15 @@ Meteor.methods({
 
       if (worker) {
         if (worker.status != '200' || 1 < moment.duration(moment().diff(worker.time)).asDays()) {
-          _worker.update(worker._id, { $set: { status: '', time: moment().toDate() } });
+          _worker.update(worker._id, { $set: { status: '', time: moment().toDate() } }); Meteor.setTimeout(() => { _nightmare.trigger(); });
         }
       } else {
-        _worker.insert({ query: project.query, status: '', time: moment().toDate(), type: 'project' });
+        _worker.insert({ query: project.query, status: '', time: moment().toDate(), type: 'project' }); Meteor.setTimeout(() => { _nightmare.trigger(); });
       }
 
       return project._id;
     } else {
-      let _id = _project.insert(_.extend(input, { worker: '' }));
-      _worker.insert({ query: input.query, status: '', time: moment().toDate(), type: 'project' });
-
-      return _id;
+      let _id = _project.insert(_.extend(input, { worker: '' })); _worker.insert({ query: input.query, status: '', time: moment().toDate(), type: 'project' }); Meteor.setTimeout(() => { _nightmare.trigger(); }); return _id;
     }
   },
 
@@ -51,14 +50,14 @@ Meteor.methods({
     if (project) {
       _project.update(project._id, { $set: { worker: '' } });
 
-      let worker = _worker.findOne({ query: { $options: 'i', $regex: '^' + project.query + '$' } }, { fields: { status: true, time: true } });
+      let worker = _worker.findOne({ query: { $options: 'i', $regex: '^' + project.query.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&') + '$' } }, { fields: { status: true, time: true } });
 
       if (worker) {
         if (worker.status != '200' || 1 < moment.duration(moment().diff(worker.time)).asDays()) {
-          _worker.update(worker._id, { $set: { status: '', time: moment().toDate() } });
+          _worker.update(worker._id, { $set: { status: '', time: moment().toDate() } }); Meteor.setTimeout(() => { _nightmare.trigger(); });
         }
       } else {
-        _worker.insert({ query: project.query, status: '', time: moment().toDate(), type: 'project' });
+        _worker.insert({ query: project.query, status: '', time: moment().toDate(), type: 'project' }); Meteor.setTimeout(() => { _nightmare.trigger(); });
       }
 
       return project._id;

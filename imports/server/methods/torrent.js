@@ -3,6 +3,7 @@ import { Meteor } from 'meteor/meteor';
 import moment from 'moment';
 
 import { _torrent } from '../../db/torrents.js';
+import { _worker } from '../../db/workers.js';
 
 Meteor.methods({
 

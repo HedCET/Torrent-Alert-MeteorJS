@@ -45,7 +45,7 @@ Polymer({
     }
   },
 
-  _status(worker) {
+  _status(worker = {}) {
     switch (worker.status) {
 
       case '':
