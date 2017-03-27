@@ -19,8 +19,6 @@ Meteor.methods({
     let project = _project.findOne({ query: { $options: 'i', $regex: '^' + input.query + '$' } }, { fields: { query: true, worker: true } });
 
     if (project) {
-      _project.update(project._id, { $set: { worker: '' } });
-
       let worker = _worker.findOne({ query: { $options: 'i', $regex: '^' + project.query + '$' } }, { fields: { status: true, time: true } });
 
       if (worker) {
@@ -33,7 +31,7 @@ Meteor.methods({
 
       return project._id;
     } else {
-      let _id = _project.insert(_.extend(input, { worker: '' })); _worker.insert({ query: input.query, status: '', time: moment().toDate(), type: 'project' }); Meteor.setTimeout(() => { _nightmare.trigger(); }); return _id;
+      let _id = _project.insert(input); _worker.insert({ query: input.query, status: '', time: moment().toDate(), type: 'project' }); Meteor.setTimeout(() => { _nightmare.trigger(); }); return _id;
     }
   },
 
@@ -48,8 +46,6 @@ Meteor.methods({
     let project = _project.findOne({ _id: input }, { fields: { query: true, worker: true } });
 
     if (project) {
-      _project.update(project._id, { $set: { worker: '' } });
-
       let worker = _worker.findOne({ query: { $options: 'i', $regex: '^' + project.query.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&') + '$' } }, { fields: { status: true, time: true } });
 
       if (worker) {

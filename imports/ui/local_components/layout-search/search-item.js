@@ -15,7 +15,7 @@ Polymer({
         if (error) {
           document.querySelector('#toast').toast(error.message);
         } else {
-          document.querySelector('#location').set('route.path', '/project/' + res);
+          document.querySelector('#location').set('route.path', '/torrent/' + res);
         }
       });
     }

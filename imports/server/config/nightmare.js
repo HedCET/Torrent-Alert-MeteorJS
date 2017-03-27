@@ -82,7 +82,9 @@ export const _nightmare = {
             const TC_string = ($('.results h2').length ? $('.results h2').text().match(/([0-9,]+) Torrents/i) : null);
             const TC_integer = (TC_string && TC_string[1] ? +TC_string[1].replace(/[^0-9]+/g, '') : null);
 
-            _project.update(project._id, { $set: (TC_integer ? { worker: '200', torrent_count: TC_integer } : { worker: 'No Item Found' }) }); _worker.update(worker._id, { $set: { status: TC_integer ? '200' : 'No Item Found', time: moment().toDate() } });
+            if (TC_integer) {
+              _project.update(project._id, { $set: { torrent_count: TC_integer } });
+            }
 
             $('.results dl').each(function () {
               if ($(this).find('dt a').attr('href')) {
@@ -101,16 +103,20 @@ export const _nightmare = {
                 };
 
                 const exists = _torrent.findOne({ query: torrent.query }, { fields: { _id: true } });
-
                 if (exists) {
-                  const W = _worker.findOne({ query: torrent.query }, { fields: { status: true, time: true } });
+                  _torrent.update(exists._id, { $addToSet: { project: project._id }, $set: torrent });
 
+                  const W = _worker.findOne({ query: torrent.query }, { fields: { status: true, time: true } });
                   if (W) {
                     if (W.status != '200' || 1 < moment.duration(moment().diff(W.time)).asDays()) {
-                      _torrent.update(exists._id, { $addToSet: { project: project._id }, $set: _.extend(torrent, { worker: '' }) }); _worker.update(W._id, { $set: { status: '', time: moment().toDate() } });
+                      _worker.update(W._id, { $set: { status: '', time: moment().toDate() } });
                     }
-                  } else { _torrent.update(exists._id, { $addToSet: { project: project._id }, $set: _.extend(torrent, { worker: '' }) }); _worker.insert({ query: torrent.query, status: '', time: moment().toDate(), type: 'torrent' }); }
-                } else { _torrent.insert(_.extend(torrent, { project: [project._id], url: [], worker: '' })); _worker.insert({ query: torrent.query, status: '', time: moment().toDate(), type: 'torrent' }); }
+                  } else {
+                    _worker.insert({ query: torrent.query, status: '', time: moment().toDate(), type: 'torrent' });
+                  }
+                } else {
+                  _torrent.insert(_.extend(torrent, { project: [project._id], url: [] })); _worker.insert({ query: torrent.query, status: '', time: moment().toDate(), type: 'torrent' });
+                }
               }
             });
 
@@ -129,13 +135,16 @@ export const _nightmare = {
             });
 
             const W = _worker.findOne('recent', { fields: { time: true } });
-
             if (W) {
               if (3 < moment.duration(moment().diff(W.time)).asMinutes()) {
                 _worker.update('recent', { $set: { project: recent, time: moment().toDate() } });
               }
-            } else { _worker.insert({ _id: 'recent', project: recent, status: '200', time: moment().toDate() }); }
-          } else { _project.update(project._id, { $set: { worker: 'Server Not Responding' } }); _worker.update(worker._id, { $set: { status: 'Server Not Responding' } }); }
+            } else {
+              _worker.insert({ _id: 'recent', project: recent, status: '200', time: moment().toDate() });
+            }
+
+            _worker.update(worker._id, { $set: { status: TC_integer ? '200' : 'No Item Found', time: moment().toDate() } });
+          } else { _worker.update(worker._id, { $set: { status: 'Server Not Responding' } }); }
         } break;
 
         case 'torrent': {
@@ -153,12 +162,18 @@ export const _nightmare = {
                 const exists = _url.findOne({ query: { $options: 'i', $regex: '^' + _href.href.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&') + '$' } }, { fields: { _id: true } });
 
                 if (exists) { href.push(exists._id); }
-                else { href.push(_url.insert({ query: _href.href, time: (moment($(this).find('dd span').attr('title'), ['ddd, DD MMM YYYY HH:mm:ss']).isValid() ? moment($(this).find('dd span').attr('title'), ['ddd, DD MMM YYYY HH:mm:ss']).toDate() : moment().toDate()), title: _href.hostname })); }
+                else {
+                  href.push(_url.insert({ query: _href.href, time: (moment($(this).find('dd span').attr('title'), ['ddd, DD MMM YYYY HH:mm:ss']).isValid() ? moment($(this).find('dd span').attr('title'), ['ddd, DD MMM YYYY HH:mm:ss']).toDate() : moment().toDate()), title: _href.hostname }));
+                }
               }
             });
 
-            _torrent.update(torrent._id, { $set: (href.length ? { url: href, worker: '200' } : { worker: 'No Item Found' }) }); _worker.update(worker._id, { $set: { status: href.length ? '200' : 'No Item Found', time: moment().toDate() } });
-          } else { _torrent.update(torrent._id, { $set: { worker: 'Server Not Responding' } }); _worker.update(worker._id, { $set: { status: 'Server Not Responding' } }); }
+            if (href.length) {
+              _torrent.update(torrent._id, { $set: { url: href } });
+            }
+
+            _worker.update(worker._id, { $set: { status: href.length ? '200' : 'No Item Found', time: moment().toDate() } });
+          } else { _worker.update(worker._id, { $set: { status: 'Server Not Responding' } }); }
         } break;
 
       }

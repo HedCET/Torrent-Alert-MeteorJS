@@ -40,8 +40,6 @@ Meteor.methods({
     let torrent = _torrent.findOne(input, { fields: { query: true } });
 
     if (torrent) {
-      _torrent.update(torrent._id, { $set: { worker: '' } });
-
       let worker = _worker.findOne({ query: torrent.query }, { fields: { status: true, time: true } });
 
       if (worker) {

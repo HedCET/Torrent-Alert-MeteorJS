@@ -15,7 +15,7 @@ Polymer({
 });
 
 import './layout-search/layout-search.js';
-// import './layout-torrent/layout-torrent.js';
+import './layout-torrent/layout-torrent.js';
 // import './layout-url/layout-url.js';
 import './layout-user/layout-user.js';
 
