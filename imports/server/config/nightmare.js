@@ -155,7 +155,7 @@ export const _nightmare = {
             const $ = cheerio.load(html);
 
             let href = [];
-            $('.download dl').each(function () {
+            $('.downlinks dl').each(function () {
               const _href = url.parse($(this).find('dt a').attr('href'));
 
               if (_href.pathname && _href.hostname && ['s3-us-west-2.amazonaws.com'].indexOf(_href.hostname) == -1) {

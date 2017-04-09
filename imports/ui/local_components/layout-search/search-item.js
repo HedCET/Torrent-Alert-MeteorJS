@@ -35,15 +35,15 @@ Polymer({
     }));
   },
 
-  is: 'search-item',
-
-  number_string(number) {
+  _number_string(number) {
     if (9999 < number) {
       return Math.round(number / 1000) + 'K';
     }
 
     return number;
   },
+
+  is: 'search-item',
 
   observers: ['_item_changed(item)'],
 
