@@ -26,8 +26,9 @@
         <paper-toolbar>
           <paper-icon-button icon="arrow-back" on-tap="_back"></paper-icon-button>
           <div class="title">{{project.title}}</div>
-          <paper-icon-button icon="alarm-add" on-tap="_subscribe"></paper-icon-button>
-          <paper-icon-button icon="filter-list"></paper-icon-button>
+          <paper-icon-button hidden="{{selected.length}}" icon="alarm-add" on-tap="_subscribe"></paper-icon-button>
+          <paper-icon-button hidden="{{selected.length}}" icon="filter-list"></paper-icon-button>
+          <paper-icon-button hidden="{{!selected.length}}" icon="social:share" on-tap="_share"></paper-icon-button>
         </paper-toolbar>
 
         <div class="horizontal layout" style="color: #757575; padding: 8px 16px;">

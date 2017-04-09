@@ -97,6 +97,12 @@ Polymer({
   observers: ['_route_changed(route)'],
 
   properties: {
+    selected: {
+      type: Array,
+      value() {
+        return [];
+      },
+    },
     torrent: {
       type: Array,
       value() {
