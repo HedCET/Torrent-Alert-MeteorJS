@@ -44,6 +44,14 @@ Polymer({
     }
   },
 
+  _scroll(e) {
+    if (e.detail.target.scrollHeight - (e.detail.target.clientHeight * 1.5) < e.detail.target.scrollTop) {
+      this.debounce('_scroll', function () {
+        Meteor.subscribe('torrent', { page: ++this.page, project: this.route._id.split('|') });
+      }, 1000);
+    }
+  },
+
   _sort(A, Z) {
     return (moment(Z.time).unix() - moment(A.time).unix());
   },

@@ -24,7 +24,12 @@
 
       <paper-item-body style="padding: 8px 0;" two-line>
         <div class="end horizontal justified layout" secondary>
-          <div>{{item.category}}</div>
+          <style>
+            .nowrap {
+              @apply(--paper-font-common-nowrap);
+            }
+          </style>
+          <div class="nowrap">{{item.category}}</div>
           <style>
             iron-icon {
               color: var(--paper-green-500);
@@ -34,7 +39,7 @@
         </div>
         <div style="white-space: normal;">{{item.title}}</div>
         <div class="horizontal justified layout" secondary>
-          <div><span>{{item.size}}</span> | <b>{{_number_string(item.leech)}}</b> L &amp; <b>{{_number_string(item.seed)}}</b> S</div>
+          <div class="nowrap"><span>{{item.size}}</span> | <b>{{_number_string(item.leech)}}</b> L &amp; <b>{{_number_string(item.seed)}}</b> S</div>
           <div>{{_date(item.time)}}</div>
         </div>
       </paper-item-body>
