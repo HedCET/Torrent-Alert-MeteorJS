@@ -63,7 +63,7 @@ export const _nightmare = {
                   const exists = _project.findOne({ query: { $options: 'i', $regex: '^' + query.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&') + '$' } }, { fields: { _id: true } });
 
                   if (exists) { project.push(exists._id); }
-                  else { project.push(_project.insert({ query, title, worker: '' })); }
+                  else { project.push(_project.insert({ query, title })); }
                 }
               });
 
@@ -130,7 +130,7 @@ export const _nightmare = {
                 const exists = _project.findOne({ query: { $options: 'i', $regex: '^' + query.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&') + '$' } }, { fields: { _id: true } });
 
                 if (exists) { recent.push(exists._id); }
-                else { recent.push(_project.insert({ query, title, worker: '' })); }
+                else { recent.push(_project.insert({ query, title })); }
               }
             });
 

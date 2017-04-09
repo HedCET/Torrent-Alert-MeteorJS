@@ -15,7 +15,7 @@ Polymer({
         if (error) {
           document.querySelector('#toast').toast(error.message);
         } else {
-          document.querySelector('#location').set('route.path', '/torrent/' + res);
+          document.querySelector('#main').set('router.path', '/torrent/' + res);
         }
       });
     }
@@ -48,8 +48,3 @@ Polymer({
   observers: ['_item_changed(item)'],
 
 });
-
-
-
-
-

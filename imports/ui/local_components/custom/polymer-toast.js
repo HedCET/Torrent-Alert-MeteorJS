@@ -22,14 +22,14 @@ Polymer({
             document.querySelector('#spinner').toggle();
 
             if (error) { document.querySelector('#toast').toast('Error'); }
-            else { document.querySelector('#location').set('route.path', '/user/' + Meteor.user()._id); }
+            else { document.querySelector('#main').set('router.path', '/user/' + Meteor.user()._id); }
           });
         } else {
           Meteor.loginWithGoogle({ requestOfflineToken: true, requestPermissions: ['email', 'profile'] }, (error) => {
             document.querySelector('#spinner').toggle();
 
             if (error) { document.querySelector('#toast').toast('Error'); }
-            else { document.querySelector('#location').set('route.path', '/user/' + Meteor.user()._id); }
+            else { document.querySelector('#main').set('router.path', '/user/' + Meteor.user()._id); }
           });
         }
         break;

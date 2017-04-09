@@ -8,7 +8,7 @@
 
 <dom-module id="layout-main">
   <template>
-    <app-location id="location" route="{{router}}"></app-location>
+    <app-location query-params="{{query}}" route="{{router}}"></app-location>
     <app-route data="{{route}}" pattern="/:page/:_id" route="{{router}}"></app-route>
 
     <neon-animated-pages attr-for-selected="data-page" selected="{{route.page}}">

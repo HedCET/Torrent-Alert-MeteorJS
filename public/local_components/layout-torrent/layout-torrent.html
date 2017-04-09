@@ -15,7 +15,7 @@
     <paper-header-panel mode="cover" style="height: 100vh;">
       <div class="paper-header tail" style="background: #4DB6AC; height: 256px;"></div>
 
-      <div class="body layout vertical" style="background: #FFF; min-height: 256px;">
+      <div class="body layout vertical" style="background: #FFF;">
         <style>
           paper-toolbar {
             --paper-toolbar-background: #009688;
@@ -39,10 +39,10 @@
               @apply(--paper-font-common-nowrap);
             }
           </style>
-          <div class="body1 nowrap">No Item Found</div>
+          <div class="body1 nowrap">{{_status(worker)}}</div>
         </div>
 
-        <div class="center-center flex horizontal layout">
+        <div class="center-center flex horizontal layout" style="min-height: 128px;">
           <paper-spinner active></paper-spinner>
         </div>
       </div>

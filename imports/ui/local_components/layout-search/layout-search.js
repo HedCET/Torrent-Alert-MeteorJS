@@ -37,11 +37,11 @@ Polymer({
             if (error) {
               document.querySelector('#toast').toast(error.message);
             } else {
-              document.querySelector('#location').set('route.path', '/search/' + res);
+              document.querySelector('#main').set('router.path', '/search/' + res);
             }
           });
         }
-      }, 1000 * 1.5));
+      }, 1000));
     }
   },
 
@@ -60,14 +60,6 @@ Polymer({
         return worker.status;
         break;
 
-    }
-  },
-
-  _SIGNIN() {
-    if (Meteor.user()) {
-      document.querySelector('#location').set('route.path', '/user/' + Meteor.user()._id);
-    } else {
-      document.querySelector('#toast').toast('', 'SIGNIN');
     }
   },
 
