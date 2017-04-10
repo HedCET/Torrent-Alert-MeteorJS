@@ -32,16 +32,10 @@ Polymer({
         _this.set('project', _project.findOne(route._id, { fields: { query: 1, title: 1, torrent_count: 1 } }));
 
         if (_this.project) {
-          _this.page = 1; Meteor.subscribe('torrent', { page: _this.page, project: _this.project._id.split('|') });
-
-          if (_this._torrent_observer) {
-            _this._torrent_observer.stop();
-          }
-
-          _this.set('_torrent_observer', _torrent.find({ project: _this.project._id }, { sort: { time: -1 } }).observe({ addedAt(row) { _this.push('torrent', row); }, changedAt(row) { _this.splice('torrent', _.findIndex(_this.torrent, { _id: row._id }), 1, row); }, removedAt(row) { _this.splice('torrent', _.findIndex(_this.torrent, { _id: row._id }), 1); } }));
+          _this._torrent_subscriber(_this.project._id);
 
           if (_this.project.query) {
-            Meteor.subscribe('worker', _this.project.query); _this.set('worker', _worker.findOne({ query: _this.project.query }, { fields: { query: 1, status: 1, time: 1 } }));
+            _this._worker_subscriber(_this.project.query);
           }
         }
       }));
@@ -88,6 +82,32 @@ Polymer({
 
   _title(title, length) {
     return length ? length : title;
+  },
+
+  _torrent_subscriber(_id) {
+    this.page = 1; Meteor.subscribe('torrent', { page: this.page, project: _id.split('|') });
+
+    if (this._torrent_observer) {
+      this._torrent_observer.stop();
+    }
+
+    let _this = this;
+
+    _this.set('_torrent_observer', _torrent.find({ project: _id }, { sort: { time: -1 } }).observe({ addedAt(row) { _this.push('torrent', row); }, changedAt(row) { _this.splice('torrent', _.findIndex(_this.torrent, { _id: row._id }), 1, row); }, removedAt(row) { _this.splice('torrent', _.findIndex(_this.torrent, { _id: row._id }), 1); } }));
+  },
+
+  _worker_subscriber(query) {
+    Meteor.subscribe('worker', query);
+
+    if (this._worker_tracker) {
+      this._worker_tracker.stop();
+    }
+
+    let _this = this;
+
+    _this.set('_worker_tracker', Tracker.autorun(() => {
+      _this.set('worker', _worker.findOne({ query }, { fields: { query: 1, status: 1, time: 1 } }));
+    }));
   },
 
   attached() {

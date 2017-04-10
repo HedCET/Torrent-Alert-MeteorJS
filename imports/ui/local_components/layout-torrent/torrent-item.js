@@ -30,7 +30,7 @@ Polymer({
         if (error) {
           document.querySelector('#toast').toast(error.message);
         } else {
-          document.querySelector('#main').set('router.path', '/torrent/' + res);
+          document.querySelector('#main').set('router.path', '/url/' + res);
         }
       });
     }
