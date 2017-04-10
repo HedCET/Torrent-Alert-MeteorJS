@@ -32,8 +32,8 @@ Meteor.methods({
   'trigger.torrent'(input) {
     this.unblock();
 
-    let user = Meteor.user();
-    if (!user) throw new Meteor.Error(400, 'User Not Found');
+    // let user = Meteor.user();
+    // if (!user) throw new Meteor.Error(400, 'User Not Found');
 
     check(input, String);
 
