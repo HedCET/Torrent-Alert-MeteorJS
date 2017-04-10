@@ -10,8 +10,12 @@ import { _worker } from '../../../db/workers.js';
 Polymer({
 
   _back() {
-    if (Meteor.isCordova) { navigator.app.backHistory(); }
-    else { history.back(); }
+    if (this.selected.length) {
+      this.set('selected', []);
+    } else {
+      if (Meteor.isCordova) { navigator.app.backHistory(); }
+      else { history.back(); }
+    }
   },
 
   _route_changed(route) {
@@ -80,6 +84,10 @@ Polymer({
     } else {
       document.querySelector('#toast').toast('', 'SIGNIN');
     }
+  },
+
+  _title(title, length) {
+    return length ? length : title;
   },
 
   attached() {
