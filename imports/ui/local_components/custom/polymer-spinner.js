@@ -11,10 +11,8 @@ Polymer({
 
   toggle() {
     if (this.opened) {
-      let _this = this;
-
-      _this.async(() => {
-        _this.opened = !_this.opened;
+      this.async(() => {
+        this.opened = !this.opened;
       }, 400);
     } else {
       this.opened = !this.opened;

@@ -61,13 +61,11 @@ Polymer({
   attached() {
     this._class = (Meteor.isCordova ? 'fit-bottom' : '');
 
-    var _this = this;
-
     Tracker.autorun(() => {
       if (Meteor.status().connected) {
-        _this.toast('server connected');
+        this.toast('server connected');
       } else {
-        _this.toast('lost server connection');
+        this.toast('lost server connection');
       }
     });
   },
@@ -77,18 +75,16 @@ Polymer({
   toast(text, condition, store) {
     this.$._toast.hide();
 
-    let _this = this;
+    this.async(() => {
+      this.$._toast.text = text;
 
-    _this.async(() => {
-      _this.$._toast.text = text;
-
-      _this.condition = (condition ? condition : '');
+      this.condition = (condition ? condition : '');
 
       if (store) {
-        _this.set('store', store);
+        this.set('store', store);
       }
 
-      _this.$._toast.show();
+      this.$._toast.show();
     }, 400);
   },
 

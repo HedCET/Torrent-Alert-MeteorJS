@@ -20,13 +20,11 @@ Polymer({
         this._torrent_tracker.stop();
       }
 
-      let _this = this;
+      this.set('_torrent_tracker', Tracker.autorun(() => {
+        this.set('torrent', _torrent.findOne(route._id, { fields: {} }));
 
-      _this.set('_torrent_tracker', Tracker.autorun(() => {
-        _this.set('torrent', _torrent.findOne(route._id, { fields: {} }));
-
-        if (_this.torrent && _this.torrent.query) {
-          _this._worker_subscriber(_this.torrent.query);
+        if (this.torrent && this.torrent.query) {
+          this._worker_subscriber(this.torrent.query);
         }
       }));
     }
@@ -57,10 +55,8 @@ Polymer({
       this._worker_tracker.stop();
     }
 
-    let _this = this;
-
-    _this.set('_worker_tracker', Tracker.autorun(() => {
-      _this.set('worker', _worker.findOne({ query }, { fields: { query: 1, status: 1, time: 1 } }));
+    this.set('_worker_tracker', Tracker.autorun(() => {
+      this.set('worker', _worker.findOne({ query }, { fields: { query: 1, status: 1, time: 1 } }));
     }));
   },
 

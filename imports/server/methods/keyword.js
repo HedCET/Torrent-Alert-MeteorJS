@@ -15,7 +15,7 @@ Meteor.methods({
 
     check(input, String);
 
-    let query = '/suggestions.php?q=' + input;
+    let query = '/suggestions/' + input;
 
     let worker = _worker.findOne({ query: { $options: 'i', $regex: '^' + query.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&') + '$' } }, { fields: { status: true, time: true } });
 

@@ -25,10 +25,8 @@ Polymer({
       this._item_tracker.stop();
     }
 
-    let _this = this;
-
-    _this.set('_item_tracker', Tracker.autorun(() => {
-      _this.set('url', _url.findOne(item, { fields: {} }));
+    this.set('_item_tracker', Tracker.autorun(() => {
+      this.set('url', _url.findOne(item, { fields: {} }));
     }));
   },
 

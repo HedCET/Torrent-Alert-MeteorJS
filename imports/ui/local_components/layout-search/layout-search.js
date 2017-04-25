@@ -14,10 +14,8 @@ Polymer({
         this._search_tracker.stop();
       }
 
-      let _this = this;
-
-      _this.set('_search_tracker', Tracker.autorun(() => {
-        _this.set('worker', _worker.findOne(route._id, { fields: { project: 1, status: 1, time: 1 } }));
+      this.set('_search_tracker', Tracker.autorun(() => {
+        this.set('worker', _worker.findOne(route._id, { fields: { project: 1, status: 1, time: 1 } }));
       }));
     }
   },
@@ -27,7 +25,7 @@ Polymer({
       Meteor.clearTimeout(this._search_timer);
     }
 
-    let value = e.target.value.replace(/ added.*?[0-9]+[a-z] ?/gi, ' ').replace(/ seed.*?[0-9]+ ?/gi, ' ').replace(/\s+/g, ' ').trim();
+    const value = e.target.value.replace(/ added.*?[0-9]+[a-z] ?/gi, ' ').replace(/ seed.*?[0-9]+ ?/gi, ' ').replace(/\s+/g, ' ').trim();
 
     if (value) {
       this.set('_search_timer', Meteor.setTimeout(() => {

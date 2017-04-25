@@ -13,11 +13,9 @@ Polymer({
   },
 
   attached() {
-    let _this = this;
-
     Tracker.autorun(() => {
       if (Meteor.user()) {
-        _this.set('user', Meteor.user().profile);
+        this.set('user', Meteor.user().profile);
       }
     });
   },

@@ -26,16 +26,14 @@ Polymer({
         this._project_tracker.stop();
       }
 
-      let _this = this;
+      this.set('_project_tracker', Tracker.autorun(() => {
+        this.set('project', _project.findOne(route._id, { fields: { query: 1, title: 1, torrent_count: 1 } }));
 
-      _this.set('_project_tracker', Tracker.autorun(() => {
-        _this.set('project', _project.findOne(route._id, { fields: { query: 1, title: 1, torrent_count: 1 } }));
+        if (this.project) {
+          this._torrent_subscriber(this.project._id);
 
-        if (_this.project) {
-          _this._torrent_subscriber(_this.project._id);
-
-          if (_this.project.query) {
-            _this._worker_subscriber(_this.project.query);
+          if (this.project.query) {
+            this._worker_subscriber(this.project.query);
           }
         }
       }));
@@ -91,9 +89,7 @@ Polymer({
       this._torrent_observer.stop();
     }
 
-    let _this = this;
-
-    _this.set('_torrent_observer', _torrent.find({ project: _id }, { sort: { time: -1 } }).observe({ addedAt(row) { _this.push('torrent', row); }, changedAt(row) { _this.splice('torrent', _.findIndex(_this.torrent, { _id: row._id }), 1, row); }, removedAt(row) { _this.splice('torrent', _.findIndex(_this.torrent, { _id: row._id }), 1); } }));
+    this.set('_torrent_observer', _torrent.find({ project: _id }, { sort: { time: -1 } }).observe({ addedAt: (row) => { this.push('torrent', row); }, changedAt: (row) => { this.splice('torrent', _.findIndex(this.torrent, { _id: row._id }), 1, row); }, removedAt: (row) => { this.splice('torrent', _.findIndex(this.torrent, { _id: row._id }), 1); } }));
   },
 
   _worker_subscriber(query) {
@@ -103,19 +99,15 @@ Polymer({
       this._worker_tracker.stop();
     }
 
-    let _this = this;
-
-    _this.set('_worker_tracker', Tracker.autorun(() => {
-      _this.set('worker', _worker.findOne({ query }, { fields: { query: 1, status: 1, time: 1 } }));
+    this.set('_worker_tracker', Tracker.autorun(() => {
+      this.set('worker', _worker.findOne({ query }, { fields: { query: 1, status: 1, time: 1 } }));
     }));
   },
 
   attached() {
-    let _this = this;
-
     Tracker.autorun(() => {
       if (Meteor.user()) {
-        _this.set('user', Meteor.user().profile);
+        this.set('user', Meteor.user().profile);
       }
     });
   },

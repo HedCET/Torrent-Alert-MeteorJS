@@ -28,10 +28,8 @@ Polymer({
       this._item_tracker.stop();
     }
 
-    let _this = this;
-
-    _this.set('_item_tracker', Tracker.autorun(() => {
-      _this.set('project', _project.findOne(item, { fields: { title: 1, torrent_count: 1 } }));
+    this.set('_item_tracker', Tracker.autorun(() => {
+      this.set('project', _project.findOne(item, { fields: { title: 1, torrent_count: 1 } }));
     }));
   },
 
