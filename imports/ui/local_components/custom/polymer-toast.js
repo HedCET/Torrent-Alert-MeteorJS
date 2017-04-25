@@ -3,6 +3,12 @@ import { Tracker } from 'meteor/tracker'
 
 Polymer({
 
+  _close() {
+    const N = document.querySelectorAll('.opt-bottom'); for (let index = 0; index < N.length; index++) { N[index].style.transform = 'translate(0, -' + this.$._toast.getBoundingClientRect().height + 'px)'; }
+
+    this.condition = '';
+  },
+
   _condition() {
     this.$._toast.hide();
 
@@ -52,10 +58,10 @@ Polymer({
     this.condition = '';
   },
 
-  _transition() {
-    if (!this.$._toast.opened) {
-      this.condition = '';
-    }
+  _open() {
+    this.async(() => {
+      const N = document.querySelectorAll('.opt-bottom'); for (let index = 0; index < N.length; index++) { N[index].style.transform = 'translate(0, -' + this.$._toast.getBoundingClientRect().height + 'px)'; }
+    }, 20);
   },
 
   attached() {
