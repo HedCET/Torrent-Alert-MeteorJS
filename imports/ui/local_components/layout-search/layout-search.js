@@ -29,15 +29,13 @@ Polymer({
 
     if (value) {
       this.set('_search_timer', Meteor.setTimeout(() => {
-        if (Meteor.status().connected) {
-          Meteor.call('insert.keyword', value, (error, res) => {
-            if (error) {
-              document.querySelector('#toast').toast(error.message);
-            } else {
-              document.querySelector('#main').set('router.path', '/search/' + res);
-            }
-          });
-        }
+        Meteor.call('insert.keyword', value, (error, res) => {
+          if (error) {
+            document.querySelector('#toast').toast(error.message);
+          } else {
+            document.querySelector('#main').set('router.path', '/search/' + res);
+          }
+        });
       }, 1000));
     }
   },

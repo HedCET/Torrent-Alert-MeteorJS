@@ -11,15 +11,16 @@
         background: #EEE;
         border-radius: 50%;
         color: black;
+        cursor: pointer;
         height: 40px;
         overflow: hidden;
-        transition: transform 400ms ease-in-out;
+        transition: transform 350ms ease-in-out;
         width: 40px;
         will-change: transform;
       }
       
-      :host([selected]) .icon {
-        transform: rotate3d(0, 1, 0, -180deg);
+       :host([selected]) .icon {
+        transform: rotate3d(0, 1, 0, 180deg);
       }
     </style>
     <div class="icon">
@@ -29,13 +30,13 @@
           border-radius: inherit;
           height: 100%;
           text-transform: uppercase;
-          transition: opacity 200ms ease-in-out 200ms;
+          transition: opacity 200ms ease-in-out 100ms;
           width: 100%;
           will-change: opacity;
         }
         
-        :host([selected]) img,
-        :host([selected]) .letter {
+         :host([selected]) img,
+         :host([selected]) .letter {
           opacity: 0;
         }
       </style>
@@ -57,12 +58,12 @@
           position: absolute!important;
           opacity: 0;
           top: 20%;
-          transform: rotate3d(0, 1, 0, 180deg) scale(0);
-          transition: transform 200ms ease-in-out 200ms;
+          transform: rotate3d(0, 1, 0, -180deg) scale(0);
+          transition: transform 300ms ease-in-out 100ms;
           will-change: opacity;
         }
         
-        :host([selected]) iron-icon {
+         :host([selected]) iron-icon {
           transform: rotate3d(0, 1, 0, -180deg) scale(1);
           opacity: 1;
         }
