@@ -49,7 +49,7 @@
         </style>
 
         <paper-icon-item class="cursor-p" style="background: #EEE;">
-          <paper-icon-button class="white" icon="file-download" item-icon on-tap="_download"></paper-icon-button>
+          <paper-icon-button class="white" icon="file-download" item-icon on-tap="_open_random"></paper-icon-button>
 
           <paper-item-body style="padding: 8px 0;" two-line>
             <div class="end horizontal justified layout" secondary>
@@ -75,7 +75,7 @@
         </paper-icon-item>
 
         <template is="dom-repeat" items="{{torrent.url}}">
-          <url-item item="{{item}}"></url-item>
+          <url-item item="{{item}}" on-tap="_open"></url-item>
         </template>
 
         <div class="center-center flex horizontal layout" hidden="{{worker.status}}" style="min-height: 128px;">

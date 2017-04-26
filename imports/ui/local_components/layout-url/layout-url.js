@@ -3,6 +3,7 @@ import { Tracker } from 'meteor/tracker';
 import moment from 'moment';
 
 import { _torrent } from '../../../db/torrents.js';
+import { _url } from '../../../db/urls.js';
 import { _worker } from '../../../db/workers.js';
 
 Polymer({
@@ -24,9 +25,35 @@ Polymer({
     return number;
   },
 
+  _open(e) {
+    const url = _url.findOne(e.model.__data__.item, { fields: { query: 1 } });
+
+    if (url) {
+      if (this.proxy) {
+        window.open(Meteor.absoluteUrl('proxy?url=' + encodeURIComponent(encodeURIComponent(url.query))), '_system');
+      } else {
+        window.open(url.query, '_system');
+      }
+    }
+  },
+
+  _open_random() {
+    if (this.torrent.url.length) {
+      const url = _url.findOne(_.sample(this.torrent.url), { fields: { query: 1 } });
+
+      if (url) {
+        if (this.proxy) {
+          window.open(Meteor.absoluteUrl('proxy?url=' + encodeURIComponent(encodeURIComponent(url.query))), '_system');
+        } else {
+          window.open(url.query, '_system');
+        }
+      }
+    }
+  },
+
   _route_changed(route) {
     if (route.page == 'url') {
-      Meteor.subscribe('torrent', { torrent: route._id.split('|') });
+      this.set('torrent', []); Meteor.subscribe('torrent', { torrent: route._id.split('|') });
 
       if (this._torrent_tracker) {
         this._torrent_tracker.stop();
