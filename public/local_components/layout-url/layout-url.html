@@ -16,7 +16,7 @@
     <paper-header-panel mode="cover" style="height: 100vh;">
       <div class="paper-header tail" style="background: #4DB6AC; height: 256px;"></div>
 
-      <div class="body layout vertical" style="background: #FFF;">
+      <div class="body layout vertical" style="background: #FFF; min-height: 256px;">
         <style>
           paper-toolbar {
             --paper-toolbar-background: #009688;
@@ -78,7 +78,7 @@
           <url-item item="{{item}}"></url-item>
         </template>
 
-        <div class="center-center flex horizontal layout" hidden="{{worker.status}}" style="min-height: 256px;">
+        <div class="center-center flex horizontal layout" hidden="{{worker.status}}" style="min-height: 128px;">
           <paper-spinner active></paper-spinner>
         </div>
 
@@ -89,7 +89,7 @@
             --paper-toggle-button-checked-ink-color: var(--paper-green-500);
           }
         </style>
-        <paper-toggle-button checked="{{proxy}}" class="flex" style="background: #EEE; height: 128px; padding: 0 16px;">Allow Proxy</paper-toggle-button>
+        <paper-toggle-button checked="{{proxy}}" class="flex" style="background: #EEE; min-height: 128px; padding: 0 16px;">Allow Proxy</paper-toggle-button>
       </div>
     </paper-header-panel>
   </template>
