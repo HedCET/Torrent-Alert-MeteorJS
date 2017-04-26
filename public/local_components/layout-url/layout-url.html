@@ -78,7 +78,7 @@
           <url-item item="{{item}}"></url-item>
         </template>
 
-        <div class="center-center flex horizontal layout" hidden="{{worker.status}}" style="min-height: 128px;">
+        <div class="center-center flex horizontal layout" hidden="{{worker.status}}" style="min-height: 256px;">
           <paper-spinner active></paper-spinner>
         </div>
 
@@ -89,7 +89,7 @@
             --paper-toggle-button-checked-ink-color: var(--paper-green-500);
           }
         </style>
-        <paper-toggle-button checked="{{proxy}}" class="flex" style="background: #EEE; padding: 32px 16px;">Allow Proxy</paper-toggle-button>
+        <paper-toggle-button checked="{{proxy}}" class="flex" style="background: #EEE; height: 128px; padding: 0 16px;">Allow Proxy</paper-toggle-button>
       </div>
     </paper-header-panel>
   </template>
