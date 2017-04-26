@@ -51,6 +51,22 @@ Polymer({
     }
   },
 
+  _remove() {
+    document.querySelector('#spinner').toggle();
+
+    Meteor.call('remove.torrent', [this.torrent._id], (error, res) => {
+      document.querySelector('#spinner').toggle();
+
+      if (error) {
+        document.querySelector('#toast').toast(error.message);
+      } else {
+        document.querySelector('#toast').toast('1 Item Removed', 'UNDO', { torrent: [this.torrent._id] });
+
+        this._back();
+      }
+    });
+  },
+
   _route_changed(route) {
     if (route.page == 'url') {
       this.set('torrent', []); Meteor.subscribe('torrent', { torrent: route._id.split('|') });
@@ -66,6 +82,16 @@ Polymer({
           this._worker_subscriber(this.torrent.query);
         }
       }));
+    }
+  },
+
+  _share() {
+    let share = "\n\n" + this.torrent.title + "\t\t" + Meteor.absoluteUrl('torrent/' + this.torrent._id) + "\n\n";
+
+    if (Meteor.isCordova) {
+      window.plugins.socialsharing.share(share);
+    } else {
+      window.open('mailto:?subject=' + encodeURIComponent('Torrent Alert') + '&body=' + encodeURIComponent(share), '_system');
     }
   },
 

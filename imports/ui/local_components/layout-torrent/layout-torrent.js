@@ -18,6 +18,26 @@ Polymer({
     }
   },
 
+  _remove() {
+    document.querySelector('#spinner').toggle();
+
+    const selected = _.map(this.selected, (item) => {
+      return item._id;
+    });
+
+    Meteor.call('remove.torrent', selected, (error, res) => {
+      document.querySelector('#spinner').toggle();
+
+      if (error) {
+        document.querySelector('#toast').toast(error.message);
+      } else {
+        document.querySelector('#toast').toast(selected.length + ' Item Removed', 'UNDO', { torrent: selected });
+
+        this.set('selected', []);
+      }
+    });
+  },
+
   _route_changed(route) {
     if (route.page == 'torrent') {
       Meteor.subscribe('project', route._id.split('|'));
@@ -48,6 +68,26 @@ Polymer({
     }
   },
 
+  _share() {
+    let share = '';
+
+    if (this.selected.length) {
+      this.selected.forEach((torrent) => {
+        share += "\n\n" + torrent.title + "\t\t" + Meteor.absoluteUrl('url/' + torrent._id) + "\n\n";
+      });
+    } else {
+      share += "\n\n" + this.project.title + "\t\t" + Meteor.absoluteUrl('torrent/' + this.project._id) + "\n\n";
+    }
+
+    if (share) {
+      if (Meteor.isCordova) {
+        window.plugins.socialsharing.share(share);
+      } else {
+        window.open('mailto:?subject=' + encodeURIComponent('Torrent Alert') + '&body=' + encodeURIComponent(share), "_system");
+      }
+    }
+  },
+
   _sort(A, Z) {
     return (moment(Z.time).unix() - moment(A.time).unix());
   },
@@ -72,12 +112,20 @@ Polymer({
 
   _subscribe() {
     if (Meteor.user()) {
+      Meteor.users.update(Meteor.user()._id, {
+        $addToSet: {
+          'profile.subscribed': this.project._id,
+        },
+      });
 
-
-
+      document.querySelector('#toast').toast('1 Item Subscribed', 'UNDO', { undo_subscribe: [this.project._id] });
     } else {
       document.querySelector('#toast').toast('', 'SIGNIN');
     }
+  },
+
+  _subscribe_hidden(selected_length, subscribed, project_id) {
+    return (selected_length || -1 < subscribed.indexOf(project_id));
   },
 
   _title(title, length) {
@@ -108,9 +156,7 @@ Polymer({
 
   attached() {
     Tracker.autorun(() => {
-      if (Meteor.user()) {
-        this.set('user', Meteor.user().profile);
-      }
+      this.set('subscribed', Meteor.user() && Meteor.user().profile && Meteor.user().profile.subscribed ? Meteor.user().profile.subscribed : []);
     });
   },
 

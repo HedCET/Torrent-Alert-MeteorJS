@@ -53,6 +53,44 @@ Polymer({
         });
         break;
 
+      case 'UNDO':
+        if (this.store.redo_subscribe) {
+          Meteor.users.update(Meteor.user()._id, {
+            $addToSet: {
+              'profile.subscribed': {
+                $each: this.store.redo_subscribe,
+              },
+            },
+          });
+        }
+
+        if (this.store.torrent) {
+          Meteor.call('restore.torrent', this.store.torrent, (error, res) => {
+            if (error) {
+              console.log(error);
+            }
+          });
+        }
+
+        if (this.store.undo_subscribe) {
+          // Meteor.users.update(Meteor.user()._id, {
+          //   $pull: {
+          //     'profile.subscribed': {
+          //       $in: this.store.undo_subscribe,
+          //     },
+          //   },
+          // });
+
+          this.store.undo_subscribe.forEach((_id) => {
+            Meteor.users.update(Meteor.user()._id, {
+              $pull: {
+                'profile.subscribed': _id,
+              },
+            });
+          });
+        }
+        break;
+
     }
 
     this.condition = '';
