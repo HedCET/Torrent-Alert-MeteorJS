@@ -12,6 +12,18 @@ Polymer({
     else { history.back(); }
   },
 
+  _date(time) {
+    return (moment(time).isValid() ? moment(time).format('ddd Do MMM') : moment().format('ddd Do MMM'));
+  },
+
+  _number_string(number) {
+    if (9999 < number) {
+      return Math.round(number / 1000) + 'K';
+    }
+
+    return number;
+  },
+
   _route_changed(route) {
     if (route.page == 'url') {
       Meteor.subscribe('torrent', { torrent: route._id.split('|') });
@@ -27,24 +39,6 @@ Polymer({
           this._worker_subscriber(this.torrent.query);
         }
       }));
-    }
-  },
-
-  _status(worker = {}) {
-    switch (worker.status) {
-
-      case '':
-        return 'Indexing';
-        break;
-
-      case '200':
-        return (this.torrent.url.length ? 'Updated At ' + (moment(worker.time).isValid() ? moment(worker.time).format('ddd Do MMM') : moment().format('ddd Do MMM')) : 'No Item Found');
-        break;
-
-      default:
-        return worker.status;
-        break;
-
     }
   },
 
