@@ -85,7 +85,7 @@ Polymer({
   },
 
   _torrent_subscriber(_id) {
-    this.page = 1; Meteor.subscribe('torrent', { page: this.page, project: _id.split('|') });
+    this.page = 1; this.set('torrent', []); Meteor.subscribe('torrent', { page: this.page, project: _id.split('|') });
 
     if (this._torrent_observer) {
       this._torrent_observer.stop();
