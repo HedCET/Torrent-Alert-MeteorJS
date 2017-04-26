@@ -52,19 +52,23 @@ Polymer({
   },
 
   _remove() {
-    document.querySelector('#spinner').toggle();
-
-    Meteor.call('remove.torrent', [this.torrent._id], (error, res) => {
+    if (Meteor.user()) {
       document.querySelector('#spinner').toggle();
 
-      if (error) {
-        document.querySelector('#toast').toast(error.message);
-      } else {
-        document.querySelector('#toast').toast('1 Item Removed', 'UNDO', { torrent: [this.torrent._id] });
+      Meteor.call('remove.torrent', [this.torrent._id], (error, res) => {
+        document.querySelector('#spinner').toggle();
 
-        this._back();
-      }
-    });
+        if (error) {
+          document.querySelector('#toast').toast(error.message);
+        } else {
+          document.querySelector('#toast').toast('1 Item Removed', 'UNDO', { torrent: [this.torrent._id] });
+
+          this._back();
+        }
+      });
+    } else {
+      document.querySelector('#toast').toast('', 'SIGNIN');
+    }
   },
 
   _route_changed(route) {

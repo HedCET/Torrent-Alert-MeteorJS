@@ -19,23 +19,27 @@ Polymer({
   },
 
   _remove() {
-    document.querySelector('#spinner').toggle();
-
-    const selected = _.map(this.selected, (item) => {
-      return item._id;
-    });
-
-    Meteor.call('remove.torrent', selected, (error, res) => {
+    if (Meteor.user()) {
       document.querySelector('#spinner').toggle();
 
-      if (error) {
-        document.querySelector('#toast').toast(error.message);
-      } else {
-        document.querySelector('#toast').toast(selected.length + ' Item Removed', 'UNDO', { torrent: selected });
+      const selected = _.map(this.selected, (item) => {
+        return item._id;
+      });
 
-        this.set('selected', []);
-      }
-    });
+      Meteor.call('remove.torrent', selected, (error, res) => {
+        document.querySelector('#spinner').toggle();
+
+        if (error) {
+          document.querySelector('#toast').toast(error.message);
+        } else {
+          document.querySelector('#toast').toast(selected.length + ' Item Removed', 'UNDO', { torrent: selected });
+
+          this.set('selected', []);
+        }
+      });
+    } else {
+      document.querySelector('#toast').toast('', 'SIGNIN');
+    }
   },
 
   _route_changed(route) {
