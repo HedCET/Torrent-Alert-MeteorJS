@@ -72,7 +72,9 @@ Polymer({
 
   _subscribe() {
     if (Meteor.user()) {
-      document.querySelector('#main').set('router.path', '/user/' + Meteor.user()._id);
+
+
+
     } else {
       document.querySelector('#toast').toast('', 'SIGNIN');
     }

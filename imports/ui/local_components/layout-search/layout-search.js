@@ -58,6 +58,14 @@ Polymer({
     }
   },
 
+  _user() {
+    if (Meteor.user()) {
+      document.querySelector('#main').set('router.path', '/user/' + Meteor.user()._id);
+    } else {
+      document.querySelector('#toast').toast('', 'SIGNIN');
+    }
+  },
+
   is: 'layout-search',
 
   observers: ['_route_changed(route)'],
