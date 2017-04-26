@@ -23,7 +23,7 @@
           }
         }
       </style>
-      <div class="body layout vertical" style="background: #FFF;">
+      <div class="body layout vertical" style="background: #FFF; min-height: 256px;">
         <style>
           paper-icon-item {
             --paper-item-icon-width: 0;
@@ -59,7 +59,7 @@
           <search-item item="{{item}}"></search-item>
         </template>
 
-        <div class="center-center flex horizontal layout" hidden="{{worker.status}}" style="min-height: 256px;">
+        <div class="center-center flex horizontal layout" hidden="{{worker.status}}">
           <paper-spinner active></paper-spinner>
         </div>
       </div>
