@@ -18,6 +18,52 @@ Polymer({
     }
   },
 
+  _filter_close() {
+    if (this.project.query) {
+      let adult_content_filter = !!this.project.query.match(/&safe=(0|1)/i);
+
+      let period = this.project.query.match(/ added.*?([0-9]+)[a-z] ?/i);
+      period = (period ? +period[1] : 999);
+
+      let quality = this.project.query.match(/\/([^\/]*)\?/);
+      quality = (quality && -1 < quality[1].indexOf('verified') ? 'verified' : 'search');
+
+      let seed = this.project.query.match(/ seed.*?([0-9]+) ?/i);
+      seed = (seed ? +seed[1] : 0);
+
+      if (this.adult_content_filter != adult_content_filter || this.period != period || this.quality != quality || this.seed != seed) {
+        document.querySelector('#spinner').toggle();
+
+        Meteor.call('insert.project', { query: '/' + this.quality + '?f=' + this.project.title + ' added:' + this.period + 'd seed > ' + this.seed + (this.adult_content_filter ? '&safe=1' : ''), title: this.project.title }, (error, res) => {
+          document.querySelector('#spinner').toggle();
+
+          if (error) {
+            document.querySelector('#toast').toast(error.message);
+          } else {
+            document.querySelector('#main').set('router.path', '/torrent/' + res);
+          }
+        });
+      }
+    }
+  },
+
+  _filter_open() {
+    if (this.project.query) {
+      this.adult_content_filter = !!this.project.query.match(/&safe=(0|1)/i);
+
+      let period = this.project.query.match(/ added.*?([0-9]+)[a-z] ?/i);
+      this.period = (period ? +period[1] : 999);
+
+      let quality = this.project.query.match(/\/([^\/]*)\?/);
+      this.quality = (quality && -1 < quality[1].indexOf('verified') ? 'verified' : 'search');
+
+      let seed = this.project.query.match(/ seed.*?([0-9]+) ?/i);
+      this.seed = (seed ? +seed[1] : 0);
+
+      this.$.filter.open();
+    }
+  },
+
   _remove() {
     if (Meteor.user()) {
       document.querySelector('#spinner').toggle();
