@@ -12,9 +12,9 @@ Install Guide
 curl https://install.meteor.com/ | sh
 git clone https://github.com/HedCET/Torrent-Alert.git TorrentAlert
 cd TorrentAlert
-meteor run android-device --mobile-server=https://ww8.herokuapp.com
+meteor -p 3000
 ```
 
-### Hosted By
+##### Hosted By
 
 * [heroku](https://ww8.herokuapp.com)
