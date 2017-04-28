@@ -15,4 +15,4 @@ cd TorrentAlert
 meteor
 ```
 
-* [Test Here](https://ww8.herokuapp.com)
+Also Test [Here](https://ww8.herokuapp.com)
