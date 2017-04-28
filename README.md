@@ -15,6 +15,4 @@ cd TorrentAlert
 meteor
 ```
 
-##### Hosted By
-
-* [heroku](https://ww8.herokuapp.com)
+* [Test Here](https://ww8.herokuapp.com)
