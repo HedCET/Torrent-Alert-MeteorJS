@@ -34,7 +34,7 @@ Polymer({
           Meteor.loginWithGoogle({ requestOfflineToken: true, requestPermissions: ['email', 'profile'] }, (error) => {
             document.querySelector('#spinner').toggle();
 
-            if (error) { document.querySelector('#toast').toast('Error'); }
+            if (error) { document.querySelector('#toast').toast('User Not Found'); }
             else { document.querySelector('#main').set('router.path', '/user/' + Meteor.user()._id); }
           });
         }
