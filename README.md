@@ -5,7 +5,7 @@ Torrent Alert will let you know when your FavoriteMovie/File is online. All you 
 
 ### this app only cache links & texts from [torrentz](https://torrentz2.me). banned torrent downloading is illegal.
 
-* [DEMO](https://ww8.herokuapp.com)
+* provide by [heroku](https://ww8.herokuapp.com)
 
 Install Guide
 ----------
@@ -19,4 +19,4 @@ meteor run android-device --mobile-server=https://ww8.herokuapp.com
 
 * Also Look [Meteor-WebComponent](https://github.com/meteorwebcomponents/synthesis) Approch
 
-**MIT License** & MAILTO *request@vcompile.com* For Abuse/ContentRemoval/copyright/DMCA/EUCD
+MIT License
