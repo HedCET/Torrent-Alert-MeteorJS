@@ -15,6 +15,6 @@ cd TorrentAlert
 meteor run android-device --mobile-server=https://ww8.herokuapp.com
 ```
 
-### Hosted By
+##### Hosted By
 
 * [heroku](https://ww8.herokuapp.com)
