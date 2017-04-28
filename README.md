@@ -12,7 +12,7 @@ Install Guide
 curl https://install.meteor.com/ | sh
 git clone https://github.com/HedCET/Torrent-Alert.git TorrentAlert
 cd TorrentAlert
-meteor -p 3000
+meteor
 ```
 
 ##### Hosted By
