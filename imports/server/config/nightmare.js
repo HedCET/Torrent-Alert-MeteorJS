@@ -12,7 +12,7 @@ import { _worker } from '../../db/workers.js';
 
 export const _nightmare = {
   _queue: [], trigger() {
-    const N = Nightmare({ openDevTools: true, show: true });
+    const N = Nightmare({ /*openDevTools: true, show: true*/ });
 
     N.on('crashed', (e, killed) => { N.halt(); _nightmare.trigger(); }).useragent('Mozilla/5.0 (Windows NT 6.3; rv:36.0) Gecko/20100101 Firefox/36.0');
 
