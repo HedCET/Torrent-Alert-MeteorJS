@@ -5,7 +5,7 @@ Torrent Alert will let you know when your FavoriteMovie/File is online. All you 
 
 ###this app only cache links & texts from [torrentz](https://torrentz2.me). banned torrent downloading is illegal.
 
-* [Chrome Browser Mobile](https://ww8.herokuapp.com)
+* [DEMO](https://ww8.herokuapp.com)
 
 Install Guide
 ----------

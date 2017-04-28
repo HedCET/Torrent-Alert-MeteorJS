@@ -89,16 +89,6 @@ Polymer({
     }
   },
 
-  _share() {
-    let share = "\n\n" + this.torrent.title + "\t\t" + Meteor.absoluteUrl('torrent/' + this.torrent._id) + "\n\n";
-
-    if (Meteor.isCordova) {
-      window.plugins.socialsharing.share(share);
-    } else {
-      window.open('mailto:?subject=' + encodeURIComponent('Torrent Alert') + '&body=' + encodeURIComponent(share), '_system');
-    }
-  },
-
   _worker_subscriber(query) {
     Meteor.subscribe('worker', query);
 

@@ -118,26 +118,6 @@ Polymer({
     }
   },
 
-  _share() {
-    let share = '';
-
-    if (this.selected.length) {
-      this.selected.forEach((torrent) => {
-        share += "\n\n" + torrent.title + "\t\t" + Meteor.absoluteUrl('url/' + torrent._id) + "\n\n";
-      });
-    } else {
-      share += "\n\n" + this.project.title + "\t\t" + Meteor.absoluteUrl('torrent/' + this.project._id) + "\n\n";
-    }
-
-    if (share) {
-      if (Meteor.isCordova) {
-        window.plugins.socialsharing.share(share);
-      } else {
-        window.open('mailto:?subject=' + encodeURIComponent('Torrent Alert') + '&body=' + encodeURIComponent(share), "_system");
-      }
-    }
-  },
-
   _sort(A, Z) {
     return (moment(Z.time).unix() - moment(A.time).unix());
   },
