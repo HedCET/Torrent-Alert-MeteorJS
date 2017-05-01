@@ -4,8 +4,12 @@ import { Tracker } from 'meteor/tracker';
 Polymer({
 
   _back() {
-    if (Meteor.isCordova) { navigator.app.backHistory(); }
-    else { history.back(); }
+    if (this.selected.length) {
+      this.set('selected', []);
+    } else {
+      if (Meteor.isCordova) { navigator.app.backHistory(); }
+      else { history.back(); }
+    }
   },
 
   _remove() {

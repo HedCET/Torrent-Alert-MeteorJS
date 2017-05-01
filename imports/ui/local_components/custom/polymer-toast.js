@@ -100,7 +100,7 @@ Polymer({
   },
 
   attached() {
-    this._class = (Meteor.isCordova ? 'fit-bottom' : '');
+    this._class = (document.querySelector('body').getBoundingClientRect().width <= 480 ? 'fit-bottom' : '');
 
     Tracker.autorun(() => {
       if (Meteor.status().connected) {
