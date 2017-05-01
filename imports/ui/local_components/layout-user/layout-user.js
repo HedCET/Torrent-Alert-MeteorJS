@@ -12,8 +12,10 @@ Polymer({
     }
   },
 
-  _OS_changed(OS) {
-    (window.OneSignal || []).push(['setSubscription', OS]);
+  _push_changed(new_value, old_value) {
+    if (old_value !== undefined) {
+      (window.OneSignal || []).push(['setSubscription', new_value]);
+    }
   },
 
   _remove() {
@@ -49,7 +51,7 @@ Polymer({
       if (Meteor.user()) {
         this.set('user', Meteor.user().profile);
 
-        OneSignal.push(() => { if (!OneSignal.isPushNotificationsSupported()) { return; } OneSignal.registerForPushNotifications(); OneSignal.isPushNotificationsEnabled((OS) => { this.OS = OS; OneSignal.sendTags({ user: Meteor.user()._id }); }); OneSignal.on('subscriptionChange', (OS) => { this.OS = OS; OneSignal.sendTags({ user: Meteor.user()._id }); }); });
+        OneSignal.push(() => { if (!OneSignal.isPushNotificationsSupported()) { return; } OneSignal.isPushNotificationsEnabled((push) => { this.push = push; OneSignal.sendTags({ user: Meteor.user()._id }); }); OneSignal.registerForPushNotifications(); OneSignal.on('subscriptionChange', (push) => { this.push = push; OneSignal.sendTags({ user: Meteor.user()._id }); }); });
       } else {
         OneSignal.push(() => { if (!OneSignal.isPushNotificationsSupported()) { return; } OneSignal.deleteTags(['user']); });
       }
@@ -58,9 +60,11 @@ Polymer({
 
   is: 'layout-user',
 
-  observers: ['_OS_changed(OS)'],
-
   properties: {
+    push: {
+      observer: '_push_changed',
+      type: Boolean,
+    },
     selected: {
       type: Array,
       value() {
