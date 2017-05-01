@@ -44,10 +44,7 @@ Polymer({
         Meteor.logout((error) => {
           if (error) { document.querySelector('#toast').toast('Error'); }
           else {
-            if (Meteor.isCordova) {
-              window.plugins.googleplus.disconnect();
-              navigator.app.backHistory();
-            }
+            if (Meteor.isCordova) { window.plugins.googleplus.disconnect(); navigator.app.backHistory(); }
             else { history.back(); }
           }
         });

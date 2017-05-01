@@ -22,4 +22,13 @@ Polymer({
 
   is: 'layout-user',
 
+  properties: {
+    selected: {
+      type: Array,
+      value() {
+        return [];
+      },
+    }
+  },
+
 });
