@@ -1,6 +1,7 @@
 <link rel="import" href="../../bower_components/font-roboto/roboto.html">
 <link rel="import" href="../../bower_components/iron-flex-layout/iron-flex-layout.html">
 <link rel="import" href="../../bower_components/iron-icons/iron-icons.html">
+<link rel="import" href="../../bower_components/iron-selector/iron-selector.html">
 <link rel="import" href="../../bower_components/paper-header-panel/paper-header-panel.html">
 <link rel="import" href="../../bower_components/paper-icon-button/paper-icon-button.html">
 <link rel="import" href="../../bower_components/paper-item/paper-icon-item.html">
@@ -59,14 +60,18 @@
               @apply(--paper-font-common-nowrap);
             }
           </style>
-          <div class="body1 nowrap">No Item Subscribed</div>
+          <div class="body1 nowrap"><span hidden="{{user.subscribed.length}}">No</span><span hidden="{{!user.subscribed.length}}">{{user.subscribed.length}}</span> Item Found</div>
         </div>
+
+        <iron-selector attr-for-selected="item" multi selected-attribute="selected" selected-values="{{selected}}">
+          <template is="dom-repeat" items="{{user.subscribed}}">
+            <subscribed-item item="{{item}}"></subscribed-item>
+          </template>
+        </iron-selector>
 
         <div class="center-center flex horizontal layout" hidden="{{user.subscribed.length}}" style="min-height: 128px;">
           <paper-spinner active></paper-spinner>
         </div>
-
-
 
         <style>
           paper-toggle-button {
@@ -81,4 +86,5 @@
   </template>
 </dom-module>
 
+<link rel="import" href="./subscribed-item.html">
 <link rel="import" href="../custom/selectable-icon.html">
