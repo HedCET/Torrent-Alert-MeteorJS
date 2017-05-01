@@ -12,6 +12,10 @@ Polymer({
     }
   },
 
+  _OS_changed(OS) {
+    (window.OneSignal || []).push(['setSubscription', OS]);
+  },
+
   _remove() {
     // Meteor.users.update(Meteor.user()._id, {
     //   $pull: {
@@ -40,13 +44,21 @@ Polymer({
 
   attached() {
     Tracker.autorun(() => {
+      const OneSignal = window.OneSignal || [];
+
       if (Meteor.user()) {
         this.set('user', Meteor.user().profile);
+
+        OneSignal.push(() => { if (!OneSignal.isPushNotificationsSupported()) { return; } OneSignal.push(['registerForPushNotifications']); OneSignal.on('subscriptionChange', (OS) => { this.OS = OS; OneSignal.sendTags({ user: Meteor.user()._id }); }); OneSignal.isPushNotificationsEnabled((OS) => { this.OS = OS; OneSignal.sendTags({ user: Meteor.user()._id }); }); });
+      } else {
+        OneSignal.push(() => { if (!OneSignal.isPushNotificationsSupported()) { return; } OneSignal.deleteTags(['user']); });
       }
     });
   },
 
   is: 'layout-user',
+
+  observers: ['_OS_changed(OS)'],
 
   properties: {
     selected: {
