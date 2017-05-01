@@ -4,7 +4,7 @@ import { Tracker } from 'meteor/tracker'
 Polymer({
 
   _close() {
-    const N = document.querySelectorAll('.opt-bottom'); for (let index = 0; index < N.length; index++) { N[index].style.transform = 'translate(0, -' + this.$._toast.getBoundingClientRect().height + 'px)'; }
+    const N = document.querySelectorAll('.fab-bottom'); for (let index = 0; index < N.length; index++) { N[index].style.transform = 'translate(0, -' + this.$._toast.getBoundingClientRect().height + 'px)'; }
 
     this.condition = '';
   },
@@ -95,7 +95,7 @@ Polymer({
 
   _open() {
     this.async(() => {
-      const N = document.querySelectorAll('.opt-bottom'); for (let index = 0; index < N.length; index++) { N[index].style.transform = 'translate(0, -' + this.$._toast.getBoundingClientRect().height + 'px)'; }
+      const N = document.querySelectorAll('.fab-bottom'); for (let index = 0; index < N.length; index++) { N[index].style.transform = 'translate(0, -' + this.$._toast.getBoundingClientRect().height + 'px)'; }
     }, 20);
   },
 
