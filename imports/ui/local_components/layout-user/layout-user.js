@@ -49,7 +49,7 @@ Polymer({
       if (Meteor.user()) {
         this.set('user', Meteor.user().profile);
 
-        OneSignal.push(() => { if (!OneSignal.isPushNotificationsSupported()) { return; } OneSignal.push(['registerForPushNotifications']); OneSignal.on('subscriptionChange', (OS) => { this.OS = OS; OneSignal.sendTags({ user: Meteor.user()._id }); }); OneSignal.isPushNotificationsEnabled((OS) => { this.OS = OS; OneSignal.sendTags({ user: Meteor.user()._id }); }); });
+        OneSignal.push(() => { if (!OneSignal.isPushNotificationsSupported()) { return; } OneSignal.registerForPushNotifications(); OneSignal.isPushNotificationsEnabled((OS) => { this.OS = OS; OneSignal.sendTags({ user: Meteor.user()._id }); }); OneSignal.on('subscriptionChange', (OS) => { this.OS = OS; OneSignal.sendTags({ user: Meteor.user()._id }); }); });
       } else {
         OneSignal.push(() => { if (!OneSignal.isPushNotificationsSupported()) { return; } OneSignal.deleteTags(['user']); });
       }
