@@ -9,11 +9,7 @@ import { _worker } from '../../db/workers.js';
 
 Meteor.setInterval(() => {
   new fibers(() => {
-    Meteor.users.find({}, {
-      fields: {
-        'profile.subscribed': 1,
-      },
-    }).forEach((row) => {
+    Meteor.users.find({}, { fields: { 'profile.subscribed': 1 } }).forEach((row) => {
       if (row.profile.subscribed && row.profile.subscribed.length) {
         row.profile.subscribed.forEach((subscribed) => {
           let project = _project.findOne(subscribed, { fields: { query: true, title: true } });
@@ -38,11 +34,7 @@ Meteor.setInterval(() => {
               }
             }
           } else {
-            Meteor.users.update(row._id, {
-              $pull: {
-                'profile.subscribed': subscribed,
-              },
-            });
+            Meteor.users.update(row._id, { $pull: { 'profile.subscribed': subscribed } });
           }
         });
       }
