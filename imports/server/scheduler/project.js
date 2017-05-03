@@ -19,7 +19,7 @@ Meteor.setInterval(() => {
             let torrent = _torrent.find({ project: project._id, user_subscribed: { $ne: row._id } }, { fields: { _id: 1 } }).fetch();
 
             if (torrent.length) {
-              let OneSIgnal = HTTP.post('https://onesignal.com/api/v1/notifications', { data: { app_id: '6cf77bb0-6c75-47bf-bd3f-7adb8f195335', contents: { en: torrent.length + ' New Item Found' }, filters: [{ field: 'tag', key: 'user', relation: '=', value: row._id }, { field: 'last_session', key: 'hours_ago', relation: '<', value: '800' }], headings: { en: project.title }, template_id: '8f953d89-f174-4e17-8088-064bd1b815ff', url: 'https://t.orrent.xyz/torrent/' + project._id + '?_id=' + _.map(torrent, (item) => { return item._id }).join('|') }, headers: { 'Authorization': 'Basic ZWFmZjQ3OTMtMWRkNC00MTJlLThlNmMtNzRmYWI2NzE2ZGVh', 'Content-Type': 'application/json; charset=utf-8' }, timeout: 1000 * 60 });
+              let OneSIgnal = HTTP.post('https://onesignal.com/api/v1/notifications', { data: { app_id: '6cf77bb0-6c75-47bf-bd3f-7adb8f195335', contents: { en: torrent.length + ' New Item Found' }, filters: [{ field: 'tag', key: 'user', relation: '=', value: row._id }], headings: { en: project.title }, included_segments: ['Allowed'], template_id: '8f953d89-f174-4e17-8088-064bd1b815ff', url: 'https://t.orrent.xyz/torrent/' + project._id + '?_id=' + _.map(torrent, (item) => { return item._id }).join('|') }, headers: { 'Authorization': 'Basic ZWFmZjQ3OTMtMWRkNC00MTJlLThlNmMtNzRmYWI2NzE2ZGVh', 'Content-Type': 'application/json; charset=utf-8' }, timeout: 1000 * 60 });
 
 console.log(OneSIgnal.data.recipients);
 
