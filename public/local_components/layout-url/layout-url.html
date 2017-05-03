@@ -95,13 +95,14 @@
         </div>
 
         <style>
-            paper-item {
+          paper-item {
             --paper-item-focused-before: {
               display: none;
             }
+          }
         </style>
         <paper-item class="center horizontal layout" style="background: #EEE; padding: 8px 16px;">
-          <div class="cursor-d flex nowrap" style="padding-right: 4px;">Allow Proxy</div>
+          <div class="cursor-d flex nowrap" style="margin-right: 4px;">Allow Proxy</div>
           <style>
             paper-toggle-button {
               --paper-toggle-button-checked-bar-color: var(--paper-green-500);
@@ -109,7 +110,7 @@
               --paper-toggle-button-checked-ink-color: var(--paper-green-500);
             }
           </style>
-          <paper-toggle-button checked="{{proxy}}" style="padding-left: 4px;"></paper-toggle-button>
+          <paper-toggle-button checked="{{proxy}}" style="margin-left: 4px;"></paper-toggle-button>
         </paper-item>
       </div>
     </paper-header-panel>
