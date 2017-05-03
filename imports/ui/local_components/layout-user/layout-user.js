@@ -51,7 +51,7 @@ Polymer({
       if (Meteor.user()) {
         this.set('user', Meteor.user().profile);
 
-        OneSignal.push(() => { if (!OneSignal.isPushNotificationsSupported()) { return; } OneSignal.isPushNotificationsEnabled((push) => { this.push = push; OneSignal.sendTags({ user: Meteor.user()._id }); }); OneSignal.registerForPushNotifications(); /*OneSignal.showHttpPrompt();*/ OneSignal.on('subscriptionChange', (push) => { this.push = push; OneSignal.sendTags({ user: Meteor.user()._id }); }); });
+        OneSignal.push(() => { if (!OneSignal.isPushNotificationsSupported()) { return; } OneSignal.isPushNotificationsEnabled((push) => { this.push = push; OneSignal.sendTags({ user: Meteor.user()._id }); }); OneSignal.registerForPushNotifications(); OneSignal.on('subscriptionChange', (push) => { this.push = push; OneSignal.sendTags({ user: Meteor.user()._id }); }); });
       } else {
         OneSignal.push(() => { if (!OneSignal.isPushNotificationsSupported()) { return; } OneSignal.deleteTags(['user']); });
       }

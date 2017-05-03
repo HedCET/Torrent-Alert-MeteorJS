@@ -27,7 +27,7 @@ console.log(OneSIgnal.data.recipients);
                 let worker = _worker.findOne({ query: { $options: 'i', $regex: '^' + project.query.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&') + '$' } }, { fields: { status: true, time: true } });
 
                 if (worker) {
-                  if (worker.status != '200' || 1.5 < moment.duration(moment().diff(worker.time)).asHours()) { // INTERVAL
+                  if (worker.status != '200' || 3 < moment.duration(moment().diff(worker.time)).asHours()) { // INTERVAL
                     _worker.update(worker._id, { $set: { status: '', time: moment().toDate() } });
                   }
                 } else {
