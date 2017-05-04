@@ -15,7 +15,7 @@
       "type": "image/png"
     }
   ],
-  "name": "Torrent Alert",
+  "name": "torrent Search & Alert",
   "orientation": "portrait",
   "scope": "/",
   "short_name": "Torrent Alert",
