@@ -1,32 +1,41 @@
-<link rel="import" href="../bower_components/app-route/app-location.html">
-<link rel="import" href="../bower_components/app-route/app-route.html">
-<link rel="import" href="../bower_components/font-roboto/roboto.html">
-<link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout.html">
-<link rel="import" href="../bower_components/neon-animation/neon-animated-pages.html">
-<link rel="import" href="../bower_components/paper-styles/paper-styles.html">
-<link rel="import" href="../bower_components/polymer/polymer.html">
-
 <dom-module id="layout-main">
   <template>
-    <app-location query-params="{{query}}" route="{{router}}"></app-location>
-    <app-route data="{{route}}" pattern="/:page/:_id" route="{{router}}"></app-route>
+    <paper-header-panel mode="cover" style="height: 100vh;">
+      <div class="paper-header tail" style="background: #4DB6AC; height: 256px;"></div>
 
-    <neon-animated-pages attr-for-selected="data-page" selected="{{route.page}}">
-      <layout-search data-page="search" route="{{route}}"></layout-search>
-      <layout-torrent data-page="torrent" query="{{query}}" route="{{route}}"></layout-torrent>
-      <layout-url data-page="url" route="{{route}}"></layout-url>
-      <layout-user data-page="user" route="{{route}}"></layout-user>
-    </neon-animated-pages>
+      <div class="body layout vertical" style="background: #FFF; min-height: 256px;">
+        <style>
+          paper-toolbar {
+            --paper-toolbar-background: #009688;
+            --paper-toolbar-color: #E0F2F1;
+          }
+        </style>
+        <paper-toolbar>
+          <paper-icon-button icon="menu"></paper-icon-button>
 
-    <polymer-spinner id="spinner"></polymer-spinner>
-    <polymer-toast id="toast"></polymer-toast>
+          <div class="title">Torrent Alert</div>
+
+          <paper-icon-button hidden="{{index}}" icon="refresh" on-tap="_refresh"></paper-icon-button>
+        </paper-toolbar>
+
+        <div class="horizontal layout" style="color: #757575; padding: 8px 16px;">
+          <style>
+            .body1 {
+              @apply(--paper-font-body1);
+            }
+
+            .nowrap {
+              @apply(--paper-font-common-nowrap);
+            }
+          </style>
+          <div class="body1 cursor-d nowrap">{{text}}</div>
+        </div>
+
+        <div class="center-center flex horizontal layout" style="min-height: 128px;">
+          <paper-spinner active></paper-spinner>
+        </div>
+
+        <paper-item class="cursor-p" hidden="{{index}}" style="background: #EEE;" on-tap="_open">check online version</paper-item>
+    </paper-header-panel>
   </template>
 </dom-module>
-
-<link rel="import" href="./layout-search/layout-search.html">
-<link rel="import" href="./layout-torrent/layout-torrent.html">
-<link rel="import" href="./layout-url/layout-url.html">
-<link rel="import" href="./layout-user/layout-user.html">
-
-<link rel="import" href="./custom/polymer-spinner.html">
-<link rel="import" href="./custom/polymer-toast.html">

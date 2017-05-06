@@ -15,10 +15,10 @@
       "type": "image/png"
     }
   ],
-  "name": "torrent Search & Alert",
+  "name": "Torrent Alert",
   "orientation": "portrait",
   "scope": "/",
-  "short_name": "Torrent Alert",
+  "short_name": "torrentz",
   "start_url": "/",
   "theme_color": "#009688"
 }

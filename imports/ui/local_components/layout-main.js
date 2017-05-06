@@ -1,23 +1,28 @@
+import { Meteor } from 'meteor/meteor';
+
 Polymer({
 
-  attached() {
-    this.async(() => {
-      if (!this.router.path || this.router.path == '/') {
-        this.set('router.path', '/search/recent');
-      }
+  _open() {
+    window.open('https://t.orrent.xyz/search/recent', '_blank');
+  },
 
-      this.$.spinner.toggle();
-    });
+  _refresh() {
+    this.index = this.fixture.length - 1; this.text = this.fixture[this.index]; this.timer = Meteor.setInterval(() => { this.index -= 1; this.text = this.fixture[this.index]; if (this.index < 1) { Meteor.clearInterval(this.timer); } }, 1000 * 3);
+  },
+
+  attached() {
+    this._refresh();
   },
 
   is: 'layout-main',
 
+  properties: {
+    fixture: {
+      type: Array,
+      value() {
+        return ['synchronizing error', 'synchronizing to latest version', 'clearing cache', 'checking latest version', 'connecting to t.orrent.xyz'];
+      },
+    },
+  },
+
 });
-
-import './custom/polymer-spinner.js';
-import './custom/polymer-toast.js';
-
-import './layout-search/layout-search.js';
-import './layout-torrent/layout-torrent.js';
-import './layout-url/layout-url.js';
-import './layout-user/layout-user.js';
