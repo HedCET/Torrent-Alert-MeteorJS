@@ -13,7 +13,7 @@ App.info({
   author: "VCompile",
   description: "Torrent Search & Alert",
   email: "linto.cet@gmail.com",
-  id: "t.orrent.xyz",
+  id: "com.herokuapp.ww8",
   name: "Torrent Alert",
   website: "https://github.com/HedCET/Torrent-Alert",
   version: "1.0.0",
