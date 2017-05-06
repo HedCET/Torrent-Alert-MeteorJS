@@ -3,7 +3,6 @@
 <!--<link rel="import" href="bower_components/iron-icons/iron-icons.html">-->
 <!--<link rel="import" href="bower_components/paper-header-panel/paper-header-panel.html">-->
 <!--<link rel="import" href="bower_components/paper-icon-button/paper-icon-button.html">-->
-<!--<link rel="import" href="bower_components/paper-item/paper-item.html">-->
 <!--<link rel="import" href="bower_components/paper-spinner/paper-spinner.html">-->
 <!--<link rel="import" href="bower_components/paper-styles/paper-styles.html">-->
 <!--<link rel="import" href="bower_components/paper-toolbar/paper-toolbar.html">-->
@@ -26,7 +25,7 @@
 
           <div class="title">Torrent Alert</div>
 
-          <paper-icon-button hidden="{{index}}" icon="refresh" on-tap="_refresh"></paper-icon-button>
+          <paper-icon-button hidden="{{index}}" icon="launch" on-tap="_open"></paper-icon-button>
         </paper-toolbar>
 
         <div class="horizontal layout" style="color: #757575; padding: 8px 16px;">
@@ -45,8 +44,6 @@
         <div class="center-center flex horizontal layout" style="min-height: 128px;">
           <paper-spinner active></paper-spinner>
         </div>
-
-        <paper-item class="cursor-p" hidden="{{index}}" style="background: #EEE;" on-tap="_open">check online version</paper-item>
     </paper-header-panel>
   </template>
 </dom-module>

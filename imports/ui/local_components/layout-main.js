@@ -6,12 +6,8 @@ Polymer({
     window.open('https://t.orrent.xyz/search/recent', '_blank');
   },
 
-  _refresh() {
-    this.index = this.fixture.length - 1; this.text = this.fixture[this.index]; this.timer = Meteor.setInterval(() => { this.index -= 1; this.text = this.fixture[this.index]; if (this.index < 1) { Meteor.clearInterval(this.timer); } }, 1000 * 3);
-  },
-
   attached() {
-    this._refresh();
+    this.index = this.fixture.length - 1; this.text = this.fixture[this.index]; this.timer = Meteor.setInterval(() => { this.index -= 1; this.text = this.fixture[this.index]; if (this.index < 1) { Meteor.clearInterval(this.timer); } }, 1000 * 3);
   },
 
   is: 'layout-main',
