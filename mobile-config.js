@@ -1,5 +1,5 @@
-App.accessRule("*://*.googleapis.com/*");
-App.accessRule("*://*.googleusercontent.com/*");
+// App.accessRule("*://*.googleapis.com/*");
+// App.accessRule("*://*.googleusercontent.com/*");
 
 App.icons({
   android_hdpi: 'public/icons/hdpi.png',
@@ -16,7 +16,7 @@ App.info({
   id: "com.herokuapp.ww8",
   name: "Torrent Alert",
   website: "https://github.com/HedCET/Torrent-Alert",
-  version: "1.0.0",
+  version: "1.1.1",
 });
 
 App.setPreference("android-installLocation", "preferExternal");

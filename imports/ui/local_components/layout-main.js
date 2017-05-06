@@ -3,7 +3,7 @@ import { Meteor } from 'meteor/meteor';
 Polymer({
 
   _open() {
-    window.open('https://t.orrent.xyz/search/recent', '_blank');
+    window.open('https://t.orrent.xyz/search/recent', '_system');
   },
 
   attached() {
