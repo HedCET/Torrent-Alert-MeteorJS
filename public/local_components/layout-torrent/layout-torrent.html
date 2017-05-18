@@ -28,7 +28,8 @@
         <paper-toolbar>
           <paper-icon-button icon="arrow-back" on-tap="_back"></paper-icon-button>
 
-          <div class="title">{{_title(project.title, selected.length)}}</div>
+          <div class="title" hidden="{{selected.length}}">User</div>
+          <div class="title" hidden="{{!selected.length}}">{{selected.length}}</div>
 
           <paper-icon-button hidden="{{_subscribe_hidden(selected.length, subscribed, project._id)}}" icon="alarm-add" on-tap="_subscribe"></paper-icon-button>
           <paper-icon-button hidden="{{selected.length}}" icon="filter-list" on-tap="_filter_open"></paper-icon-button>

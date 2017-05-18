@@ -27,7 +27,8 @@
         <paper-toolbar>
           <paper-icon-button icon="arrow-back" on-tap="_back"></paper-icon-button>
 
-          <div class="title">User</div>
+          <div class="title" hidden="{{selected.length}}">{{project.title}}</div>
+          <div class="title" hidden="{{!selected.length}}">{{selected.length}}</div>
 
           <paper-icon-button hidden="{{!selected.length}}" icon="delete" on-tap="_remove"></paper-icon-button>
         </paper-toolbar>
