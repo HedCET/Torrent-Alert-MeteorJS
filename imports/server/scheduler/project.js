@@ -25,7 +25,7 @@ Meteor.setInterval(() => {
             let worker = _worker.findOne({ query: { $options: 'i', $regex: '^' + project.query.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&') + '$' } }, { fields: { status: true, time: true } });
 
             if (worker) {
-              if (worker.status != '200' || 6 < moment.duration(moment().diff(worker.time)).asHours()) { // INTERVAL
+              if (worker.status != '200' || 3 < moment.duration(moment().diff(worker.time)).asHours()) { // INTERVAL
                 _worker.update(worker._id, { $set: { status: '', time: moment().toDate() } });
               }
             } else {
@@ -40,4 +40,4 @@ Meteor.setInterval(() => {
 
     Meteor.setTimeout(() => { _nightmare.trigger(); });
   }).run();
-}, 1000 * 60 * 15);
+}, 1000 * 60 * 60);
