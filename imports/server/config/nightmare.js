@@ -14,8 +14,8 @@ export const _nightmare = {
   _queue: [], trigger() {
     const N = Nightmare(_.extend(
       {
-        openDevTools: true,
-        show: true,
+        // openDevTools: true,
+        // show: true,
       },
       (process.env.PROXY_SERVER ? {
         switches: {
@@ -59,7 +59,7 @@ export const _nightmare = {
     };
 
     let worker = null;
-    while (worker = _worker.findOne({ _id: { $nin: _nightmare._queue }, status: '', type: { $in: ['keyword', 'project', 'torrent'] } }, { fields: { query: 1, type: 1 }, sort: { type: 1 } })) {
+    while (worker = _worker.findOne({ _id: { $nin: _nightmare._queue }, status: '', type: { $in: ['keyword', 'project', 'torrent'] } }, { fields: { query: 1, type: 1 }, sort: { time: 1, type: 1 } })) {
       _nightmare._queue.push(worker._id);
 
       switch (worker.type) {
