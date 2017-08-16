@@ -59,7 +59,7 @@ export const _nightmare = {
     };
 
     let worker = null;
-    while (worker = _worker.findOne({ _id: { $nin: _nightmare._queue }, status: '', type: { $in: ['keyword', 'project', 'torrent'] } }, { fields: { query: 1, type: 1 }, sort: { time: 1, type: 1 } })) {
+    while (worker = _worker.findOne({ _id: { $nin: _nightmare._queue }, status: '', type: { $in: ['keyword', 'project', 'torrent'] } }, { fields: { query: 1, type: 1 }, sort: { type: 1 } })) {
       _nightmare._queue.push(worker._id);
 
       switch (worker.type) {
